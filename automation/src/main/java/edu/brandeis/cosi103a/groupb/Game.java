@@ -1,7 +1,9 @@
 package edu.brandeis.cosi103a.groupb;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class Game {
     private List<Card> supply;
@@ -40,18 +42,36 @@ public class Game {
     }
 
     private void distributeStarterDeck(Player player) {
-        for (int i = 0; i < 7; i++) {
-            player.addCardToDeck(new CryptocurrencyCard("Bitcoin", 0, 1));
-        }
-        for (int i = 0; i < 3; i++) {
-            player.addCardToDeck(new AutomationCard("Method", 2, 1));
+        distributeCardsFromSupply(player, "Bitcoin", 7);
+        distributeCardsFromSupply(player, "Method", 3);
+        Collections.shuffle(player.getDeck());
+    }
+
+    private void distributeCardsFromSupply(Player player, String cardName, int count) {
+        int distributed = 0;
+        for (int i = 0; i < supply.size() && distributed < count; i++) {
+            Card card = supply.get(i);
+            if (card.getName().equals(cardName)) {
+                player.addCardToDeck(card);
+                supply.remove(i);
+                i--; // Adjust index after removal
+                distributed++;
+            }
         }
     }
 
     public void playGame() {
+        Random random = new Random();
+        boolean player1Starts = random.nextBoolean();
+
         while (!isGameOver()) {
-            takeTurn(player1);
-            takeTurn(player2);
+            if (player1Starts) {
+                takeTurn(player1);
+                takeTurn(player2);
+            } else {
+                takeTurn(player2);
+                takeTurn(player1);
+            }
         }
         determineWinner();
     }
