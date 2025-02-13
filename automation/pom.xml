@@ -19,11 +19,33 @@
   </properties>
 
   <dependencies>
+    <!-- JUnit 5 API for writing tests -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>5.8.1</version>
+        <scope>test</scope>
+    </dependency>
+
+    <!-- JUnit 5 Engine to run tests -->
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>5.8.1</version>
+        <scope>test</scope>
+    </dependency>
+
+    <!-- JUnit Vintage (for backward compatibility with JUnit 4) -->
+    <dependency>
+        <groupId>org.junit.vintage</groupId>
+        <artifactId>junit-vintage-engine</artifactId>
+        <version>5.8.1</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>io.github.brandeis-cosi-103a</groupId>
+        <artifactId>atg-api</artifactId>
+        <version>1.4.1</version>
     </dependency>
   </dependencies>
 

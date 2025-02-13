@@ -1,53 +1,28 @@
 package edu.brandeis.cosi103a.groupb;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
-public class Player {
-    private List<Card> deck;
-    private List<Card> hand;
-    private List<Card> discardPile;
+import edu.brandeis.cosi103a.groupb.Decisions.*;
 
-    public Player() {
-        deck = new ArrayList<>();
-        hand = new ArrayList<>();
-        discardPile = new ArrayList<>();
-    }
 
-    public void addCardToDeck(Card card) {
-        deck.add(card);
-    }
+public interface Player {
+    String getName();
+    Decision makeDecision(GameState state, List<Decision> options);
 
-    public void drawHand() {
-        if (deck.size() < 5) {
-            reshuffle();
+    Optional<GameObserver> getObserver();
+
+    class ScorePair {
+        public final Player player;
+        public final int score;
+
+        public ScorePair(Player player, int score) {
+            this.player = player;
+            this.score = score;
         }
-        for (int i = 0; i < 5 && !deck.isEmpty(); i++) {
-            hand.add(deck.remove(0));
+
+        public int getScore() {
+            return score;
         }
-    }
-
-    public void discardHand() {
-        discardPile.addAll(hand);
-        hand.clear();
-    }
-
-    private void reshuffle() {
-        Collections.shuffle(discardPile);
-        deck.addAll(discardPile);
-        discardPile.clear();
-    }
-
-    public List<Card> getHand() {
-        return hand;
-    }
-
-    public List<Card> getDeck() {
-        return deck;
-    }
-
-    public List<Card> getDiscardPile() {
-        return discardPile;
     }
 }
