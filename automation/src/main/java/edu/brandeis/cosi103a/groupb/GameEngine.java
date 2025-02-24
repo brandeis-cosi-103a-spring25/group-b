@@ -5,6 +5,8 @@ import edu.brandeis.cosi103a.groupb.Decisions.*;
 import edu.brandeis.cosi103a.groupb.Events.*;
 import java.util.*;
 
+import com.google.common.annotations.VisibleForTesting;
+
 public class GameEngine implements Engine {
     private final GameDeck deck;
     private final Player player1;
@@ -30,7 +32,7 @@ public class GameEngine implements Engine {
         return computeScores();
     }
 
-    private void processTurn(Player player) throws PlayerViolationException {
+    public void processTurn(Player player) throws PlayerViolationException {
         gameState = new GameState(player.getName(), gameState.getCurrentPlayerHand(),
                                   GameState.TurnPhase.MONEY, gameState.getSpendableMoney(),
                                   gameState.getAvailableBuys(), deck);
@@ -41,7 +43,7 @@ public class GameEngine implements Engine {
         handleCleanupPhase(player);
     }
 
-    private void handleMoneyPhase(Player player) throws PlayerViolationException {
+    public void handleMoneyPhase(Player player) throws PlayerViolationException {
         System.out.println("DEBUG: Checking " + player.getName() + "'s hand...");
         System.out.println("DEBUG: Unplayed cards -> " + gameState.getCurrentPlayerHand().getUnplayedCards());
     
@@ -85,7 +87,7 @@ public class GameEngine implements Engine {
     
     
 
-    private void handleBuyPhase(Player player) throws PlayerViolationException {
+    public void handleBuyPhase(Player player) throws PlayerViolationException {
         System.out.println("DEBUG: Entering BUY phase. Available money: " + gameState.getSpendableMoney());
     
         while (gameState.getTurnPhase() == GameState.TurnPhase.BUY) {
@@ -127,7 +129,7 @@ public class GameEngine implements Engine {
     }
     
 
-    private void handleCleanupPhase(Player player) {
+    public void handleCleanupPhase(Player player) {
         observer.notifyEvent(gameState, new GameEvent(player.getName() + "'s turn ends"));
     
         // ✅ Draw 5 new cards from the deck for the next turn
@@ -148,18 +150,18 @@ public class GameEngine implements Engine {
     
     
 
-    private boolean isGameOver() {
+    public boolean isGameOver() {
         return deck.getNumAvailable(Card.Type.FRAMEWORK) == 0;
     }
 
-    private List<Player.ScorePair> computeScores() {
+    public List<Player.ScorePair> computeScores() {
         List<Player.ScorePair> scores = new ArrayList<>();
         scores.add(new Player.ScorePair(player1, calculateScore(player1)));
         scores.add(new Player.ScorePair(player2, calculateScore(player2)));
         return scores;
     }
 
-    private int calculateScore(Player player) {
+    public int calculateScore(Player player) {
         int score = 0;
         for (Card.Type type : deck.getCardTypes()) {
             if (type.getCategory() == Card.Type.Category.VICTORY) {
@@ -169,6 +171,7 @@ public class GameEngine implements Engine {
         return score;
     }
 
+    @VisibleForTesting
     private GameDeck initializeDeck() {
         Map<Card.Type, Integer> deckMap = new HashMap<>();
         deckMap.put(Card.Type.BITCOIN, 60);
@@ -180,7 +183,7 @@ public class GameEngine implements Engine {
         return new GameDeck(deckMap);
     }
 
-    private GameState initializeGameState() {
+    public GameState initializeGameState() {
         List<Card> startingHand = new ArrayList<>();
         
         for (int i = 0; i < 5; i++) {
