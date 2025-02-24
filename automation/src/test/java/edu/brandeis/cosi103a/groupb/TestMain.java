@@ -1,5 +1,6 @@
 package edu.brandeis.cosi103a.groupb;
 
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,6 +10,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
+
+import edu.brandeis.cosi103a.groupb.Main;
 
 public class TestMain {
 
