@@ -171,7 +171,6 @@ public class GameEngine implements Engine {
         return score;
     }
 
-    @VisibleForTesting
     private GameDeck initializeDeck() {
         Map<Card.Type, Integer> deckMap = new HashMap<>();
         deckMap.put(Card.Type.BITCOIN, 60);
