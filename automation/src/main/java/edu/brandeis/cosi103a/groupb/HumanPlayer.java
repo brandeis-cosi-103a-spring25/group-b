@@ -11,12 +11,18 @@ import java.util.Scanner;
  */
 public class HumanPlayer implements Player {
     private final String name;
-    private static final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
     private final Optional<GameObserver> observer;
 
     public HumanPlayer(String name) {
+        this(name, new Scanner(System.in));
+    }
+    
+    // Added constructor to inject a custom scanner
+    public HumanPlayer(String name, Scanner scanner) {
         this.name = name;
-        this.observer = Optional.of((GameObserver) new ConsoleGameObserver()); // Fix applied here
+        this.scanner = scanner;
+        this.observer = Optional.of((GameObserver) new ConsoleGameObserver());
     }
 
     @Override
@@ -28,14 +34,11 @@ public class HumanPlayer implements Player {
     public Decision makeDecision(GameState state, List<Decision> options) {
         System.out.println("\n" + name + "'s turn (" + state.getTurnPhase() + " phase)");
         System.out.println("Available options:");
-
         for (int i = 0; i < options.size(); i++) {
             System.out.println("[" + i + "] " + options.get(i).getDescription());
         }
-
         System.out.print("Choose an option (enter number): ");
         int choice = -1;
-
         while (choice < 0 || choice >= options.size()) {
             if (scanner.hasNextInt()) {
                 choice = scanner.nextInt();
@@ -46,7 +49,6 @@ public class HumanPlayer implements Player {
                 System.out.print("Invalid choice. Try again: ");
             }
         }
-
         return options.get(choice);
     }
 
