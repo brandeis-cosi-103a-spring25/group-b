@@ -1,15 +1,10 @@
 package edu.brandeis.cosi103a.groupb;
 
 import edu.brandeis.cosi103a.groupb.Decisions.*;
-import edu.brandeis.cosi103a.groupb.GameObserver;
-import edu.brandeis.cosi103a.groupb.HumanPlayer;
-import edu.brandeis.cosi103a.groupb.GameState;
-import edu.brandeis.cosi103a.groupb.Hand;
-import edu.brandeis.cosi103a.groupb.GameDeck;
-import edu.brandeis.cosi103a.groupb.ConsoleGameObserver;
 import edu.brandeis.cosi103a.groupb.Cards.Card;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -19,16 +14,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestHumanPlayer {
 
     private HumanPlayer humanPlayer;
+    private final InputStream originalIn = System.in;
 
     @BeforeEach
     public void setUp() {
         humanPlayer = new HumanPlayer("TestPlayer");
+    }
+    
+    @AfterEach
+    public void tearDown() {
+        System.setIn(originalIn);
     }
 
     @Test
@@ -41,6 +43,10 @@ public class TestHumanPlayer {
         String input = "0\n";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
+        
+        // Create a new scanner using the new System.in
+        Scanner testScanner = new Scanner(System.in);
+        HumanPlayer humanPlayer = new HumanPlayer("TestPlayer", testScanner);
 
         List<Decision> options = new ArrayList<>();
         options.add(new EndPhaseDecision(GameState.TurnPhase.MONEY));
@@ -50,7 +56,8 @@ public class TestHumanPlayer {
         deckMap.put(Card.Type.ETHEREUM, 40);
         GameDeck deck = new GameDeck(deckMap);
 
-        GameState state = new GameState("TestPlayer", new Hand(new ArrayList<>(), new ArrayList<>()),
+        GameState state = new GameState("TestPlayer",
+                                        new Hand(new ArrayList<>(), new ArrayList<>()),
                                         GameState.TurnPhase.MONEY, 0, 1, deck);
 
         Decision decision = humanPlayer.makeDecision(state, options);
