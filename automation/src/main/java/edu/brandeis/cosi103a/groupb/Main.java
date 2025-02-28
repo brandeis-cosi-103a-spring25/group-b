@@ -1,9 +1,6 @@
 package edu.brandeis.cosi103a.groupb;
 
-import edu.brandeis.cosi103a.groupb.Decisions.*;
-import edu.brandeis.cosi103a.groupb.ConsoleGameObserver;
 import java.util.List;
-import java.util.Optional;
 
 public class Main {
     public static void main(String[] args) {

@@ -14,7 +14,7 @@ public interface Player {
 
     class ScorePair {
         public final Player player;
-        public final int score;
+        public final int score; //Victory points /
 
         public ScorePair(Player player, int score) {
             this.player = player;

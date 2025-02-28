@@ -1,9 +1,12 @@
 package edu.brandeis.cosi103a.groupb;
 
-import edu.brandeis.cosi103a.groupb.Decisions.*;
-import edu.brandeis.cosi103a.groupb.Events.*;
 import java.util.List;
 import java.util.Optional;
+
+import edu.brandeis.cosi103a.groupb.Decisions.BuyDecision;
+import edu.brandeis.cosi103a.groupb.Decisions.Decision;
+import edu.brandeis.cosi103a.groupb.Decisions.EndPhaseDecision;
+import edu.brandeis.cosi103a.groupb.Decisions.PlayCardDecision;
 
 /**
  * Represents an AI-controlled player.

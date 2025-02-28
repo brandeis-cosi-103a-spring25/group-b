@@ -2,7 +2,7 @@ package edu.brandeis.cosi103a.groupb.Cards;
 
 public class Card {
     private final Type type;
-    private final int id;
+    private final int id; //What is the id for?
 
     public Card(Type type, int id) {
         this.type = type;
@@ -15,6 +15,11 @@ public class Card {
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return this.getType() + " " + this.getId();
     }
 
     public enum Type {
@@ -42,7 +47,8 @@ public class Card {
         }
 
         public enum Category {
-            MONEY, VICTORY;
+            MONEY,
+            VICTORY;
         }
     }
 }

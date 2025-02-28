@@ -1,11 +1,18 @@
 package edu.brandeis.cosi103a.groupb;
 
-import edu.brandeis.cosi103a.groupb.Cards.Card;
-import edu.brandeis.cosi103a.groupb.Decisions.*;
-import edu.brandeis.cosi103a.groupb.Events.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import com.google.common.annotations.VisibleForTesting;
+import edu.brandeis.cosi103a.groupb.Cards.Card;
+import edu.brandeis.cosi103a.groupb.Decisions.BuyDecision;
+import edu.brandeis.cosi103a.groupb.Decisions.Decision;
+import edu.brandeis.cosi103a.groupb.Decisions.EndPhaseDecision;
+import edu.brandeis.cosi103a.groupb.Decisions.PlayCardDecision;
+import edu.brandeis.cosi103a.groupb.Events.GainCardEvent;
+import edu.brandeis.cosi103a.groupb.Events.GameEvent;
+import edu.brandeis.cosi103a.groupb.Events.PlayCardEvent;
 
 public class GameEngine implements Engine {
     private final GameDeck deck;
@@ -32,7 +39,7 @@ public class GameEngine implements Engine {
         return computeScores();
     }
 
-    public void processTurn(Player player) throws PlayerViolationException {
+    private void processTurn(Player player) throws PlayerViolationException {
         gameState = new GameState(player.getName(), gameState.getCurrentPlayerHand(),
                                   GameState.TurnPhase.MONEY, gameState.getSpendableMoney(),
                                   gameState.getAvailableBuys(), deck);
@@ -43,7 +50,7 @@ public class GameEngine implements Engine {
         handleCleanupPhase(player);
     }
 
-    public void handleMoneyPhase(Player player) throws PlayerViolationException {
+    private void handleMoneyPhase(Player player) throws PlayerViolationException {
         System.out.println("DEBUG: Checking " + player.getName() + "'s hand...");
         System.out.println("DEBUG: Unplayed cards -> " + gameState.getCurrentPlayerHand().getUnplayedCards());
     
@@ -84,10 +91,7 @@ public class GameEngine implements Engine {
         }
     }
     
-    
-    
-
-    public void handleBuyPhase(Player player) throws PlayerViolationException {
+    private void handleBuyPhase(Player player) throws PlayerViolationException {
         System.out.println("DEBUG: Entering BUY phase. Available money: " + gameState.getSpendableMoney());
     
         while (gameState.getTurnPhase() == GameState.TurnPhase.BUY) {
@@ -129,7 +133,7 @@ public class GameEngine implements Engine {
     }
     
 
-    public void handleCleanupPhase(Player player) {
+    private void handleCleanupPhase(Player player) {
         observer.notifyEvent(gameState, new GameEvent(player.getName() + "'s turn ends"));
     
         // ✅ Draw 5 new cards from the deck for the next turn
@@ -147,21 +151,19 @@ public class GameEngine implements Engine {
         gameState = new GameState(player.getName(), new Hand(new ArrayList<>(), newHand),
                                   GameState.TurnPhase.MONEY, 0, 1, deck);
     }
-    
-    
 
-    public boolean isGameOver() {
+    private boolean isGameOver() {
         return deck.getNumAvailable(Card.Type.FRAMEWORK) == 0;
     }
 
-    public List<Player.ScorePair> computeScores() {
+    private List<Player.ScorePair> computeScores() {
         List<Player.ScorePair> scores = new ArrayList<>();
         scores.add(new Player.ScorePair(player1, calculateScore(player1)));
         scores.add(new Player.ScorePair(player2, calculateScore(player2)));
         return scores;
     }
 
-    public int calculateScore(Player player) {
+    private int calculateScore(Player player) {
         int score = 0;
         for (Card.Type type : deck.getCardTypes()) {
             if (type.getCategory() == Card.Type.Category.VICTORY) {
@@ -182,7 +184,7 @@ public class GameEngine implements Engine {
         return new GameDeck(deckMap);
     }
 
-    public GameState initializeGameState() {
+    private GameState initializeGameState() {
         List<Card> startingHand = new ArrayList<>();
         
         for (int i = 0; i < 5; i++) {
