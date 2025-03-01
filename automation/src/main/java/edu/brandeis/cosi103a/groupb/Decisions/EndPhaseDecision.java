@@ -6,7 +6,7 @@ import edu.brandeis.cosi103a.groupb.Game.GameState;
  * Represents a decision to end a phase.
  */
 public final class EndPhaseDecision implements Decision {
-    private final GameState.TurnPhase phase;
+    private final GameState.TurnPhase phase; //MONEY, BUY, CLEANUP
 
     public EndPhaseDecision(GameState.TurnPhase phase) {
         this.phase = phase;

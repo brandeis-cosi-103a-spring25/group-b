@@ -1,7 +1,7 @@
 package edu.brandeis.cosi103a.groupb.Game;
 
-import edu.brandeis.cosi103a.groupb.GameDeck;
-import edu.brandeis.cosi103a.groupb.Hand;
+import edu.brandeis.cosi103a.groupb.Decks.GameDeck;
+import edu.brandeis.cosi103a.groupb.Decks.Hand;
 
 public final class GameState {
     private final String currentPlayerName;

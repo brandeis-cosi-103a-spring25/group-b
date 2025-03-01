@@ -1,4 +1,4 @@
-package edu.brandeis.cosi103a.groupb;
+package edu.brandeis.cosi103a.groupb.Decks;
 
 import edu.brandeis.cosi103a.groupb.Cards.Card;
 import com.google.common.collect.ImmutableList;
@@ -21,6 +21,7 @@ public final class Hand {
         System.out.println("DEBUG: Retrieving unplayed cards -> " + unplayedCards);
         return unplayedCards;
     }
+
     public ImmutableList<Card> getPlayedCards() {
         return playedCards;
     }
