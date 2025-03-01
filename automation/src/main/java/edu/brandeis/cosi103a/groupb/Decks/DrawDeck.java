@@ -2,18 +2,17 @@ package edu.brandeis.cosi103a.groupb.Decks;
 
 import edu.brandeis.cosi103a.groupb.Cards.Card;
 
-public class DiscardDeck extends PlayerDeck {
+public class DrawDeck extends PlayerDeck {
     
-    public DiscardDeck() {
+    public DrawDeck() {
         super();
     }
 
     @Override
     public void printDeck() {
-        System.out.println("Discard Deck: ");
+        System.out.println("Draw Deck: ");
         for (Card card : discardDeck) {
             System.out.println(card);
         }
-    }    
-
+    }        
 }

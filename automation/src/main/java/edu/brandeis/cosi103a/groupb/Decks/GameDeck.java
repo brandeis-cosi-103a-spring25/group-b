@@ -43,7 +43,7 @@ public final class GameDeck {
         return cardCounts.getOrDefault(cardType, 0);
     }
 
-    // ✅ New method: Draw a card from the deck
+    //Draw a card from this deck
     public Card drawCard(Card.Type type) {
         if (cardCounts.getOrDefault(type, 0) > 0) {
             cardCounts.put(type, cardCounts.get(type) - 1); //One less card.

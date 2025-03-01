@@ -1,19 +1,22 @@
 package edu.brandeis.cosi103a.groupb.Player;
 
 import edu.brandeis.cosi103a.groupb.Decisions.*;
+import edu.brandeis.cosi103a.groupb.Decks.DiscardDeck;
+import edu.brandeis.cosi103a.groupb.Decks.DrawDeck;
 import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
 import edu.brandeis.cosi103a.groupb.Game.GameObserver;
 import edu.brandeis.cosi103a.groupb.Game.GameState;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Represents a human-controlled player using console input.
  */
 public class HumanPlayer implements Player {
     private final String name;
+    private DiscardDeck discardDeck;
+    private DrawDeck drawDeck;
+
     private static final Scanner scanner = new Scanner(System.in);
     private final Optional<GameObserver> observer;
 

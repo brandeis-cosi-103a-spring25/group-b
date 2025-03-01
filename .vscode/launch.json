@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "PlayerDeck",
+            "request": "launch",
+            "mainClass": "edu.brandeis.cosi103a.groupb.Decks.PlayerDeck",
+            "projectName": "automation"
+        },
+        {
+            "type": "java",
+            "name": "DiscardDeck",
+            "request": "launch",
+            "mainClass": "edu.brandeis.cosi103a.groupb.Decks.DiscardDeck",
+            "projectName": "automation"
+        },
+        {
+            "type": "java",
             "name": "TestAIPlayer",
             "request": "launch",
             "mainClass": "edu.brandeis.cosi103a.groupb.TestAIPlayer",
