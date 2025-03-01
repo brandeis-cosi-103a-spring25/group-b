@@ -1,21 +1,26 @@
-package edu.brandeis.cosi103a.groupb;
+package edu.brandeis.cosi103a.groupb.Player;
 
 import java.util.List;
 import java.util.Optional;
+
+import com.google.common.collect.ImmutableList;
 
 import edu.brandeis.cosi103a.groupb.Decisions.BuyDecision;
 import edu.brandeis.cosi103a.groupb.Decisions.Decision;
 import edu.brandeis.cosi103a.groupb.Decisions.EndPhaseDecision;
 import edu.brandeis.cosi103a.groupb.Decisions.PlayCardDecision;
+import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
+import edu.brandeis.cosi103a.groupb.Game.GameObserver;
+import edu.brandeis.cosi103a.groupb.Game.GameState;
 
 /**
  * Represents an AI-controlled player.
  */
-public class AIPlayer implements Player {
+public class BigMoneyPlayer implements Player {
     private final String name;
     private final Optional<GameObserver> observer;
 
-    public AIPlayer(String name) {
+    public BigMoneyPlayer(String name) {
         this.name = name;
         this.observer = Optional.of((GameObserver) new ConsoleGameObserver());  // Fix applied here
     }

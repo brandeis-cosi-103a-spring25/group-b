@@ -1,6 +1,6 @@
 package edu.brandeis.cosi103a.groupb.Decisions;
 
-import edu.brandeis.cosi103a.groupb.GameState;
+import edu.brandeis.cosi103a.groupb.Game.GameState;
 
 /**
  * Represents a decision to end a phase.

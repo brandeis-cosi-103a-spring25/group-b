@@ -1,7 +1,11 @@
-package edu.brandeis.cosi103a.groupb;
+package edu.brandeis.cosi103a.groupb.Player;
 
 import edu.brandeis.cosi103a.groupb.Decisions.*;
 import edu.brandeis.cosi103a.groupb.Events.*;
+import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
+import edu.brandeis.cosi103a.groupb.Game.GameObserver;
+import edu.brandeis.cosi103a.groupb.Game.GameState;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;

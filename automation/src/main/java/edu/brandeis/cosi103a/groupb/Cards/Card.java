@@ -2,7 +2,7 @@ package edu.brandeis.cosi103a.groupb.Cards;
 
 public class Card {
     private final Type type;
-    private final int id; //What is the id for?
+    private final int id;
 
     public Card(Type type, int id) {
         this.type = type;
@@ -51,4 +51,5 @@ public class Card {
             VICTORY;
         }
     }
+    
 }

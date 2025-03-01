@@ -31,10 +31,12 @@ public final class GameDeck {
     public Card drawCard(Card.Type type) {
         if (cardCounts.getOrDefault(type, 0) > 0) {
             cardCounts.put(type, cardCounts.get(type) - 1);
-            return new Card(type, (int) (Math.random() * 1000)); // Assign a random ID
-            //NZ: What is the id for?
-            
+            return new Card(type, (int) (Math.random() * 1000));
         }
         return null; // No cards left
+    }
+
+    public static void main(String args[]) {
+        
     }
 }

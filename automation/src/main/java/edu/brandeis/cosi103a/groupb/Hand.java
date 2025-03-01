@@ -24,4 +24,4 @@ public final class Hand {
     public ImmutableList<Card> getPlayedCards() {
         return playedCards;
     }
-    }
+}

@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.brandeis.cosi103a.groupb.GameDeck;
-import edu.brandeis.cosi103a.groupb.GameEngine;
-import edu.brandeis.cosi103a.groupb.Player;
+import edu.brandeis.cosi103a.groupb.Game.GameEngine;
+import edu.brandeis.cosi103a.groupb.Player.Player;
 
 public class testGameEngine {
     
