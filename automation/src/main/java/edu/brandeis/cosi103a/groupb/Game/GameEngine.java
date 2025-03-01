@@ -15,6 +15,7 @@ import edu.brandeis.cosi103a.groupb.Decks.Hand;
 import edu.brandeis.cosi103a.groupb.Events.GainCardEvent;
 import edu.brandeis.cosi103a.groupb.Events.GameEvent;
 import edu.brandeis.cosi103a.groupb.Events.PlayCardEvent;
+import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
 import edu.brandeis.cosi103a.groupb.Player.Player;
 import edu.brandeis.cosi103a.groupb.Player.PlayerViolationException;
 
@@ -30,11 +31,53 @@ public class GameEngine implements Engine {
         this.player2 = player2;
         this.observer = observer;
         this.deck = initializeDeck();
-        this.gameState = initializeGameState();
+        this.gameState = null;
+    }
+
+    /**
+     * Initialize the main deck.
+     * @return
+     */
+    private GameDeck initializeDeck() {
+        Map<Card.Type, Integer> deckMap = new HashMap<>();
+        deckMap.put(Card.Type.BITCOIN, 60);
+        deckMap.put(Card.Type.ETHEREUM, 40);
+        deckMap.put(Card.Type.DOGECOIN, 30);
+        deckMap.put(Card.Type.METHOD, 14);
+        deckMap.put(Card.Type.MODULE, 8);
+        deckMap.put(Card.Type.FRAMEWORK, 8);
+        return new GameDeck(deckMap);
+    }
+
+    /**
+     * Players' starting hand: 
+     * -- 7x Bitcoin cards
+     * -- 3x Method cards
+     */
+    private GameState initializeGameState(Player player) {
+        List<Card> startingHand = new ArrayList<>();
+        
+        System.out.println("DEBUG: Assigning starting hand to player: " + startingHand);
+        for (int i = 0; i < 7; i++) {
+            startingHand.add(new Card(Card.Type.BITCOIN, i));
+            this.deck.drawCard(Card.Type.BITCOIN); //Deduct corresponding card types from main deck
+        }
+        for (int i = 0; i < 3; i++) {
+            startingHand.add(new Card(Card.Type.METHOD, i));
+            this.deck.drawCard(Card.Type.METHOD); //Deduct corresponding card types from main deck
+        }
+        
+    
+        
+    
+        return new GameState(player.getName(), new Hand(new ArrayList<>(), startingHand), 
+                             GameState.TurnPhase.MONEY, 0, 1, deck);
     }
 
     @Override
     public List<Player.ScorePair> play() throws PlayerViolationException {
+        //Initialize the game 
+        
         while (!isGameOver()) {
             processTurn(player1);
             if (isGameOver()) break;
@@ -43,11 +86,12 @@ public class GameEngine implements Engine {
         return computeScores();
     }
 
+
     private void processTurn(Player player) throws PlayerViolationException {
         gameState = new GameState(player.getName(), gameState.getCurrentPlayerHand(),
                                   GameState.TurnPhase.MONEY, gameState.getSpendableMoney(),
                                   gameState.getAvailableBuys(), deck);
-        observer.notifyEvent(gameState, new GameEvent(player.getName() + "'s turn begins"));
+        observer.notifyEvent(gameState, new GameEvent(player.getName() + "'s turn begins!"));
 
         handleMoneyPhase(player);
         handleBuyPhase(player);
@@ -177,29 +221,13 @@ public class GameEngine implements Engine {
         return score;
     }
 
-    private GameDeck initializeDeck() {
-        Map<Card.Type, Integer> deckMap = new HashMap<>();
-        deckMap.put(Card.Type.BITCOIN, 60);
-        deckMap.put(Card.Type.ETHEREUM, 40);
-        deckMap.put(Card.Type.DOGECOIN, 30);
-        deckMap.put(Card.Type.METHOD, 14);
-        deckMap.put(Card.Type.MODULE, 8);
-        deckMap.put(Card.Type.FRAMEWORK, 8);
-        return new GameDeck(deckMap);
-    }
+    public static void main(String[] args) {
+        Player player1 = new HumanPlayer("Nance");
+        Player player2 = new HumanPlayer("Jiayi");
 
-    private GameState initializeGameState() {
-        List<Card> startingHand = new ArrayList<>();
-        
-        for (int i = 0; i < 5; i++) {
-            startingHand.add(new Card(Card.Type.BITCOIN, i));
-        }
-    
-        System.out.println("DEBUG: Assigning starting hand to player: " + startingHand);
-    
-        return new GameState(player1.getName(), new Hand(new ArrayList<>(), startingHand), 
-                             GameState.TurnPhase.MONEY, 0, 1, deck);
+        GameObserver observer = (GameObserver) new ConsoleGameObserver();
+        GameEngine engine = new GameEngine(player1, player2, observer);
+        System.out.println(engine.deck);
     }
-    
     
 }

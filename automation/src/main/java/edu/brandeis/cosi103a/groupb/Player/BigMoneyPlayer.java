@@ -7,20 +7,25 @@ import edu.brandeis.cosi103a.groupb.Decisions.BuyDecision;
 import edu.brandeis.cosi103a.groupb.Decisions.Decision;
 import edu.brandeis.cosi103a.groupb.Decisions.EndPhaseDecision;
 import edu.brandeis.cosi103a.groupb.Decisions.PlayCardDecision;
+import edu.brandeis.cosi103a.groupb.Decks.DiscardDeck;
+import edu.brandeis.cosi103a.groupb.Decks.DrawDeck;
 import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
 import edu.brandeis.cosi103a.groupb.Game.GameObserver;
 import edu.brandeis.cosi103a.groupb.Game.GameState;
 
 /**
- * Represents an AI-controlled player.
+ * Represents an automated player, following the basic strategy.
  */
 public class BigMoneyPlayer implements Player {
     private final String name;
+    private DiscardDeck discardDeck;
+    private DrawDeck drawDeck;
+
     private final Optional<GameObserver> observer;
 
     public BigMoneyPlayer(String name) {
         this.name = name;
-        this.observer = Optional.of((GameObserver) new ConsoleGameObserver());  // Fix applied here
+        this.observer = Optional.of((GameObserver) new ConsoleGameObserver());
     }
 
     @Override
@@ -64,5 +69,15 @@ public class BigMoneyPlayer implements Player {
     @Override
     public Optional<GameObserver> getObserver() {
         return observer;
+    }
+    
+    @Override
+    public DiscardDeck getDiscardDeck() {
+        return this.discardDeck;
+    }
+
+    @Override
+    public DrawDeck getDrawDeck() {
+        return this.drawDeck;
     }
 }

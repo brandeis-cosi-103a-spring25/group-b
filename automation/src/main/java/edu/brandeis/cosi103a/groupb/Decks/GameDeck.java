@@ -51,4 +51,18 @@ public final class GameDeck {
         }
         return null; // If there are no cards in the beginning, no card can be drawn
     }
+
+    /**
+     * Print out deck information.
+     * @return: deck information.
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Cards left in the main deck: \n");
+        for (Map.Entry<Card.Type, Integer> Entry: cardCounts.entrySet()) {
+            sb.append(Entry.getKey()).append(" -- ").append(Entry.getValue()).append(";\n");
+        }
+        return sb.toString();
+    }
 }

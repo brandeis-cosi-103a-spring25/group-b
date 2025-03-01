@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "GameEngine",
+            "request": "launch",
+            "mainClass": "edu.brandeis.cosi103a.groupb.Game.GameEngine",
+            "projectName": "automation"
+        },
+        {
+            "type": "java",
             "name": "PlayerDeck",
             "request": "launch",
             "mainClass": "edu.brandeis.cosi103a.groupb.Decks.PlayerDeck",

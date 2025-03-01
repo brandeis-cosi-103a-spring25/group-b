@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import edu.brandeis.cosi103a.groupb.Cards.Card;
 import edu.brandeis.cosi103a.groupb.Decisions.*;
+import edu.brandeis.cosi103a.groupb.Decks.DiscardDeck;
+import edu.brandeis.cosi103a.groupb.Decks.DrawDeck;
 import edu.brandeis.cosi103a.groupb.Game.GameObserver;
 import edu.brandeis.cosi103a.groupb.Game.GameState;
 
@@ -12,6 +14,8 @@ import edu.brandeis.cosi103a.groupb.Game.GameState;
 public interface Player {
     String getName();
     Decision makeDecision(GameState state, List<Decision> options);
+    DiscardDeck getDiscardDeck();
+    DrawDeck getDrawDeck();
 
     Optional<GameObserver> getObserver();
 

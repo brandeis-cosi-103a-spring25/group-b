@@ -22,7 +22,7 @@ public class HumanPlayer implements Player {
 
     public HumanPlayer(String name) {
         this.name = name;
-        this.observer = Optional.of((GameObserver) new ConsoleGameObserver()); // Fix applied here
+        this.observer = Optional.of((GameObserver) new ConsoleGameObserver());
     }
 
     @Override
@@ -59,5 +59,15 @@ public class HumanPlayer implements Player {
     @Override
     public Optional<GameObserver> getObserver() {
         return observer;
+    }
+
+    @Override
+    public DiscardDeck getDiscardDeck() {
+        return this.discardDeck;
+    }
+
+    @Override
+    public DrawDeck getDrawDeck() {
+        return this.drawDeck;
     }
 }
