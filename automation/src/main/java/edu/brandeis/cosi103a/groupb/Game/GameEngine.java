@@ -214,7 +214,8 @@ public class GameEngine implements Engine {
 
                 System.out.println("DEBUG: Updated spendable money after buying: " + newMoney);
                 System.out.println("DEBUG: Updated " + player.getName() 
-                + "'s discard deck: \n" + player.getDiscardDeck());
+                + "'s discard deck: \n");
+                player.getDiscardDeck().printDeck();
                 System.out.println("DEBUG: Updated " + player.getName() 
                 + "'s hand: \n" + gameState.getCurrentPlayerHand());
 

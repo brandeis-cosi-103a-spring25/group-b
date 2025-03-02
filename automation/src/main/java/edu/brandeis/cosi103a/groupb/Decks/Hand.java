@@ -27,4 +27,11 @@ public final class Hand {
     public ImmutableList<Card> getPlayedCards() {
         return playedCards;
     }
+
+    @Override
+    public String toString() {
+        return "Hand:\n" +
+           "Unplayed Cards: " + unplayedCards + "\n" +
+           "Played Cards: " + playedCards;
+}
 }
