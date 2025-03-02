@@ -59,7 +59,6 @@ public final class GameDeck {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Cards left in the main deck: \n");
         for (Map.Entry<Card.Type, Integer> Entry: cardCounts.entrySet()) {
             sb.append(Entry.getKey()).append(" -- ").append(Entry.getValue()).append(";\n");
         }

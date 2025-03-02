@@ -54,8 +54,8 @@ public class GameEngine implements Engine {
      * -- 7x Bitcoin cards
      * -- 3x Method cards
      */
-    private GameState initializeGameState(Player player) {
-        List<Card> startingHand = new ArrayList<>();
+    private void initializeGameState(Player player) {
+        // List<Card> startingHand = new ArrayList<>();
         
         for (int i = 0; i < 7; i++) {
             player.getDrawDeck().addCard(new Card(Card.Type.BITCOIN, i));
@@ -66,17 +66,19 @@ public class GameEngine implements Engine {
             this.deck.drawCard(Card.Type.METHOD); //Deduct corresponding card types from main deck
         }
         player.getDrawDeck().shuffle();
-        for (int i = 0; i < 5; i++) { //Initialize hand
-            startingHand.add(player.getDrawDeck().drawCard());
-        }
 
-        System.out.println("DEBUG: Assigning starting hand to " 
-        + player.getName() + ":\n" + startingHand + "\n");
+        System.out.println("Initializaing " + player.getName() + " 's draw drck...\n");
+        // for (int i = 0; i < 5; i++) { //Initialize hand
+        //     startingHand.add(player.getDrawDeck().drawCard());
+        // }
+
+        // System.out.println("DEBUG: Assigning starting hand to " 
+        // + player.getName() + ":\n" + startingHand + "\n");
  
-        this.gameState = new GameState(player.getName(), new Hand(new ArrayList<>(), startingHand), 
-        GameState.TurnPhase.MONEY, 0, 1, deck); //Spendable money updates as player plays the card, not with the changes in hand in one turn
+        // this.gameState = new GameState(player.getName(), new Hand(new ArrayList<>(), startingHand), 
+        // GameState.TurnPhase.MONEY, 0, 1, deck); //Spendable money updates as player plays the card, not with the changes in hand in one turn
 
-        return this.gameState;
+        // return this.gameState;
     }
 
     @Override
@@ -89,6 +91,7 @@ public class GameEngine implements Engine {
             processTurn(player1);
             if (isGameOver()) break;
             processTurn(player2);
+            turnCount++;
         }
         return computeScores();
     }
@@ -101,25 +104,45 @@ public class GameEngine implements Engine {
     }
 
     /**
-     * 1) Show players' hand: card type + card value
-     * 2) Show players' spendable money in this single turn
-     * 3) Show player that they can only buy up to [1?] card (so far)
-     * 4) Show player the buyable cards by listing out their types
-     * 5) Ask the player how much money he wants to spend on this turn
+     * 1) Assign hand for this turn
+     * 2) Show players' hand: card type + card value
+     * 3) Show players' spendable money in this single turn
+     * 4) Show player that they can only buy up to [1?] card (so far)
+     * 5) Show player the buyable cards by listing out their types
+     * 6) Ask the player how much money he wants to spend on this turn
      * @param player Player in action
      * @throws PlayerViolationException
      */
     private void handleMoneyPhase(Player player) throws PlayerViolationException {
-        gameState = new GameState(player.getName(), gameState.getCurrentPlayerHand(),
-                                  GameState.TurnPhase.MONEY, gameState.getSpendableMoney(),
-                                  gameState.getAvailableBuys(), deck);
+        List<Card> startingHand = new ArrayList<>();
+        // 1). Assign hand for this turn
+        for (int i = 0; i < 5; i++) {
+            if (player.getDrawDeck().isEmpty()) { //If the draw deck is empty, move the discard deck into the draw deck
+                player.getDiscardDeck().moveDeck(player.getDrawDeck());
+            }
+
+            Card drawnCard = player.getDrawDeck().drawCard();
+            if (drawnCard != null) {
+                startingHand.add(drawnCard);
+            } else {
+                System.out.println("WARNING: Player " + player.getName() + " does not have enough cards to draw a full hand!");
+                break;
+            }
+        }
+
+        System.out.println("DEBUG: Assigning hand to " 
+        + player.getName() + ":\n" + startingHand + "\n");
+ 
+        this.gameState = new GameState(player.getName(), new Hand(new ArrayList<>(), startingHand), 
+        GameState.TurnPhase.MONEY, 0, 1, deck); //Spendable money updates as player plays the card, not with the changes in hand in one turn & available buys is 1 currently. Will update in the future.
+        
         observer.notifyEvent(gameState, new GameEvent(player.getName() + " -- " + "Turn " + turnCount + "."));
 
-        // 1). Show players' hand: card type + card value
+        // 2). Show players' hand: card type + card value
         System.out.println("DEBUG: Checking " + player.getName() + "'s hand...");
         System.out.println("DEBUG: Unplayed cards -> " + gameState.getCurrentPlayerHand().getUnplayedCards() + "\n");
 
-        // 2). Show players' spendable money in this single turn
+        // 3). Show players' spendable money in this single turn
         int money = 0;
         for (int i = 0; i < 5; i++) {
             if (gameState.getCurrentPlayerHand().getUnplayedCards().get(i).getType().getCategory() == Card.Type.Category.MONEY) {
@@ -128,11 +151,11 @@ public class GameEngine implements Engine {
         }
         System.out.println("In this turn, the maximum money value " + gameState.getCurrentPlayerName() + " can spend is: " + money);
 
-        // 3). Show player that they can only buy up to [1] card (so far)
+        // 4). Show player that they can only buy up to [1] card (so far)
         System.out.println("In this turn, " + gameState.getCurrentPlayerName() + " can buy " + gameState.getAvailableBuys() + " card(s).");
 
-        // 4). Show player the buyable cards
-        System.out.println("These are the card in the main deck left.");
+        // 5). Show player the buyable cards
+        System.out.println("These are the card in the main deck left.\n");
         System.out.println(this.deck);
         ArrayList<Card.Type> buyableCards = new ArrayList<>();
         for (Map.Entry<Card.Type, Integer> Entry: this.deck.getCardCounts().entrySet()) {
@@ -142,7 +165,7 @@ public class GameEngine implements Engine {
         }
         System.out.println("In this turn, " + gameState.getCurrentPlayerName() + " can AFFORD:\n" + buyableCards);
 
-        // 5) Ask the player how much money he wants to spend on this turn
+        // 6) Ask the player how much money he wants to spend on this turn
         while (gameState.getTurnPhase() == GameState.TurnPhase.MONEY) {
             List<Decision> options = new ArrayList<>();
             List<Card> updatedUnplayedCards = new ArrayList<>(gameState.getCurrentPlayerHand().getUnplayedCards());
@@ -214,7 +237,7 @@ public class GameEngine implements Engine {
 
                 System.out.println("DEBUG: Updated spendable money after buying: " + newMoney);
                 System.out.println("DEBUG: Updated " + player.getName() 
-                + "'s discard deck: \n");
+                + "'s discard deck:");
                 player.getDiscardDeck().printDeck();
                 System.out.println("DEBUG: Updated " + player.getName() 
                 + "'s hand: \n" + gameState.getCurrentPlayerHand());
@@ -235,7 +258,7 @@ public class GameEngine implements Engine {
     
 
     private void handleCleanupPhase(Player player) {
-        observer.notifyEvent(gameState, new GameEvent(player.getName() + "'s turn ends"));
+        // observer.notifyEvent(gameState, new GameEvent(player.getName() + "'s turn ends"));
         
         //Put hand into discard deck.
         List<Card> cardsToMove = new ArrayList<>();
@@ -243,24 +266,32 @@ public class GameEngine implements Engine {
         cardsToMove.addAll(gameState.getCurrentPlayerHand().getUnplayedCards());
         player.getDiscardDeck().addAllCards(cardsToMove);
 
-
         // ✅ Draw 5 new cards from the deck for the next turn
-        List<Card> newHand = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            Card drawnCard = player.getDrawDeck().drawCard(); // Currently using BITCOIN for simplicity
-            if (drawnCard == null) { //If the draw deck is empty, move the discard deck into the draw deck
-                player.getDiscardDeck().moveDeck(player.getDrawDeck());
-            }
-            if (drawnCard != null) {
-                newHand.add(drawnCard);
-            }
-        }
+        // List<Card> newHand = new ArrayList<>();
+        // for (int i = 0; i < 5; i++) {
+        //     Card drawnCard = player.getDrawDeck().drawCard();
+        //     if (drawnCard == null) { //If the draw deck is empty, move the discard deck into the draw deck
+        //         player.getDiscardDeck().moveDeck(player.getDrawDeck());
+        //     }
+        //     if (drawnCard != null) {
+        //         newHand.add(drawnCard);
+        //     }
+        // }
     
-        System.out.println("DEBUG: Drawing new hand for " + player.getName() + ": " + newHand.size() + " cards");
+        // System.out.println("DEBUG: Drawing new hand for " + player.getName() + ": " + newHand.size() + " cards");
     
+        
+        
         // ✅ Reset the game state with new cards
-        gameState = new GameState(player.getName(), new Hand(new ArrayList<>(), newHand),
-                                  GameState.TurnPhase.MONEY, 0, 1, deck);
+        // gameState = new GameState(player.getName(), new Hand(new ArrayList<>(), newHand),
+        //                           GameState.TurnPhase.MONEY, 0, 1, deck);
+
+        gameState = new GameState(player.getName(), gameState.getCurrentPlayerHand(),
+                                   GameState.TurnPhase.BUY, 0, 0, deck);
+        System.out.println("DEBUG: Discarding current hand...");
+        System.out.println("DEBUG: Updated " + player.getName() + "'s discard deck:");
+        player.getDiscardDeck().printDeck();
+        observer.notifyEvent(gameState, new GameEvent(player.getName() + "'s turn ends"));
     }
 
     private boolean isGameOver() {
