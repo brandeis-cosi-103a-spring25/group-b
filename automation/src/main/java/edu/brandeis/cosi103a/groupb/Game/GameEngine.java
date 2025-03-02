@@ -82,8 +82,8 @@ public class GameEngine implements Engine {
     @Override
     public List<Player.ScorePair> play() throws PlayerViolationException {
         //Initialize the game 
-        initializeGameState(player2);
         initializeGameState(player1);
+        initializeGameState(player2);
         
         while (!isGameOver()) {
             processTurn(player1);
@@ -249,6 +249,9 @@ public class GameEngine implements Engine {
             Card drawnCard = player.getDrawDeck().drawCard(); // Currently using BITCOIN for simplicity
             if (drawnCard == null) { //If the draw deck is empty, move the discard deck into the draw deck
                 player.getDiscardDeck().moveDeck(player.getDrawDeck());
+            }
+            if (drawnCard != null) {
+                newHand.add(drawnCard);
             }
         }
     
