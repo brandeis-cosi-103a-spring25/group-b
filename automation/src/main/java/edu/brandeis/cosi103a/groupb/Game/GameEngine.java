@@ -57,26 +57,39 @@ public class GameEngine implements Engine {
     private GameState initializeGameState(Player player) {
         List<Card> startingHand = new ArrayList<>();
         
-        System.out.println("DEBUG: Assigning starting hand to player: " + startingHand);
         for (int i = 0; i < 7; i++) {
-            startingHand.add(new Card(Card.Type.BITCOIN, i));
+            player.getDrawDeck().addCard(new Card(Card.Type.BITCOIN, i));
             this.deck.drawCard(Card.Type.BITCOIN); //Deduct corresponding card types from main deck
         }
         for (int i = 0; i < 3; i++) {
-            startingHand.add(new Card(Card.Type.METHOD, i));
+            player.getDrawDeck().addCard(new Card(Card.Type.METHOD, i));
             this.deck.drawCard(Card.Type.METHOD); //Deduct corresponding card types from main deck
         }
-        
-    
-        
-    
-        return new GameState(player.getName(), new Hand(new ArrayList<>(), startingHand), 
-                             GameState.TurnPhase.MONEY, 0, 1, deck);
+        player.getDrawDeck().shuffle();
+        for (int i = 0; i < 5; i++) { //Initialize hand
+            startingHand.add(player.getDrawDeck().drawCard());
+        }
+
+        System.out.println("DEBUG: Assigning starting hand to " 
+        + player.getName() + ":\n" + startingHand);
+
+        int money = 0;
+        for (int i = 0; i < 5; i++) {
+            if (startingHand.get(i).getType().getCategory() == Card.Type.Category.MONEY) {
+                money += startingHand.get(i).getType().getValue();
+            }
+        }
+ 
+        this.gameState = new GameState(player.getName(), new Hand(new ArrayList<>(), startingHand), 
+        GameState.TurnPhase.MONEY, money, 1, deck);
+        return this.gameState;
     }
 
     @Override
     public List<Player.ScorePair> play() throws PlayerViolationException {
         //Initialize the game 
+        initializeGameState(player1);
+        initializeGameState(player2);
         
         while (!isGameOver()) {
             processTurn(player1);
@@ -88,17 +101,30 @@ public class GameEngine implements Engine {
 
 
     private void processTurn(Player player) throws PlayerViolationException {
-        gameState = new GameState(player.getName(), gameState.getCurrentPlayerHand(),
-                                  GameState.TurnPhase.MONEY, gameState.getSpendableMoney(),
-                                  gameState.getAvailableBuys(), deck);
-        observer.notifyEvent(gameState, new GameEvent(player.getName() + "'s turn begins!"));
-
         handleMoneyPhase(player);
         handleBuyPhase(player);
         handleCleanupPhase(player);
     }
 
+    /**
+     * 1) Calculate player's available money in one turn
+     * 2) Show players' hand: card type + card value
+     * 2) Show players' spendable money in this single turn
+     * 3) Show player that they can only buy up to [1] card (so far)
+     * 4) Show player the buyable cards by printing out the main deck
+     * 5) Ask player to choose the card the they want to buy by inputting indexes.
+     * 6) Assess if the player can afford that card
+     * 5) If yes, continues. If no, ask the player again -- until player choose a buyable card / end the phase
+     * @param player Player in action
+     * @throws PlayerViolationException
+     */
     private void handleMoneyPhase(Player player) throws PlayerViolationException {
+        gameState = new GameState(player.getName(), gameState.getCurrentPlayerHand(),
+                                  GameState.TurnPhase.MONEY, gameState.getSpendableMoney(),
+                                  gameState.getAvailableBuys(), deck);
+        observer.notifyEvent(gameState, new GameEvent(player.getName() + "'s turn begins!"));
+
+
         System.out.println("DEBUG: Checking " + player.getName() + "'s hand...");
         System.out.println("DEBUG: Unplayed cards -> " + gameState.getCurrentPlayerHand().getUnplayedCards());
     

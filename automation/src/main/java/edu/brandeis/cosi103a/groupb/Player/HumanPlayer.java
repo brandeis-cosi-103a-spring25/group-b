@@ -14,8 +14,8 @@ import java.util.*;
  */
 public class HumanPlayer implements Player {
     private final String name;
-    private DiscardDeck discardDeck;
-    private DrawDeck drawDeck;
+    private DiscardDeck discardDeck = new DiscardDeck();
+    private DrawDeck drawDeck = new DrawDeck();
 
     private static final Scanner scanner = new Scanner(System.in);
     private final Optional<GameObserver> observer;

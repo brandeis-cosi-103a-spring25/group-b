@@ -12,7 +12,7 @@ public final class Hand {
     private final ImmutableList<Card> unplayedCards;
 
     public Hand(List<Card> playedCards, List<Card> unplayedCards) {
-        System.out.println("DEBUG: Initializing hand with " + unplayedCards.size() + " unplayed cards.");
+        System.out.println("DEBUG: Initializing hand with " + unplayedCards.size() + " unplayed cards.\n");
         this.playedCards = ImmutableList.copyOf(playedCards);
         this.unplayedCards = ImmutableList.copyOf(unplayedCards);
     }

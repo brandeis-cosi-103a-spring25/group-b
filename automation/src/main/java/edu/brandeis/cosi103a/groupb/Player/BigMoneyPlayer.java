@@ -18,8 +18,8 @@ import edu.brandeis.cosi103a.groupb.Game.GameState;
  */
 public class BigMoneyPlayer implements Player {
     private final String name;
-    private DiscardDeck discardDeck;
-    private DrawDeck drawDeck;
+    private DiscardDeck discardDeck = new DiscardDeck();
+    private DrawDeck drawDeck = new DrawDeck();
 
     private final Optional<GameObserver> observer;
 
