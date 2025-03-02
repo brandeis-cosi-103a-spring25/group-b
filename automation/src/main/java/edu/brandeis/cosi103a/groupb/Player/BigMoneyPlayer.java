@@ -42,7 +42,7 @@ public class BigMoneyPlayer implements Player {
             }
         }
 
-        // Always buy the most expensive card in the BUY phase
+        // Always buy the most expensive card in the BUY phase -- which is framework if present.
         Decision bestBuy = null;
         int highestCost = 0;
         for (Decision option : options) {
@@ -63,7 +63,7 @@ public class BigMoneyPlayer implements Player {
             }
         }
 
-        throw new IllegalStateException("AIPlayer could not find a valid decision.");
+        throw new IllegalStateException("Big Money Player could not find a valid decision.");
     }
 
     @Override

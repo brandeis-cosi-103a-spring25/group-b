@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import edu.brandeis.cosi103a.groupb.Cards.Card;
 import edu.brandeis.cosi103a.groupb.Decisions.BuyDecision;
@@ -83,17 +84,40 @@ public class GameEngine implements Engine {
 
     @Override
     public List<Player.ScorePair> play() throws PlayerViolationException {
-        //Initialize the game 
-        initializeGameState(player1);
-        initializeGameState(player2);
-        
-        while (!isGameOver()) {
-            processTurn(player1);
-            if (isGameOver()) break;
-            processTurn(player2);
-            turnCount++;
+        Random rand = new Random();
+        int seed = rand.nextInt(2) + 1;
+
+        if (seed == 1) {
+            System.out.println(player1.getName() + ", you got lucky this time. You get to start first!");
+            System.out.println(player2.getName() + ", don't be upset. Maybe your luck will come later!\n");
+
+            //Initialize the game 
+            initializeGameState(player1);
+            initializeGameState(player2);
+            
+            while (!isGameOver()) {
+                processTurn(player1);
+                if (isGameOver()) break;
+                processTurn(player2);
+                turnCount++;
+            }
+            return computeScores();
+        } else {
+            System.out.println(player2.getName() + ", you got lucky this time. You get to start first!");
+            System.out.println(player1.getName() + ", don't be upset. Maybe your luck will come later!\n");
+
+            //Initialize the game 
+            initializeGameState(player2);
+            initializeGameState(player1);
+            
+            while (!isGameOver()) {
+                processTurn(player2);
+                if (isGameOver()) break;
+                processTurn(player1);
+                turnCount++;
+            }
+            return computeScores();
         }
-        return computeScores();
     }
 
 
