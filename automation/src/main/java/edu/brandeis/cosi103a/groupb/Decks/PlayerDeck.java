@@ -1,6 +1,7 @@
 package edu.brandeis.cosi103a.groupb.Decks;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 
 import edu.brandeis.cosi103a.groupb.Cards.Card;
@@ -28,6 +29,28 @@ public abstract class PlayerDeck {
     // Shuffle the discard pile
     public void shuffle() {
         Collections.shuffle(deck);
+    }
+
+    public void moveDeck(PlayerDeck newDeck) {
+        if (this.isEmpty()) return;
+        this.shuffle();
+
+        while (!this.isEmpty()) { 
+            Card card = this.drawCard();
+            if (card != null) {
+                newDeck.addCard(card);
+            }
+        }
+    }
+
+    /**
+     * Put all cards from the list into this deck
+     * @param list: from which all cards are put into this.deck
+     */
+    public void addAllCards(List<Card> list) {
+        for (Card card: list) {
+            this.deck.push(card);
+        }
     }
 
     // Check if discard pile is empty

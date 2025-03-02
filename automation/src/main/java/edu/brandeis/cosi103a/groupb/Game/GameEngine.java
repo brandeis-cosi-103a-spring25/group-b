@@ -15,7 +15,6 @@ import edu.brandeis.cosi103a.groupb.Decks.Hand;
 import edu.brandeis.cosi103a.groupb.Events.GainCardEvent;
 import edu.brandeis.cosi103a.groupb.Events.GameEvent;
 import edu.brandeis.cosi103a.groupb.Events.PlayCardEvent;
-import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
 import edu.brandeis.cosi103a.groupb.Player.Player;
 import edu.brandeis.cosi103a.groupb.Player.PlayerViolationException;
 
@@ -83,8 +82,8 @@ public class GameEngine implements Engine {
     @Override
     public List<Player.ScorePair> play() throws PlayerViolationException {
         //Initialize the game 
-        initializeGameState(player1);
         initializeGameState(player2);
+        initializeGameState(player1);
         
         while (!isGameOver()) {
             processTurn(player1);
@@ -105,10 +104,8 @@ public class GameEngine implements Engine {
      * 1) Show players' hand: card type + card value
      * 2) Show players' spendable money in this single turn
      * 3) Show player that they can only buy up to [1?] card (so far)
-     * 4) Show player the buyable cards by printing out the main deck
-     * 5) Ask player to choose the card the they want to buy by inputting indexes.
-     * 6) Assess if the player can afford that card
-     * 5) If yes, continues. If no, ask the player again -- until player choose a buyable card / end the phase
+     * 4) Show player the buyable cards by listing out their types
+     * 5) Ask the player how much money he wants to spend on this turn
      * @param player Player in action
      * @throws PlayerViolationException
      */
@@ -134,7 +131,7 @@ public class GameEngine implements Engine {
         // 3). Show player that they can only buy up to [1] card (so far)
         System.out.println("In this turn, " + gameState.getCurrentPlayerName() + " can buy " + gameState.getAvailableBuys() + " card(s).");
 
-        // 4). Show player the buyable cards by printing out the main deck
+        // 4). Show player the buyable cards
         System.out.println("These are the card in the main deck left.");
         System.out.println(this.deck);
         ArrayList<Card.Type> buyableCards = new ArrayList<>();
@@ -145,6 +142,7 @@ public class GameEngine implements Engine {
         }
         System.out.println("In this turn, " + gameState.getCurrentPlayerName() + " can AFFORD:\n" + buyableCards);
 
+        // 5) Ask the player how much money he wants to spend on this turn
         while (gameState.getTurnPhase() == GameState.TurnPhase.MONEY) {
             List<Decision> options = new ArrayList<>();
             List<Card> updatedUnplayedCards = new ArrayList<>(gameState.getCurrentPlayerHand().getUnplayedCards());
@@ -152,24 +150,26 @@ public class GameEngine implements Engine {
             
             //The player can choose to either play the available cards, or end the phase without playing any cards.
             for (Card card : updatedUnplayedCards) {
-                options.add(new PlayCardDecision(card));
+                if (card.getType().getCategory() == Card.Type.Category.MONEY) { //Player can only play money card (and action cards in the future)
+                    options.add(new PlayCardDecision(card)); 
+                }
             }
             options.add(new EndPhaseDecision(GameState.TurnPhase.MONEY));
     
             System.out.println("DEBUG: Available decisions -> " + options.size());
-    
+            
             Decision decision = player.makeDecision(gameState, options);
-            if (decision instanceof PlayCardDecision) {
-                Card playedCard = ((PlayCardDecision) decision).getCard();
+            if (decision instanceof PlayCardDecision playCardDecision) {
+                Card playedCard = playCardDecision.getCard();
                 updatedUnplayedCards.remove(playedCard);
                 playedCards.add(playedCard);
                 observer.notifyEvent(gameState, new PlayCardEvent(playedCard, player.getName()));
     
-                // Increase spendable money when playing a money card
+                // ✅ Increase spendable money when playing a money card
                 int newMoney = gameState.getSpendableMoney() + playedCard.getType().getValue();
                 System.out.println("DEBUG: Updated spendable money: " + newMoney);
     
-                // Update the game state with increased money
+                // ✅ Update the game state with increased money
                 gameState = new GameState(player.getName(), new Hand(playedCards, updatedUnplayedCards),
                                           GameState.TurnPhase.MONEY, newMoney,
                                           gameState.getAvailableBuys(), deck);
@@ -186,7 +186,7 @@ public class GameEngine implements Engine {
     private void handleBuyPhase(Player player) throws PlayerViolationException {
         System.out.println("DEBUG: Entering BUY phase. Available money: " + gameState.getSpendableMoney());
     
-        while (gameState.getTurnPhase() == GameState.TurnPhase.BUY) {
+        while (gameState.getTurnPhase() == GameState.TurnPhase.BUY && gameState.getAvailableBuys() >= 1) { //In this stage, without action cards, each turn only consists of 1 avaible buys. The 1 is subject to future changes.
             List<Decision> options = new ArrayList<>();
     
             // ✅ Add buyable cards based on money
@@ -202,14 +202,22 @@ public class GameEngine implements Engine {
             System.out.println("DEBUG: Available decisions in BUY phase -> " + options.size());
     
             Decision decision = player.makeDecision(gameState, options);
-            if (decision instanceof BuyDecision) {
-                Card.Type boughtCard = ((BuyDecision) decision).getCardType();
+            if (decision instanceof BuyDecision buyDecision) {
+                Card.Type boughtCard = buyDecision.getCardType();
                 observer.notifyEvent(gameState, new GainCardEvent(boughtCard, player.getName()));
-    
+
+                //Add the bought card to player's discard deck & Remove the card from the game deck
+                player.getDiscardDeck().addCard(deck.drawCard(boughtCard));
+
                 // ✅ Deduct money after buying
                 int newMoney = gameState.getSpendableMoney() - boughtCard.getValue();
+
                 System.out.println("DEBUG: Updated spendable money after buying: " + newMoney);
-    
+                System.out.println("DEBUG: Updated " + player.getName() 
+                + "'s discard deck: \n" + player.getDiscardDeck());
+                System.out.println("DEBUG: Updated " + player.getName() 
+                + "'s hand: \n" + gameState.getCurrentPlayerHand());
+
                 // ✅ Update game state after a purchase
                 gameState = new GameState(player.getName(), gameState.getCurrentPlayerHand(),
                                           GameState.TurnPhase.BUY, newMoney,
@@ -227,13 +235,20 @@ public class GameEngine implements Engine {
 
     private void handleCleanupPhase(Player player) {
         observer.notifyEvent(gameState, new GameEvent(player.getName() + "'s turn ends"));
-    
+        
+        //Put hand into discard deck.
+        List<Card> cardsToMove = new ArrayList<>();
+        cardsToMove.addAll(gameState.getCurrentPlayerHand().getPlayedCards());
+        cardsToMove.addAll(gameState.getCurrentPlayerHand().getUnplayedCards());
+        player.getDiscardDeck().addAllCards(cardsToMove);
+
+
         // ✅ Draw 5 new cards from the deck for the next turn
         List<Card> newHand = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            Card drawnCard = deck.drawCard(Card.Type.BITCOIN); // Currently using BITCOIN for simplicity
-            if (drawnCard != null) {
-                newHand.add(drawnCard);
+            Card drawnCard = player.getDrawDeck().drawCard(); // Currently using BITCOIN for simplicity
+            if (drawnCard == null) { //If the draw deck is empty, move the discard deck into the draw deck
+                player.getDiscardDeck().moveDeck(player.getDrawDeck());
             }
         }
     
@@ -256,22 +271,28 @@ public class GameEngine implements Engine {
     }
 
     private int calculateScore(Player player) {
+        List<Card> discardDeck = new ArrayList<>();
+        while (!player.getDiscardDeck().isEmpty()) {
+            discardDeck.add(player.getDiscardDeck().drawCard());
+        }
+
+        List<Card> drawDeck = new ArrayList<>();
+        while (!player.getDrawDeck().isEmpty()) {
+            discardDeck.add(player.getDrawDeck().drawCard());
+        }
+
+        //No need to add the hand to the counts, because after each turn, the player will have all the cards moved from hand to the discard deck already.
+        
+        List<Card> playerMainDeck = new ArrayList<>();
+        playerMainDeck.addAll(discardDeck);
+        playerMainDeck.addAll(drawDeck);
+
         int score = 0;
-        for (Card.Type type : deck.getCardTypes()) {
-            if (type.getCategory() == Card.Type.Category.VICTORY) {
-                score += deck.getNumAvailable(type) * type.getValue();
+        for (Card card: playerMainDeck) {
+            if (card.getType().getCategory() == Card.Type.Category.VICTORY) {
+                score += card.getType().getValue();
             }
         }
         return score;
-    }
-
-    public static void main(String[] args) {
-        Player player1 = new HumanPlayer("Nance");
-        Player player2 = new HumanPlayer("Jiayi");
-
-        GameObserver observer = (GameObserver) new ConsoleGameObserver();
-        GameEngine engine = new GameEngine(player1, player2, observer);
-        System.out.println(engine.deck);
-    }
-    
+    }   
 }
