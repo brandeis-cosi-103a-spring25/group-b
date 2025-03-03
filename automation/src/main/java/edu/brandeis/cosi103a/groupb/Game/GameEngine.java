@@ -271,8 +271,6 @@ public class GameEngine implements Engine {
     
 
     private void handleCleanupPhase(Player player) {
-        // observer.notifyEvent(gameState, new GameEvent(player.getName() + "'s turn ends"));
-        
         //Put hand into discard deck.
         List<Card> cardsToMove = new ArrayList<>();
         cardsToMove.addAll(gameState.getCurrentPlayerHand().getPlayedCards());
@@ -323,4 +321,8 @@ public class GameEngine implements Engine {
         }
         return score;
     }   
+
+    public GameState getGameState() {
+        return this.gameState;
+    }
 }
