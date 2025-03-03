@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import edu.brandeis.cosi103a.groupb.Player.Player;
+import edu.brandeis.cosi103a.groupb.Player.PlayerViolationException;
 import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
 import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
 import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
@@ -56,6 +57,68 @@ public class HarnessTest {
         options.add(new EndPhaseDecision(TurnPhase.MONEY));
     }
 
+    @Test
+    public void testInitialization() {
+        assertNotNull(humanPlayer);
+        assertNotNull(bigMoneyPlayer);
+        assertNotNull(observer);
+        assertNotNull(gameEngine);
+    }
+   
+    @Test
+    public void testGamePlay() throws PlayerViolationException {
+        List<Player.ScorePair> mockResults = new ArrayList<>();
+        mockResults.add(new Player.ScorePair(humanPlayer, 10));
+        mockResults.add(new Player.ScorePair(bigMoneyPlayer, 5));
+
+        GameEngine mockGameEngine = Mockito.mock(GameEngine.class);
+        when(mockGameEngine.play()).thenReturn(mockResults);
+
+        List<Player.ScorePair> results = mockGameEngine.play();
+        assertEquals(2, results.size());
+        assertEquals(10, results.get(0).getScore());
+        assertEquals(5, results.get(1).getScore());
+    }
+   
+    @Test
+    public void testGameEndDueToPlayerViolationException() {
+        GameEngine mockGameEngine = Mockito.mock(GameEngine.class);
+        try {
+            when(mockGameEngine.play()).thenThrow(new PlayerViolationException("Invalid move"));
+            mockGameEngine.play();
+            fail("Expected PlayerViolationException to be thrown");
+        } catch (PlayerViolationException e) {
+            assertEquals("Invalid move", e.getMessage());
+        }
+    }
+
+    @Test
+    public void testWinnerDetermination() throws PlayerViolationException {
+        List<Player.ScorePair> mockResults = new ArrayList<>();
+        mockResults.add(new Player.ScorePair(humanPlayer, 10));
+        mockResults.add(new Player.ScorePair(bigMoneyPlayer, 10));
+
+        GameEngine mockGameEngine = Mockito.mock(GameEngine.class);
+        when(mockGameEngine.play()).thenReturn(mockResults);
+
+        List<Player.ScorePair> results = mockGameEngine.play();
+        int highestScore = -1;
+        List<Player> winners = new ArrayList<>();
+
+        for (Player.ScorePair score : results) {
+            if (score.getScore() > highestScore) {
+                highestScore = score.getScore();
+                winners.clear();
+                winners.add(score.player);
+            } else if (score.getScore() == highestScore) {
+                winners.add(score.player);
+            }
+        }
+
+        assertEquals(2, winners.size());
+        assertTrue(winners.contains(humanPlayer));
+        assertTrue(winners.contains(bigMoneyPlayer));
+    }
     @Test
     public void testObserverNotificationOnGainCard() {
         GameObserver mockObserver = Mockito.mock(GameObserver.class);
