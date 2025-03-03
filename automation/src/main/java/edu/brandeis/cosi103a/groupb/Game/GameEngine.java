@@ -69,17 +69,6 @@ public class GameEngine implements Engine {
         player.getDrawDeck().shuffle();
 
         System.out.println("Initializaing " + player.getName() + " 's draw drck...\n");
-        // for (int i = 0; i < 5; i++) { //Initialize hand
-        //     startingHand.add(player.getDrawDeck().drawCard());
-        // }
-
-        // System.out.println("DEBUG: Assigning starting hand to " 
-        // + player.getName() + ":\n" + startingHand + "\n");
- 
-        // this.gameState = new GameState(player.getName(), new Hand(new ArrayList<>(), startingHand), 
-        // GameState.TurnPhase.MONEY, 0, 1, deck); //Spendable money updates as player plays the card, not with the changes in hand in one turn
-
-        // return this.gameState;
     }
 
     @Override
@@ -148,7 +137,7 @@ public class GameEngine implements Engine {
             Card drawnCard = player.getDrawDeck().drawCard();
             if (drawnCard != null) {
                 startingHand.add(drawnCard);
-            } else {
+            } else { //This will not likely happen
                 System.out.println("WARNING: Player " + player.getName() + " does not have enough cards to draw a full hand!");
                 break;
             }
@@ -282,36 +271,14 @@ public class GameEngine implements Engine {
     
 
     private void handleCleanupPhase(Player player) {
-        // observer.notifyEvent(gameState, new GameEvent(player.getName() + "'s turn ends"));
-        
         //Put hand into discard deck.
         List<Card> cardsToMove = new ArrayList<>();
         cardsToMove.addAll(gameState.getCurrentPlayerHand().getPlayedCards());
         cardsToMove.addAll(gameState.getCurrentPlayerHand().getUnplayedCards());
         player.getDiscardDeck().addAllCards(cardsToMove);
 
-        // ✅ Draw 5 new cards from the deck for the next turn
-        // List<Card> newHand = new ArrayList<>();
-        // for (int i = 0; i < 5; i++) {
-        //     Card drawnCard = player.getDrawDeck().drawCard();
-        //     if (drawnCard == null) { //If the draw deck is empty, move the discard deck into the draw deck
-        //         player.getDiscardDeck().moveDeck(player.getDrawDeck());
-        //     }
-        //     if (drawnCard != null) {
-        //         newHand.add(drawnCard);
-        //     }
-        // }
-    
-        // System.out.println("DEBUG: Drawing new hand for " + player.getName() + ": " + newHand.size() + " cards");
-    
-        
-        
-        // ✅ Reset the game state with new cards
-        // gameState = new GameState(player.getName(), new Hand(new ArrayList<>(), newHand),
-        //                           GameState.TurnPhase.MONEY, 0, 1, deck);
-
-        gameState = new GameState(player.getName(), gameState.getCurrentPlayerHand(),
-                                   GameState.TurnPhase.BUY, 0, 0, deck);
+        gameState = new GameState(player.getName(), new Hand(new ArrayList<>(), new ArrayList<>()),
+                                   GameState.TurnPhase.CLEANUP, 0, 0, deck);
         System.out.println("DEBUG: Discarding current hand...");
         System.out.println("DEBUG: Updated " + player.getName() + "'s discard deck:");
         player.getDiscardDeck().printDeck();
@@ -354,4 +321,8 @@ public class GameEngine implements Engine {
         }
         return score;
     }   
+
+    public GameState getGameState() {
+        return this.gameState;
+    }
 }
