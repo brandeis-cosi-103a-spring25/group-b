@@ -23,4 +23,4 @@
 hs_err_pid*
 replay_pid*
 
-automation/target/surefire-reports/TEST-edu.brandeis.cosi103a.groupb.BigMoneyPlayerTest.xml
+/target/
