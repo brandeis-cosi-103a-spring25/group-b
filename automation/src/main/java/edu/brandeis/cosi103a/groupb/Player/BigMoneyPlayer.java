@@ -10,6 +10,7 @@ import edu.brandeis.cosi103a.groupb.Decisions.PlayCardDecision;
 import edu.brandeis.cosi103a.groupb.Decks.DiscardDeck;
 import edu.brandeis.cosi103a.groupb.Decks.DrawDeck;
 import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
+import edu.brandeis.cosi103a.groupb.Game.GameEngine;
 import edu.brandeis.cosi103a.groupb.Game.GameObserver;
 import edu.brandeis.cosi103a.groupb.Game.GameState;
 import edu.brandeis.cosi103a.groupb.Cards.Card;
@@ -77,13 +78,23 @@ public class BigMoneyPlayer implements Player {
     }
 
     /**
-     * Dummy method for demonstration.
-     * In a real implementation, this should compare the current player's victory points
-     * with the opponent's and return true if winning.
+     * Calculates if the player is winning based on the current game state.
      */
     private boolean isWinning(GameState state) {
-        // TODO: Replace with actual scoring logic.
-        return false;
+        List<Player.ScorePair> scores = GameEngine.getCurrentScores();
+        int myScore = 0;
+        for (Player.ScorePair pair : scores) {
+            if (pair.getPlayer().getName().equals(this.name)) {
+                myScore = pair.getScore();
+                break;
+            }
+        }
+        for (Player.ScorePair pair : scores) {
+            if (!pair.getPlayer().getName().equals(this.name) && pair.getScore() >= myScore) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

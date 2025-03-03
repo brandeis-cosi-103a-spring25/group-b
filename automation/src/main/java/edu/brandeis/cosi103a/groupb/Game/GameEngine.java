@@ -27,12 +27,15 @@ public class GameEngine implements Engine {
     private GameState gameState;
     private int turnCount = 1; //For logging
 
+    private static GameEngine currentEngine;
+
     public GameEngine(Player player1, Player player2, GameObserver observer) {
         this.player1 = player1;
         this.player2 = player2;
         this.observer = observer;
         this.deck = initializeDeck();
         this.gameState = null;
+        currentEngine = this;
     }
 
     /**
@@ -322,6 +325,13 @@ public class GameEngine implements Engine {
         return deck.getNumAvailable(Card.Type.FRAMEWORK) == 0;
     }
 
+    public static List<Player.ScorePair> getCurrentScores() {
+        if (currentEngine == null) {
+            throw new IllegalStateException("GameEngine has not been initialized yet");
+        }
+        return currentEngine.computeScores();
+    }
+
     private List<Player.ScorePair> computeScores() {
         List<Player.ScorePair> scores = new ArrayList<>();
         scores.add(new Player.ScorePair(player1, calculateScore(player1)));
@@ -345,6 +355,10 @@ public class GameEngine implements Engine {
         List<Card> playerMainDeck = new ArrayList<>();
         playerMainDeck.addAll(discardDeck);
         playerMainDeck.addAll(drawDeck);
+        if (gameState != null && gameState.getCurrentPlayerName().equals(player.getName())) {
+            playerMainDeck.addAll(gameState.getCurrentPlayerHand().getPlayedCards());
+            playerMainDeck.addAll(gameState.getCurrentPlayerHand().getUnplayedCards());
+        }
 
         int score = 0;
         for (Card card: playerMainDeck) {
