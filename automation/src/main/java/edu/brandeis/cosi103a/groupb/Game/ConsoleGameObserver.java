@@ -1,4 +1,4 @@
-package edu.brandeis.cosi103a.groupb;
+package edu.brandeis.cosi103a.groupb.Game;
 
 import edu.brandeis.cosi103a.groupb.Events.Event;
 
@@ -8,6 +8,6 @@ import edu.brandeis.cosi103a.groupb.Events.Event;
 public class ConsoleGameObserver implements GameObserver {
     @Override
     public void notifyEvent(GameState state, Event event) {
-        System.out.println("[LOG] " + event.getDescription());
+        System.out.println("[LOG] " + event.getDescription() + "\n");
     }
 }

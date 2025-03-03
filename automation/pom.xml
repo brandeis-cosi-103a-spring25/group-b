@@ -47,6 +47,7 @@
         <artifactId>atg-api</artifactId>
         <version>1.4.1</version>
     </dependency>
+  </dependencies>
 
     <!-- Mockito (required for mocking) -->
     <dependency>
@@ -65,9 +66,10 @@
         <groupId>net.bytebuddy</groupId>
         <artifactId>byte-buddy</artifactId>
         <version>1.14.5</version>
+        <artifactId>mockito-junit-jupiter</artifactId>
+        <version>4.0.0</version>
         <scope>test</scope>
     </dependency>
-  </dependencies>
 
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->

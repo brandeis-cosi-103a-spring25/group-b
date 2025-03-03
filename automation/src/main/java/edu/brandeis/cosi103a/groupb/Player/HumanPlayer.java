@@ -1,17 +1,23 @@
-package edu.brandeis.cosi103a.groupb;
+package edu.brandeis.cosi103a.groupb.Player;
 
 import edu.brandeis.cosi103a.groupb.Decisions.*;
-import edu.brandeis.cosi103a.groupb.Events.*;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import edu.brandeis.cosi103a.groupb.Decks.DiscardDeck;
+import edu.brandeis.cosi103a.groupb.Decks.DrawDeck;
+import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
+import edu.brandeis.cosi103a.groupb.Game.GameObserver;
+import edu.brandeis.cosi103a.groupb.Game.GameState;
+
+import java.util.*;
 
 /**
  * Represents a human-controlled player using console input.
  */
 public class HumanPlayer implements Player {
     private final String name;
-    private final Scanner scanner;
+    private DiscardDeck discardDeck = new DiscardDeck();
+    private DrawDeck drawDeck = new DrawDeck();
+
+    private static final Scanner scanner = new Scanner(System.in);
     private final Optional<GameObserver> observer;
 
     public HumanPlayer(String name) {
@@ -21,7 +27,6 @@ public class HumanPlayer implements Player {
     // Added constructor to inject a custom scanner
     public HumanPlayer(String name, Scanner scanner) {
         this.name = name;
-        this.scanner = scanner;
         this.observer = Optional.of((GameObserver) new ConsoleGameObserver());
     }
 
@@ -55,5 +60,15 @@ public class HumanPlayer implements Player {
     @Override
     public Optional<GameObserver> getObserver() {
         return observer;
+    }
+
+    @Override
+    public DiscardDeck getDiscardDeck() {
+        return this.discardDeck;
+    }
+
+    @Override
+    public DrawDeck getDrawDeck() {
+        return this.drawDeck;
     }
 }

@@ -1,4 +1,4 @@
-package edu.brandeis.cosi103a.groupb;
+package edu.brandeis.cosi103a.groupb.Player;
 
 public class PlayerViolationException extends Exception {
     public PlayerViolationException(String message) {

@@ -1,20 +1,31 @@
-package edu.brandeis.cosi103a.groupb;
+package edu.brandeis.cosi103a.groupb.Player;
 
-import edu.brandeis.cosi103a.groupb.Decisions.*;
-import edu.brandeis.cosi103a.groupb.Events.*;
 import java.util.List;
 import java.util.Optional;
 
+import edu.brandeis.cosi103a.groupb.Decisions.BuyDecision;
+import edu.brandeis.cosi103a.groupb.Decisions.Decision;
+import edu.brandeis.cosi103a.groupb.Decisions.EndPhaseDecision;
+import edu.brandeis.cosi103a.groupb.Decisions.PlayCardDecision;
+import edu.brandeis.cosi103a.groupb.Decks.DiscardDeck;
+import edu.brandeis.cosi103a.groupb.Decks.DrawDeck;
+import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
+import edu.brandeis.cosi103a.groupb.Game.GameObserver;
+import edu.brandeis.cosi103a.groupb.Game.GameState;
+
 /**
- * Represents an AI-controlled player.
+ * Represents an automated player, following the basic strategy.
  */
-public class AIPlayer implements Player {
+public class BigMoneyPlayer implements Player {
     private final String name;
+    private DiscardDeck discardDeck = new DiscardDeck();
+    private DrawDeck drawDeck = new DrawDeck();
+
     private final Optional<GameObserver> observer;
 
-    public AIPlayer(String name) {
+    public BigMoneyPlayer(String name) {
         this.name = name;
-        this.observer = Optional.of((GameObserver) new ConsoleGameObserver());  // Fix applied here
+        this.observer = Optional.of((GameObserver) new ConsoleGameObserver());
     }
 
     @Override
@@ -31,7 +42,7 @@ public class AIPlayer implements Player {
             }
         }
 
-        // Always buy the most expensive card in the BUY phase
+        // Always buy the most expensive card in the BUY phase -- which is framework if present.
         Decision bestBuy = null;
         int highestCost = 0;
         for (Decision option : options) {
@@ -52,11 +63,21 @@ public class AIPlayer implements Player {
             }
         }
 
-        throw new IllegalStateException("AIPlayer could not find a valid decision.");
+        throw new IllegalStateException("Big Money Player could not find a valid decision.");
     }
 
     @Override
     public Optional<GameObserver> getObserver() {
         return observer;
+    }
+    
+    @Override
+    public DiscardDeck getDiscardDeck() {
+        return this.discardDeck;
+    }
+
+    @Override
+    public DrawDeck getDrawDeck() {
+        return this.drawDeck;
     }
 }

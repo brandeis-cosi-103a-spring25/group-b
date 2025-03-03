@@ -17,6 +17,11 @@ public class Card {
         return id;
     }
 
+    @Override
+    public String toString() {
+        return this.getType() + " " + this.getId();
+    }
+
     public enum Type {
         BITCOIN(1, Category.MONEY),
         ETHEREUM(2, Category.MONEY),
@@ -42,7 +47,9 @@ public class Card {
         }
 
         public enum Category {
-            MONEY, VICTORY;
+            MONEY,
+            VICTORY;
         }
     }
+    
 }

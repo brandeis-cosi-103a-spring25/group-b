@@ -1,12 +1,15 @@
-package edu.brandeis.cosi103a.groupb;
+package edu.brandeis.cosi103a.groupb.Game;
+
+import edu.brandeis.cosi103a.groupb.Decks.GameDeck;
+import edu.brandeis.cosi103a.groupb.Decks.Hand;
 
 public final class GameState {
     private final String currentPlayerName;
-    private final Hand currentPlayerHand;
+    private final Hand currentPlayerHand; //Renewed each turn
     private final TurnPhase phase;
-    private final int spendableMoney;
-    private final int availableBuys;
-    private final GameDeck deck;
+    private final int spendableMoney; //Renewed each turn
+    private final int availableBuys; //Can be increased by action cards in future implementations.
+    private final GameDeck deck; //Main deck! Check if any card is deducted by players' buying actions
 
     public GameState(String currentPlayerName, Hand currentPlayerHand, TurnPhase phase, 
                      int spendableMoney, int availableBuys, GameDeck deck) {

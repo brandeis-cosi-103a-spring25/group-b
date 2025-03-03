@@ -1,0 +1,49 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "GameEngine",
+            "request": "launch",
+            "mainClass": "edu.brandeis.cosi103a.groupb.Game.GameEngine",
+            "projectName": "automation"
+        },
+        {
+            "type": "java",
+            "name": "PlayerDeck",
+            "request": "launch",
+            "mainClass": "edu.brandeis.cosi103a.groupb.Decks.PlayerDeck",
+            "projectName": "automation"
+        },
+        {
+            "type": "java",
+            "name": "DiscardDeck",
+            "request": "launch",
+            "mainClass": "edu.brandeis.cosi103a.groupb.Decks.DiscardDeck",
+            "projectName": "automation"
+        },
+        {
+            "type": "java",
+            "name": "TestAIPlayer",
+            "request": "launch",
+            "mainClass": "edu.brandeis.cosi103a.groupb.TestAIPlayer",
+            "projectName": "automation"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "edu.brandeis.cosi103a.groupb.Main",
+            "projectName": "automation"
+        }
+    ]
+}
