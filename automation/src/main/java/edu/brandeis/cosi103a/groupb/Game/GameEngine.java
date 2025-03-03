@@ -137,7 +137,7 @@ public class GameEngine implements Engine {
             Card drawnCard = player.getDrawDeck().drawCard();
             if (drawnCard != null) {
                 startingHand.add(drawnCard);
-            } else {
+            } else { //This will not likely happen
                 System.out.println("WARNING: Player " + player.getName() + " does not have enough cards to draw a full hand!");
                 break;
             }
