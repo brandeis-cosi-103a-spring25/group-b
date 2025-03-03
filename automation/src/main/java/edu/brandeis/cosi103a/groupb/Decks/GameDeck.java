@@ -60,7 +60,7 @@ public final class GameDeck {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<Card.Type, Integer> Entry: cardCounts.entrySet()) {
-            sb.append(Entry.getKey()).append(" -- ").append(Entry.getValue()).append(";\n");
+            sb.append(Entry.getKey()).append(" -- ").append(Entry.getValue()).append(" (Cost: ").append(Entry.getKey().getCost()).append(", Value: ").append(Entry.getKey().getValue()).append(");\n");
         }
         return sb.toString();
     }

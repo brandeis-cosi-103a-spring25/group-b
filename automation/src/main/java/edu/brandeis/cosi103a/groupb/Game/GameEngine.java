@@ -183,7 +183,7 @@ public class GameEngine implements Engine {
         System.out.println(this.deck);
         ArrayList<Card.Type> buyableCards = new ArrayList<>();
         for (Map.Entry<Card.Type, Integer> Entry: this.deck.getCardCounts().entrySet()) {
-            if (Entry.getKey().getValue() < money) {
+            if (Entry.getKey().getCost() <= money) {
                 buyableCards.add(Entry.getKey());
             }
         }
@@ -238,8 +238,8 @@ public class GameEngine implements Engine {
     
             // ✅ Add buyable cards based on money
             for (Card.Type type : deck.getCardTypes()) {
-                if (deck.getNumAvailable(type) > 0 && gameState.getSpendableMoney() >= type.getValue()) {
-                    System.out.println("DEBUG: Adding buy option for " + type + " (Cost: " + type.getValue() + ")");
+                if (deck.getNumAvailable(type) > 0 && gameState.getSpendableMoney() >= type.getCost()) {
+                    System.out.println("DEBUG: Adding buy option for " + type + " (Cost: " + type.getCost() + ", Value: " + type.getValue() + ")");
                     options.add(new BuyDecision(type));
                 }
             }
@@ -257,7 +257,7 @@ public class GameEngine implements Engine {
                 player.getDiscardDeck().addCard(deck.drawCard(boughtCard));
 
                 // ✅ Deduct money after buying
-                int newMoney = gameState.getSpendableMoney() - boughtCard.getValue();
+                int newMoney = gameState.getSpendableMoney() - boughtCard.getCost();
 
                 System.out.println("DEBUG: Updated spendable money after buying: " + newMoney);
                 System.out.println("DEBUG: Updated " + player.getName() 
