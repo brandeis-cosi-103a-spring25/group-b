@@ -277,8 +277,8 @@ public class GameEngine implements Engine {
         cardsToMove.addAll(gameState.getCurrentPlayerHand().getUnplayedCards());
         player.getDiscardDeck().addAllCards(cardsToMove);
 
-        gameState = new GameState(player.getName(), gameState.getCurrentPlayerHand(),
-                                   GameState.TurnPhase.BUY, 0, 0, deck);
+        gameState = new GameState(player.getName(), new Hand(new ArrayList<>(), new ArrayList<>()),
+                                   GameState.TurnPhase.CLEANUP, 0, 0, deck);
         System.out.println("DEBUG: Discarding current hand...");
         System.out.println("DEBUG: Updated " + player.getName() + "'s discard deck:");
         player.getDiscardDeck().printDeck();
