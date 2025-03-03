@@ -17,16 +17,18 @@ public class HumanPlayer implements Player {
     private DiscardDeck discardDeck = new DiscardDeck();
     private DrawDeck drawDeck = new DrawDeck();
 
-    private static final Scanner scanner = new Scanner(System.in);
+    // Remove "static" so that the scanner instance can be set from the constructor.
+    private final Scanner scanner;
     private final Optional<GameObserver> observer;
 
     public HumanPlayer(String name) {
         this(name, new Scanner(System.in));
     }
     
-    // Added constructor to inject a custom scanner
+    // Constructor to inject a custom scanner.
     public HumanPlayer(String name, Scanner scanner) {
         this.name = name;
+        this.scanner = scanner;
         this.observer = Optional.of((GameObserver) new ConsoleGameObserver());
     }
 

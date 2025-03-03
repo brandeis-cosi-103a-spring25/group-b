@@ -10,8 +10,10 @@ import edu.brandeis.cosi103a.groupb.Decisions.PlayCardDecision;
 import edu.brandeis.cosi103a.groupb.Decks.DiscardDeck;
 import edu.brandeis.cosi103a.groupb.Decks.DrawDeck;
 import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
+import edu.brandeis.cosi103a.groupb.Game.GameEngine;
 import edu.brandeis.cosi103a.groupb.Game.GameObserver;
 import edu.brandeis.cosi103a.groupb.Game.GameState;
+import edu.brandeis.cosi103a.groupb.Cards.Card;
 
 /**
  * Represents an automated player, following the basic strategy.
@@ -41,29 +43,58 @@ public class BigMoneyPlayer implements Player {
                 return option;
             }
         }
-
-        // Always buy the most expensive card in the BUY phase -- which is framework if present.
+        
+        // BUY phase logic with advanced strategy.
         Decision bestBuy = null;
         int highestCost = 0;
         for (Decision option : options) {
             if (option instanceof BuyDecision) {
                 BuyDecision buy = (BuyDecision) option;
-                if (buy.getCardType().getValue() > highestCost) {
-                    highestCost = buy.getCardType().getValue();
+                // Implemented advanced Strategy 2: Avoid purchasing the last Framework if not winning.
+                if (buy.getCardType() == Card.Type.FRAMEWORK) {
+                    int remainingFramework = state.getDeck().getNumAvailable(Card.Type.FRAMEWORK);
+                    if (remainingFramework == 1 && !isWinning(state)) {
+                        // Skip buying framework even if it is normally the most expensive.
+                        continue;
+                    }
+                }
+                int cost = buy.getCardType().getValue();
+                if (cost > highestCost) {
+                    highestCost = cost;
                     bestBuy = buy;
                 }
             }
         }
         if (bestBuy != null) return bestBuy;
-
-        // If no actions left, end phase
+        
+        // If no buy option qualifies, check for an EndPhaseDecision.
         for (Decision option : options) {
             if (option instanceof EndPhaseDecision) {
                 return option;
             }
         }
-
+        
         throw new IllegalStateException("Big Money Player could not find a valid decision.");
+    }
+
+    /**
+     * Calculates if the player is winning based on the current game state.
+     */
+    private boolean isWinning(GameState state) {
+        List<Player.ScorePair> scores = GameEngine.getCurrentScores();
+        int myScore = 0;
+        for (Player.ScorePair pair : scores) {
+            if (pair.getPlayer().getName().equals(this.name)) {
+                myScore = pair.getScore();
+                break;
+            }
+        }
+        for (Player.ScorePair pair : scores) {
+            if (!pair.getPlayer().getName().equals(this.name) && pair.getScore() >= myScore) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

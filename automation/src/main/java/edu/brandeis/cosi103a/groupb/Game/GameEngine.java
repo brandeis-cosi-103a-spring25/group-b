@@ -27,12 +27,15 @@ public class GameEngine implements Engine {
     private GameState gameState;
     private int turnCount = 1; //For logging
 
+    private static GameEngine currentEngine;
+
     public GameEngine(Player player1, Player player2, GameObserver observer) {
         this.player1 = player1;
         this.player2 = player2;
         this.observer = observer;
         this.deck = initializeDeck();
         this.gameState = null;
+        currentEngine = this;
     }
 
     /**
@@ -172,7 +175,7 @@ public class GameEngine implements Engine {
         System.out.println(this.deck);
         ArrayList<Card.Type> buyableCards = new ArrayList<>();
         for (Map.Entry<Card.Type, Integer> Entry: this.deck.getCardCounts().entrySet()) {
-            if (Entry.getKey().getValue() < money) {
+            if (Entry.getKey().getCost() <= money) {
                 buyableCards.add(Entry.getKey());
             }
         }
@@ -227,8 +230,8 @@ public class GameEngine implements Engine {
     
             // ✅ Add buyable cards based on money
             for (Card.Type type : deck.getCardTypes()) {
-                if (deck.getNumAvailable(type) > 0 && gameState.getSpendableMoney() >= type.getValue()) {
-                    System.out.println("DEBUG: Adding buy option for " + type + " (Cost: " + type.getValue() + ")");
+                if (deck.getNumAvailable(type) > 0 && gameState.getSpendableMoney() >= type.getCost()) {
+                    System.out.println("DEBUG: Adding buy option for " + type + " (Cost: " + type.getCost() + ", Value: " + type.getValue() + ")");
                     options.add(new BuyDecision(type));
                 }
             }
@@ -246,7 +249,7 @@ public class GameEngine implements Engine {
                 player.getDiscardDeck().addCard(deck.drawCard(boughtCard));
 
                 // ✅ Deduct money after buying
-                int newMoney = gameState.getSpendableMoney() - boughtCard.getValue();
+                int newMoney = gameState.getSpendableMoney() - boughtCard.getCost();
 
                 System.out.println("DEBUG: Updated spendable money after buying: " + newMoney);
                 System.out.println("DEBUG: Updated " + player.getName() 
@@ -289,6 +292,13 @@ public class GameEngine implements Engine {
         return deck.getNumAvailable(Card.Type.FRAMEWORK) == 0;
     }
 
+    public static List<Player.ScorePair> getCurrentScores() {
+        if (currentEngine == null) {
+            throw new IllegalStateException("GameEngine has not been initialized yet");
+        }
+        return currentEngine.computeScores();
+    }
+
     private List<Player.ScorePair> computeScores() {
         List<Player.ScorePair> scores = new ArrayList<>();
         scores.add(new Player.ScorePair(player1, calculateScore(player1)));
@@ -312,6 +322,10 @@ public class GameEngine implements Engine {
         List<Card> playerMainDeck = new ArrayList<>();
         playerMainDeck.addAll(discardDeck);
         playerMainDeck.addAll(drawDeck);
+        if (gameState != null && gameState.getCurrentPlayerName().equals(player.getName())) {
+            playerMainDeck.addAll(gameState.getCurrentPlayerHand().getPlayedCards());
+            playerMainDeck.addAll(gameState.getCurrentPlayerHand().getUnplayedCards());
+        }
 
         int score = 0;
         for (Card card: playerMainDeck) {

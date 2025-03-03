@@ -23,23 +23,29 @@ public class Card {
     }
 
     public enum Type {
-        BITCOIN(1, Category.MONEY),
-        ETHEREUM(2, Category.MONEY),
-        DOGECOIN(3, Category.MONEY),
-        METHOD(1, Category.VICTORY),
-        MODULE(3, Category.VICTORY),
-        FRAMEWORK(6, Category.VICTORY);
+        BITCOIN(0, 1, Category.MONEY),
+        ETHEREUM(3, 2, Category.MONEY),
+        DOGECOIN(6, 3, Category.MONEY),
+        METHOD(2, 1, Category.VICTORY),
+        MODULE(5, 3, Category.VICTORY),
+        FRAMEWORK(8, 6, Category.VICTORY);
 
+        private final int cost;
         private final int value;
         private final Category category;
 
-        Type(int value, Category category) {
+        Type(int cost, int value, Category category) {
+            this.cost = cost;
             this.value = value;
             this.category = category;
         }
 
         public int getValue() {
             return value;
+        }
+
+        public int getCost() {
+            return cost;
         }
 
         public Category getCategory() {

@@ -30,5 +30,9 @@ public interface Player {
         public int getScore() {
             return score;
         }
+
+        public Player getPlayer() {
+            return player;
+        }
     }
 }
