@@ -6,10 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 
 import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
-import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
-import edu.brandeis.cosi103a.groupb.Game.GameObserver;
-import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
-import edu.brandeis.cosi103a.groupb.Game.Engine;
 import edu.brandeis.cosi103a.groupb.Decisions.Decision;
 import edu.brandeis.cosi103a.groupb.Decisions.EndPhaseDecision;
 import edu.brandeis.cosi103a.groupb.Decisions.PlayCardDecision;
