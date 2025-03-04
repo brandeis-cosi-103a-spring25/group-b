@@ -1,5 +1,6 @@
 package edu.brandeis.cosi103a.groupb.Decks;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
@@ -67,5 +68,9 @@ public abstract class PlayerDeck {
         for (Card card : deck) {
             System.out.println(card); // Assumes Card has a toString() method
         }
+    }
+
+    public List<Card> getCards() {
+        return new ArrayList<>(deck);
     }
 }

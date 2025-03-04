@@ -115,6 +115,8 @@ public class BigMoneyPlayerTest {
         assertEquals(firstCard, playDecision.getCard(), "Expected the first PlayCardDecision option to be chosen.");
     }
 
+    // Additional test on advanced strategy: but require fixes in the next sprint to isolate score calculating logic
+
     // @Test
     // public void testAdvancedStrategySkipsFramework() {
     //     BigMoneyPlayer player = new BigMoneyPlayer("BigMoney");
