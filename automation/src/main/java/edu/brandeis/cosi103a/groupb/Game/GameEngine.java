@@ -308,17 +308,12 @@ public class GameEngine implements Engine {
 
     private int calculateScore(Player player) {
         List<Card> discardDeck = new ArrayList<>();
-        while (!player.getDiscardDeck().isEmpty()) {
-            discardDeck.add(player.getDiscardDeck().drawCard());
-        }
+        discardDeck.addAll(player.getDiscardDeck().getCards());
 
         List<Card> drawDeck = new ArrayList<>();
-        while (!player.getDrawDeck().isEmpty()) {
-            discardDeck.add(player.getDrawDeck().drawCard());
-        }
-
-        //No need to add the hand to the counts, because after each turn, the player will have all the cards moved from hand to the discard deck already.
+        drawDeck.addAll(player.getDrawDeck().getCards());
         
+        // Caculate AP points for cards in players' hand, if any        
         List<Card> playerMainDeck = new ArrayList<>();
         playerMainDeck.addAll(discardDeck);
         playerMainDeck.addAll(drawDeck);
