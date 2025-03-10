@@ -3,6 +3,7 @@ package edu.brandeis.cosi103a.groupb.Player;
 import java.util.List;
 import java.util.Optional;
 
+import edu.brandeis.cosi103a.groupb.Cards.Card;
 import edu.brandeis.cosi103a.groupb.Decisions.BuyDecision;
 import edu.brandeis.cosi103a.groupb.Decisions.Decision;
 import edu.brandeis.cosi103a.groupb.Decisions.EndPhaseDecision;
@@ -13,7 +14,6 @@ import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
 import edu.brandeis.cosi103a.groupb.Game.GameEngine;
 import edu.brandeis.cosi103a.groupb.Game.GameObserver;
 import edu.brandeis.cosi103a.groupb.Game.GameState;
-import edu.brandeis.cosi103a.groupb.Cards.Card;
 
 /**
  * Represents an automated player, following the basic strategy.
@@ -80,7 +80,7 @@ public class BigMoneyPlayer implements Player {
     /**
      * Calculates if the player is winning based on the current game state.
      */
-    private boolean isWinning(GameState state) {
+    public boolean isWinning(GameState state) {
         List<Player.ScorePair> scores = GameEngine.getCurrentScores();
         int myScore = 0;
         for (Player.ScorePair pair : scores) {

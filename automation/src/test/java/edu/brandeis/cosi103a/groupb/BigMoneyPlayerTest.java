@@ -1,19 +1,32 @@
 package edu.brandeis.cosi103a.groupb;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.io.ByteArrayInputStream;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
-
-import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
+import edu.brandeis.cosi103a.groupb.Cards.Card;
+import edu.brandeis.cosi103a.groupb.Decisions.BuyDecision;
 import edu.brandeis.cosi103a.groupb.Decisions.Decision;
 import edu.brandeis.cosi103a.groupb.Decisions.EndPhaseDecision;
 import edu.brandeis.cosi103a.groupb.Decisions.PlayCardDecision;
-import edu.brandeis.cosi103a.groupb.Decisions.BuyDecision;
-import edu.brandeis.cosi103a.groupb.Game.GameState;
 import edu.brandeis.cosi103a.groupb.Decks.GameDeck;
 import edu.brandeis.cosi103a.groupb.Decks.Hand;
-import edu.brandeis.cosi103a.groupb.Cards.Card;
+import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
+import edu.brandeis.cosi103a.groupb.Game.Engine;
+import edu.brandeis.cosi103a.groupb.Game.GameEngine;
+import edu.brandeis.cosi103a.groupb.Game.GameObserver;
+import edu.brandeis.cosi103a.groupb.Game.GameState;
+import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
+import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
 
 public class BigMoneyPlayerTest {
 
@@ -111,87 +124,98 @@ public class BigMoneyPlayerTest {
         assertEquals(firstCard, playDecision.getCard(), "Expected the first PlayCardDecision option to be chosen.");
     }
 
-    // Additional test on advanced strategy: but require fixes in the next sprint to isolate score calculating logic
+    // Test on advanced strategy to skip the framework car assuming isWinning returns false
+    @Test
+    public void testAdvancedStrategySkipsFramework() {
+        // Override isWinning() to avoid calling GameEngine.getCurrentScores()
+        BigMoneyPlayer player = new BigMoneyPlayer("BigMoney") {
+            @Override
+            public boolean isWinning(GameState state) {
+                return false;
+            }
+        };
 
-    // @Test
-    // public void testAdvancedStrategySkipsFramework() {
-    //     BigMoneyPlayer player = new BigMoneyPlayer("BigMoney");
+        // Create a deck where exactly 1 Framework card is available 
+        // (i.e. the last Framework card) and several ETHEREUM cards are available.
+        Map<Card.Type, Integer> deckMap = new HashMap<>();
+        deckMap.put(Card.Type.FRAMEWORK, 1);  // Last Framework card available
+        deckMap.put(Card.Type.ETHEREUM, 5);   // Alternative purchase option
+        GameDeck deck = new GameDeck(deckMap);
         
-    //     // Create a deck where exactly 1 Framework card is available 
-    //     // (i.e. the last Framework card) and several ETHEREUM cards are available.
-    //     Map<Card.Type, Integer> deckMap = new HashMap<>();
-    //     deckMap.put(Card.Type.FRAMEWORK, 1);  // Last Framework card available
-    //     deckMap.put(Card.Type.ETHEREUM, 5);   // Alternative purchase option
-    //     GameDeck deck = new GameDeck(deckMap);
+        // Create a dummy hand and a game state for the BUY phase with enough money.
+        Hand dummyHand = new Hand(new ArrayList<>(), new ArrayList<>());
+        // Setting money to 8 so that both options are affordable.
+        GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.BUY, 8, 1, deck);
         
-    //     // Create a dummy hand and a game state for the BUY phase with enough money.
-    //     Hand dummyHand = new Hand(new ArrayList<>(), new ArrayList<>());
-    //     // Setting money to 5 so that both options are affordable.
-    //     GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.BUY, 5, 1, deck);
+        // Provide BuyDecision options: one for FRAMEWORK and one for ETHEREUM,
+        // plus an EndPhaseDecision if no valid purchase can be made.
+        List<Decision> options = new ArrayList<>();
+        options.add(new BuyDecision(Card.Type.FRAMEWORK));
+        options.add(new BuyDecision(Card.Type.ETHEREUM));
+        options.add(new EndPhaseDecision(GameState.TurnPhase.BUY));
         
-    //     // Provide BuyDecision options: one for FRAMEWORK and one for ETHEREUM,
-    //     // plus an EndPhaseDecision if no valid purchase can be made.
-    //     List<Decision> options = new ArrayList<>();
-    //     options.add(new BuyDecision(Card.Type.FRAMEWORK));
-    //     options.add(new BuyDecision(Card.Type.ETHEREUM));
-    //     options.add(new EndPhaseDecision(GameState.TurnPhase.BUY));
+        // With isWinning overridden to false, the advanced strategy should skip
+        // buying the last Framework card and choose ETHEREUM.
+        Decision decision = player.makeDecision(state, options);
         
-    //     // In our scenario, BigMoneyPlayer's isWinning(state) is expected to return false.
-    //     // Thus, the advanced strategy should skip buying the last Framework card
-    //     // and select the alternative ETHEREUM card.
-    //     Decision decision = player.makeDecision(state, options);
+        assertTrue(decision instanceof BuyDecision, "Expected decision to be BuyDecision.");
+        BuyDecision buyDecision = (BuyDecision) decision;
+        assertNotEquals(Card.Type.FRAMEWORK, buyDecision.getCardType(), "Advanced strategy should skip buying the Framework card when it is the last one and the player is not winning.");
+        assertEquals(Card.Type.ETHEREUM, buyDecision.getCardType(), "Expected to choose ETHEREUM as the alternative purchase option.");
+    }
+
+    // Test on advanced strategy with gameEngine along with isWinning to check if BigMoneyPlayer correctly determines the current situation and make an expected decision
+    @Test
+    public void testAdvancedStrategySkipsFrameworkWithEngine() throws Exception {
+        // Create primary player and a dummy opponent.
+        BigMoneyPlayer player = new BigMoneyPlayer("BigMoney");
+        // Create a HumanPlayer with dummy input (won't be used in this test)
+        HumanPlayer opponent = new HumanPlayer("Opponent", new Scanner(new ByteArrayInputStream("0\n".getBytes())));
         
-    //     assertTrue(decision instanceof BuyDecision, "Expected decision to be BuyDecision.");
-    //     BuyDecision buyDecision = (BuyDecision) decision;
-    //     assertNotEquals(Card.Type.FRAMEWORK, buyDecision.getCardType(), "Advanced strategy should skip buying the Framework card when it is the last one and the player is not winning.");
-    //     assertEquals(Card.Type.ETHEREUM, buyDecision.getCardType(), "Expected to choose ETHEREUM as the alternative purchase option.");
-    // }
+        // Create an observer (or use a dummy implementation)
+        GameObserver observer = new ConsoleGameObserver();
+        
+        // Initialize GameEngine with both players so that currentEngine is set.
+        Engine engine = new GameEngine(player, opponent, observer);
+        
+        // Force the opponent to have a higher victory score.
+        // For example, add a victory card to the opponent's discard deck.
+        opponent.getDiscardDeck().addCard(new Card(Card.Type.METHOD, 99));
+        
+        // Create a controlled deck:
+        // Exactly 1 Framework card (the last one) and several ETHEREUM cards.
+        Map<Card.Type, Integer> deckMap = new HashMap<>();
+        deckMap.put(Card.Type.FRAMEWORK, 1);  // Last Framework card available
+        deckMap.put(Card.Type.ETHEREUM, 5);   // Alternative purchase option
+        GameDeck controlledDeck = new GameDeck(deckMap);
+        
+        // Create a dummy hand (for this test it can be empty) and then a game state for BUY phase.
+        Hand dummyHand = new Hand(new ArrayList<>(), new ArrayList<>());
+        // Set money to 8 so both buy options are affordable.
+        GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.BUY, 8, 1, controlledDeck);
+        
+        // Force the GameEngine's gameState to our controlled state (using reflection).
+        Field gameStateField = engine.getClass().getDeclaredField("gameState");
+        gameStateField.setAccessible(true);
+        gameStateField.set(engine, state);
+        
+        // Prepare the decision options for BUY phase.
+        List<Decision> options = new ArrayList<>();
+        options.add(new BuyDecision(Card.Type.FRAMEWORK));
+        options.add(new BuyDecision(Card.Type.ETHEREUM));
+        options.add(new EndPhaseDecision(GameState.TurnPhase.BUY));
+        
+        // Now call makeDecision on our player.
+        Decision decision = player.makeDecision(state, options);
+        
+        // Because the opponent has a higher victory score, isWinning() should return false.
+        // Therefore, the advanced strategy should skip Framework (the last card)
+        // and choose ETHEREUM.
+        assertTrue(decision instanceof BuyDecision, "Expected decision to be BuyDecision.");
+        BuyDecision buyDecision = (BuyDecision) decision;
+        assertNotEquals(Card.Type.FRAMEWORK, buyDecision.getCardType(), 
+                "Advanced strategy should skip buying the Framework card when it is the last one and the player is not winning.");
+        assertEquals(Card.Type.ETHEREUM, buyDecision.getCardType(), 
+                "Expected to choose ETHEREUM as the alternative purchase option.");
+    }
 }
-
-//     @Test
-//     public void testAdvancedStrategySkipsFrameworkWithEngine() {
-//         // Create an overridden BigMoneyPlayer that forces not winning.
-//         BigMoneyPlayer player = new BigMoneyPlayer("BigMoney") {
-//             @Override
-//             protected boolean isWinning(GameState state) {
-//                 return false;
-//             }
-//         };
-
-//         // Create a dummy opponent. You can use a simple HumanPlayer with a dummy scanner.
-//         HumanPlayer opponent = new HumanPlayer("Alice", new Scanner(new ByteArrayInputStream("0\n".getBytes())));
-        
-//         // Create a ConsoleGameObserver (or any other GameObserver) instance.
-//         GameObserver observer = new ConsoleGameObserver();
-        
-//         // Initialize the game engine.
-//         Engine gameEngine = new GameEngine(player, opponent, observer);
-        
-//         // Optionally, you might run a partial game setup if needed.
-//         // For this test we want a buy-phase state with a controlled deck:
-//         Map<Card.Type, Integer> deckMap = new HashMap<>();
-//         deckMap.put(Card.Type.FRAMEWORK, 1);  // last Framework card
-//         deckMap.put(Card.Type.ETHEREUM, 5);   // alternative option
-//         GameDeck deck = new GameDeck(deckMap);
-        
-//         Hand dummyHand = new Hand(new ArrayList<>(), new ArrayList<>());
-//         // Create a GameState for the BUY phase.
-//         GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.BUY, 5, 1, deck);
-        
-//         // Provide BuyDecision options.
-//         List<Decision> options = new ArrayList<>();
-//         options.add(new BuyDecision(Card.Type.FRAMEWORK));
-//         options.add(new BuyDecision(Card.Type.ETHEREUM));
-//         options.add(new EndPhaseDecision(GameState.TurnPhase.BUY));
-        
-//         // Now, simulate a decision call that might occur inside the engine.
-//         Decision decision = player.makeDecision(state, options);
-        
-//         assertTrue(decision instanceof BuyDecision, "Expected decision to be BuyDecision.");
-//         BuyDecision buyDecision = (BuyDecision) decision;
-//         assertNotEquals(Card.Type.FRAMEWORK, buyDecision.getCardType(), 
-//                 "Advanced strategy should skip buying the Framework card when it is the last one and the player is not winning.");
-//         assertEquals(Card.Type.ETHEREUM, buyDecision.getCardType(), 
-//                 "Expected to choose ETHEREUM as the alternative purchase option.");
-//     }
-// }
