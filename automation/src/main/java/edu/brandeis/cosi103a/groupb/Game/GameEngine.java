@@ -13,6 +13,7 @@ import edu.brandeis.cosi.atg.api.event.Event;
 import edu.brandeis.cosi.atg.api.event.GainCardEvent;
 import edu.brandeis.cosi.atg.api.event.GameEvent;
 import edu.brandeis.cosi.atg.api.event.PlayCardEvent;
+import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
 import edu.brandeis.cosi.atg.api.decisions.BuyDecision;
 import edu.brandeis.cosi.atg.api.decisions.Decision;
 import edu.brandeis.cosi.atg.api.decisions.EndPhaseDecision;
@@ -65,7 +66,7 @@ public class GameEngine implements Engine {
      * -- 7x Bitcoin cards
      * -- 3x Method cards
      */
-    private void initializeGameState(Player player) {
+    private void initializeGameState(AtgPlayer player) {
         // List<Card> startingHand = new ArrayList<>();
         
         for (int i = 0; i < 7; i++) {

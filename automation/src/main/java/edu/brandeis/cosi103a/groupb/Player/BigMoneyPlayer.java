@@ -14,13 +14,12 @@ import edu.brandeis.cosi.atg.api.decisions.EndPhaseDecision;
 import edu.brandeis.cosi.atg.api.decisions.PlayCardDecision;
 import edu.brandeis.cosi.atg.api.GameObserver;
 import edu.brandeis.cosi.atg.api.GameState;
-import edu.brandeis.cosi.atg.api.Player;
 
 
 /**
  * Represents an automated player, following the basic strategy.
  */
-public class BigMoneyPlayer implements Player {
+public class BigMoneyPlayer implements AtgPlayer {
     private final String name;
     private DiscardDeck discardDeck = new DiscardDeck();
     private DrawDeck drawDeck = new DrawDeck();

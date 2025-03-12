@@ -7,7 +7,6 @@ import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
 import edu.brandeis.cosi.atg.api.decisions.Decision;
 import edu.brandeis.cosi.atg.api.GameObserver;
 import edu.brandeis.cosi.atg.api.GameState;
-import edu.brandeis.cosi.atg.api.Player;
 
 import java.util.*;
 
@@ -16,7 +15,7 @@ import com.google.common.collect.ImmutableList;
 /**
  * Represents a human-controlled player using console input.
  */
-public class HumanPlayer implements Player {
+public class HumanPlayer implements AtgPlayer {
     private final String name;
     private DiscardDeck discardDeck = new DiscardDeck();
     private DrawDeck drawDeck = new DrawDeck();
@@ -43,8 +42,13 @@ public class HumanPlayer implements Player {
 
     @Override
     public Decision makeDecision(GameState state, ImmutableList<Decision> options, Optional<Event> reason) {
-        System.out.println("\n" + name + "'s turn (" + state.getTurnPhase() + " phase)");
-        System.out.println("Available options:");
+        if (reason.isPresent()) {
+            System.out.println("New Event: " + reason);
+        } else {
+            System.out.println("\n" + name + "'s turn (" + state.getTurnPhase() + " phase)");
+            System.out.println("Available options:");
+        }
+        
         for (int i = 0; i < options.size(); i++) {
             System.out.println("[" + i + "] " + options.get(i).getDescription());
         }
