@@ -137,7 +137,7 @@ public class GameEngine implements Engine {
      * @param player Player in action
      * @throws PlayerViolationException
      */
-    private void handleMoneyPhase(Player player) throws PlayerViolationException {
+    private void handleMoneyPhase(AtgPlayer player) throws PlayerViolationException {
         List<Card> startingHand = new ArrayList<>();
         // 1). Assign hand for this turn
         for (int i = 0; i < 5; i++) {
