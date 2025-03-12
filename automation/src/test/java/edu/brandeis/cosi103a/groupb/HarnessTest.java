@@ -8,8 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import edu.brandeis.cosi103a.groupb.Player.Player;
-import edu.brandeis.cosi103a.groupb.Player.PlayerViolationException;
+import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
+import edu.brandeis.cosi103a.groupb.AtgPlayer.PlayerViolationException;
 import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
 import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
 import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
@@ -26,8 +26,8 @@ import java.lang.reflect.Method;
 
 public class HarnessTest {
 
-    private Player humanPlayer;
-    private Player bigMoneyPlayer;
+    private AtgPlayer humanPlayer;
+    private AtgPlayer bigMoneyPlayer;
     private GameObserver observer;
     private GameState gameState;
     private List<Decision> options;
@@ -41,7 +41,7 @@ public class HarnessTest {
         gameEngine = new GameEngine(humanPlayer, bigMoneyPlayer, observer);
 
         // Use reflection to access the private initializeGameState method
-        Method initializeGameStateMethod = GameEngine.class.getDeclaredMethod("initializeGameState", Player.class);
+        Method initializeGameStateMethod = GameEngine.class.getDeclaredMethod("initializeGameState", AtgPlayer.class);
         initializeGameStateMethod.setAccessible(true);
         initializeGameStateMethod.invoke(gameEngine, humanPlayer);
         initializeGameStateMethod.invoke(gameEngine, bigMoneyPlayer);
@@ -62,14 +62,14 @@ public class HarnessTest {
    
     @Test
     public void testGamePlay() throws PlayerViolationException {
-        List<Player.ScorePair> mockResults = new ArrayList<>();
-        mockResults.add(new Player.ScorePair(humanPlayer, 10));
-        mockResults.add(new Player.ScorePair(bigMoneyPlayer, 5));
+        List<AtgPlayer.ScorePair> mockResults = new ArrayList<>();
+        mockResults.add(new AtgPlayer.ScorePair(humanPlayer, 10));
+        mockResults.add(new AtgPlayer.ScorePair(bigMoneyPlayer, 5));
 
         GameEngine mockGameEngine = Mockito.mock(GameEngine.class);
         when(mockGameEngine.play()).thenReturn(mockResults);
 
-        List<Player.ScorePair> results = mockGameEngine.play();
+        List<AtgPlayer.ScorePair> results = mockGameEngine.play();
         assertEquals(2, results.size());
         assertEquals(10, results.get(0).getScore());
         assertEquals(5, results.get(1).getScore());
@@ -89,18 +89,18 @@ public class HarnessTest {
 
     @Test
     public void testWinnerDetermination() throws PlayerViolationException {
-        List<Player.ScorePair> mockResults = new ArrayList<>();
-        mockResults.add(new Player.ScorePair(humanPlayer, 10));
-        mockResults.add(new Player.ScorePair(bigMoneyPlayer, 10));
+        List<AtgPlayer.ScorePair> mockResults = new ArrayList<>();
+        mockResults.add(new AtgPlayer.ScorePair(humanPlayer, 10));
+        mockResults.add(new AtgPlayer.ScorePair(bigMoneyPlayer, 10));
 
         GameEngine mockGameEngine = Mockito.mock(GameEngine.class);
         when(mockGameEngine.play()).thenReturn(mockResults);
 
-        List<Player.ScorePair> results = mockGameEngine.play();
+        List<AtgPlayer.ScorePair> results = mockGameEngine.play();
         int highestScore = -1;
-        List<Player> winners = new ArrayList<>();
+        List<AtgPlayer> winners = new ArrayList<>();
 
-        for (Player.ScorePair score : results) {
+        for (AtgPlayer.ScorePair score : results) {
             if (score.getScore() > highestScore) {
                 highestScore = score.getScore();
                 winners.clear();

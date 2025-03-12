@@ -5,19 +5,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import com.google.common.collect.ImmutableMap;
 
-import edu.brandeis.cosi103a.groupb.Cards.Card;
-import edu.brandeis.cosi103a.groupb.Decisions.BuyDecision;
-import edu.brandeis.cosi103a.groupb.Decisions.Decision;
-import edu.brandeis.cosi103a.groupb.Decisions.EndPhaseDecision;
-import edu.brandeis.cosi103a.groupb.Decisions.PlayCardDecision;
-import edu.brandeis.cosi103a.groupb.Decks.GameDeck;
-import edu.brandeis.cosi103a.groupb.Decks.Hand;
-import edu.brandeis.cosi103a.groupb.Events.GainCardEvent;
-import edu.brandeis.cosi103a.groupb.Events.GameEvent;
-import edu.brandeis.cosi103a.groupb.Events.PlayCardEvent;
-import edu.brandeis.cosi103a.groupb.Player.Player;
-import edu.brandeis.cosi103a.groupb.Player.PlayerViolationException;
+import edu.brandeis.cosi.atg.api.cards.Card;
+import edu.brandeis.cosi.atg.api.cards.Card.Type;
+import edu.brandeis.cosi.atg.api.event.Event;
+import edu.brandeis.cosi.atg.api.event.GainCardEvent;
+import edu.brandeis.cosi.atg.api.event.GameEvent;
+import edu.brandeis.cosi.atg.api.event.PlayCardEvent;
+import edu.brandeis.cosi.atg.api.decisions.BuyDecision;
+import edu.brandeis.cosi.atg.api.decisions.Decision;
+import edu.brandeis.cosi.atg.api.decisions.EndPhaseDecision;
+import edu.brandeis.cosi.atg.api.decisions.PlayCardDecision;
+import edu.brandeis.cosi.atg.api.decisions.EndPhaseDecision;
+import edu.brandeis.cosi.atg.api.Engine;
+import edu.brandeis.cosi.atg.api.GameDeck;
+import edu.brandeis.cosi.atg.api.GameObserver;
+import edu.brandeis.cosi.atg.api.GameState;
+import edu.brandeis.cosi.atg.api.Hand;
+import edu.brandeis.cosi.atg.api.Player;
+import edu.brandeis.cosi.atg.api.PlayerViolationException;
 
 public class GameEngine implements Engine {
     private final GameDeck deck;
@@ -50,7 +57,7 @@ public class GameEngine implements Engine {
         deckMap.put(Card.Type.METHOD, 14);
         deckMap.put(Card.Type.MODULE, 8);
         deckMap.put(Card.Type.FRAMEWORK, 8);
-        return new GameDeck(deckMap);
+        return new GameDeck((ImmutableMap<Type, Integer>) deckMap);
     }
 
     /**
@@ -150,7 +157,7 @@ public class GameEngine implements Engine {
         + player.getName() + ":\n" + startingHand + "\n");
  
         this.gameState = new GameState(player.getName(), new Hand(new ArrayList<>(), startingHand), 
-        GameState.TurnPhase.MONEY, 0, 1, deck); //Spendable money updates as player plays the card, not with the changes in hand in one turn & available buys is 1 currently. Will update in the future.
+        GameState.TurnPhase.MONEY, 0, 1, turnCount, deck); //Spendable money updates as player plays the card, not with the changes in hand in one turn & available buys is 1 currently. Will update in the future.
         
         observer.notifyEvent(gameState, new GameEvent(player.getName() + " -- " + "Turn " + turnCount + "."));
 

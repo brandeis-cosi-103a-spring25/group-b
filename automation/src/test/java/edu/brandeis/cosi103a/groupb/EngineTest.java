@@ -18,11 +18,11 @@ import edu.brandeis.cosi103a.groupb.Game.GameEngine;
 import edu.brandeis.cosi103a.groupb.Game.GameObserver;
 import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
 import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
-import edu.brandeis.cosi103a.groupb.Player.Player;
+import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
 
 public class EngineTest {
-    private Player player1 = new BigMoneyPlayer("Nancy");
-    private Player player2 = new HumanPlayer("Abby");
+    private AtgPlayer player1 = new BigMoneyPlayer("Nancy");
+    private AtgPlayer player2 = new HumanPlayer("Abby");
     private GameObserver observer = new ConsoleGameObserver();
     private GameEngine gameEngine = new GameEngine(player1, player2, observer);
 
@@ -42,7 +42,7 @@ public class EngineTest {
 
     @Test
     void testInitializeGameState() throws Exception {
-        Method initializeGameState = gameEngine.getClass().getDeclaredMethod("initializeGameState", Player.class);
+        Method initializeGameState = gameEngine.getClass().getDeclaredMethod("initializeGameState", AtgPlayer.class);
         initializeGameState.setAccessible(true);
         initializeGameState.invoke(gameEngine, player1);
         initializeGameState.invoke(gameEngine, player2);
@@ -60,23 +60,23 @@ public class EngineTest {
         Field mainDeck = gameEngine.getClass().getDeclaredField("deck"); 
         mainDeck.setAccessible(true);
 
-        Method initializeGameState = gameEngine.getClass().getDeclaredMethod("initializeGameState", Player.class);
+        Method initializeGameState = gameEngine.getClass().getDeclaredMethod("initializeGameState", AtgPlayer.class);
         initializeGameState.setAccessible(true);
         initializeGameState.invoke(gameEngine, player1);
 
-        Method moneyPhase = gameEngine.getClass().getDeclaredMethod("handleMoneyPhase", Player.class);
+        Method moneyPhase = gameEngine.getClass().getDeclaredMethod("handleMoneyPhase", AtgPlayer.class);
         moneyPhase.setAccessible(true);
         moneyPhase.invoke(gameEngine, player1);
 
         assertTrue(player1.getDrawDeck().size() == 5);
 
-        Method buyPhase = gameEngine.getClass().getDeclaredMethod("handleBuyPhase", Player.class);
+        Method buyPhase = gameEngine.getClass().getDeclaredMethod("handleBuyPhase", AtgPlayer.class);
         buyPhase.setAccessible(true);
         buyPhase.invoke(gameEngine, player1);
 
         assertEquals(player1.getDiscardDeck().size(), 1); //Bought card directly goes into the discard deck.
 
-        Method cleanUpPhase = gameEngine.getClass().getDeclaredMethod("handleCleanupPhase", Player.class);
+        Method cleanUpPhase = gameEngine.getClass().getDeclaredMethod("handleCleanupPhase", AtgPlayer.class);
         cleanUpPhase.setAccessible(true);
         cleanUpPhase.invoke(gameEngine, player1);
 
@@ -161,11 +161,11 @@ public class EngineTest {
         mainDeck.setAccessible(true);
         GameDeck deck = (GameDeck) mainDeck.get(gameEngine);
 
-        Method initializeGameState = gameEngine.getClass().getDeclaredMethod("initializeGameState", Player.class);
+        Method initializeGameState = gameEngine.getClass().getDeclaredMethod("initializeGameState", AtgPlayer.class);
         initializeGameState.setAccessible(true);
         initializeGameState.invoke(gameEngine, player1);
 
-        Method processTurn = gameEngine.getClass().getDeclaredMethod("processTurn", Player.class);
+        Method processTurn = gameEngine.getClass().getDeclaredMethod("processTurn", AtgPlayer.class);
         processTurn.setAccessible(true);
 
         processTurn.invoke(gameEngine, player1);
@@ -181,7 +181,7 @@ public class EngineTest {
         }
 
         @SuppressWarnings("unchecked")
-        List<Player.ScorePair> scorePair = (ArrayList<Player.ScorePair>) computeScores.invoke(gameEngine);
+        List<AtgPlayer.ScorePair> scorePair = (ArrayList<AtgPlayer.ScorePair>) computeScores.invoke(gameEngine);
         int score = scorePair.get(0).getScore(); // Only one player in the test so far
 
         int money = 0;
