@@ -111,4 +111,7 @@ public class BigMoneyPlayer implements Player {
     public DrawDeck getDrawDeck() {
         return this.drawDeck;
     }
+    public static void main(String[] args) {
+        System.out.println("BigMoneyPlayer executed!");
+    }
 }

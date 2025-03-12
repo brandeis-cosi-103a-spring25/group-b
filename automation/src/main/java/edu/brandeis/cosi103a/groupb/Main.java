@@ -11,14 +11,19 @@ import edu.brandeis.cosi103a.groupb.Game.GameEngine;
 import edu.brandeis.cosi103a.groupb.Game.GameObserver;
 import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
 import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
+import edu.brandeis.cosi103a.groupb.Game.DeckInitializer;
+import edu.brandeis.cosi103a.groupb.Game.GameStateInitializer;
 
 public class Main {
     public static void main(String[] args) {
         Player player1 = new HumanPlayer("Alice");
         Player player2 = new BigMoneyPlayer("Bot");
 
-        GameObserver observer = (GameObserver) new ConsoleGameObserver(); // Fix applied here
-        Engine gameEngine = new GameEngine(player1, player2, observer);
+        GameObserver observer = new ConsoleGameObserver();
+        DeckInitializer deckInitializer = new DeckInitializer();
+        GameStateInitializer gameStateInitializer = new GameStateInitializer();
+
+        GameEngine gameEngine = new GameEngine(player1, player2, observer, deckInitializer, gameStateInitializer);
 
         try {
             int highestScore = -1;

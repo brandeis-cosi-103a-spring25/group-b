@@ -24,94 +24,66 @@ public class GameEngine implements Engine {
     private final Player player1;
     private final Player player2;
     private final GameObserver observer;
+    private final ScoreCalculator scoreCalculator;
     private GameState gameState;
-    private int turnCount = 1; //For logging
+    private int turnCount = 1; // For logging
 
     private static GameEngine currentEngine;
 
-    public GameEngine(Player player1, Player player2, GameObserver observer) {
+    public GameEngine(Player player1, Player player2, GameObserver observer, DeckInitializer deckInitializer, GameStateInitializer gameStateInitializer) {
         this.player1 = player1;
         this.player2 = player2;
         this.observer = observer;
-        this.deck = initializeDeck();
+        this.deck = initializeDeck(deckInitializer);
         this.gameState = null;
+        this.scoreCalculator = new ScoreCalculator(this.gameState);
         currentEngine = this;
+
+        initializePlayers(gameStateInitializer);
     }
 
-    /**
-     * Initialize the main deck.
-     * @return
-     */
-    private GameDeck initializeDeck() {
-        Map<Card.Type, Integer> deckMap = new HashMap<>();
-        deckMap.put(Card.Type.BITCOIN, 60);
-        deckMap.put(Card.Type.ETHEREUM, 40);
-        deckMap.put(Card.Type.DOGECOIN, 30);
-        deckMap.put(Card.Type.METHOD, 14);
-        deckMap.put(Card.Type.MODULE, 8);
-        deckMap.put(Card.Type.FRAMEWORK, 8);
-        return new GameDeck(deckMap);
+    private GameDeck initializeDeck(DeckInitializer deckInitializer) {
+        return deckInitializer.initializeDeck();
     }
 
-    /**
-     * Players' starting hand: 
-     * -- 7x Bitcoin cards
-     * -- 3x Method cards
-     */
-    private void initializeGameState(Player player) {
-        // List<Card> startingHand = new ArrayList<>();
-        
-        for (int i = 0; i < 7; i++) {
-            player.getDrawDeck().addCard(new Card(Card.Type.BITCOIN, i));
-            this.deck.drawCard(Card.Type.BITCOIN); //Deduct corresponding card types from main deck
-        }
-        for (int i = 0; i < 3; i++) {
-            player.getDrawDeck().addCard(new Card(Card.Type.METHOD, i));
-            this.deck.drawCard(Card.Type.METHOD); //Deduct corresponding card types from main deck
-        }
-        player.getDrawDeck().shuffle();
-
-        System.out.println("Initializaing " + player.getName() + " 's draw drck...\n");
+    private void initializePlayers(GameStateInitializer gameStateInitializer) {
+        gameStateInitializer.initializeGameState(player1, this.deck);
+        gameStateInitializer.initializeGameState(player2, this.deck);
     }
 
     @Override
     public List<Player.ScorePair> play() throws PlayerViolationException {
+        Player startingPlayer = determineStartingPlayer();
+        runGameLoop(startingPlayer);
+        return computeScores();
+    }
+
+    private Player determineStartingPlayer() {
         Random rand = new Random();
         int seed = rand.nextInt(2) + 1;
 
         if (seed == 1) {
             System.out.println(player1.getName() + ", you got lucky this time. You get to start first!");
             System.out.println(player2.getName() + ", don't be upset. Maybe your luck will come later!\n");
-
-            //Initialize the game 
-            initializeGameState(player1);
-            initializeGameState(player2);
-            
-            while (!isGameOver()) {
-                processTurn(player1);
-                if (isGameOver()) break;
-                processTurn(player2);
-                turnCount++;
-            }
-            return computeScores();
+            return player1;
         } else {
             System.out.println(player2.getName() + ", you got lucky this time. You get to start first!");
             System.out.println(player1.getName() + ", don't be upset. Maybe your luck will come later!\n");
-
-            //Initialize the game 
-            initializeGameState(player2);
-            initializeGameState(player1);
-            
-            while (!isGameOver()) {
-                processTurn(player2);
-                if (isGameOver()) break;
-                processTurn(player1);
-                turnCount++;
-            }
-            return computeScores();
+            return player2;
         }
     }
 
+    private void runGameLoop(Player startingPlayer) throws PlayerViolationException {
+        Player currentPlayer = startingPlayer;
+        Player otherPlayer = (startingPlayer == player1) ? player2 : player1;
+
+        while (!isGameOver()) {
+            processTurn(currentPlayer);
+            if (isGameOver()) break;
+            processTurn(otherPlayer);
+            turnCount++;
+        }
+    }
 
     private void processTurn(Player player) throws PlayerViolationException {
         handleMoneyPhase(player);
@@ -119,17 +91,7 @@ public class GameEngine implements Engine {
         handleCleanupPhase(player);
     }
 
-    /**
-     * 1) Assign hand for this turn
-     * 2) Show players' hand: card type + card value
-     * 3) Show players' spendable money in this single turn
-     * 4) Show player that they can only buy up to [1?] card (so far)
-     * 5) Show player the buyable cards by listing out their types
-     * 6) Ask the player how much money he wants to spend on this turn
-     * @param player Player in action
-     * @throws PlayerViolationException
-     */
-    private void handleMoneyPhase(Player player) throws PlayerViolationException {
+    public void handleMoneyPhase(Player player) throws PlayerViolationException {
         List<Card> startingHand = new ArrayList<>();
         // 1). Assign hand for this turn
         for (int i = 0; i < 5; i++) {
@@ -222,7 +184,7 @@ public class GameEngine implements Engine {
         }
     }
     
-    private void handleBuyPhase(Player player) throws PlayerViolationException {
+    public void handleBuyPhase(Player player) throws PlayerViolationException {
         System.out.println("DEBUG: Entering BUY phase. Available money: " + gameState.getSpendableMoney());
     
         while (gameState.getTurnPhase() == GameState.TurnPhase.BUY && gameState.getAvailableBuys() >= 1) { //In this stage, without action cards, each turn only consists of 1 avaible buys. The 1 is subject to future changes.
@@ -273,7 +235,7 @@ public class GameEngine implements Engine {
     }
     
 
-    private void handleCleanupPhase(Player player) {
+    public void handleCleanupPhase(Player player) {
         //Put hand into discard deck.
         List<Card> cardsToMove = new ArrayList<>();
         cardsToMove.addAll(gameState.getCurrentPlayerHand().getPlayedCards());
@@ -292,46 +254,18 @@ public class GameEngine implements Engine {
         return deck.getNumAvailable(Card.Type.FRAMEWORK) == 0;
     }
 
+    public GameState getGameState() {
+        return this.gameState;
+    }
+
     public static List<Player.ScorePair> getCurrentScores() {
         if (currentEngine == null) {
             throw new IllegalStateException("GameEngine has not been initialized yet");
         }
-        return currentEngine.computeScores();
+        return currentEngine.scoreCalculator.computeScores(currentEngine.player1, currentEngine.player2);
     }
 
     private List<Player.ScorePair> computeScores() {
-        List<Player.ScorePair> scores = new ArrayList<>();
-        scores.add(new Player.ScorePair(player1, calculateScore(player1)));
-        scores.add(new Player.ScorePair(player2, calculateScore(player2)));
-        return scores;
-    }
-
-    private int calculateScore(Player player) {
-        List<Card> discardDeck = new ArrayList<>();
-        discardDeck.addAll(player.getDiscardDeck().getCards());
-
-        List<Card> drawDeck = new ArrayList<>();
-        drawDeck.addAll(player.getDrawDeck().getCards());
-        
-        // Caculate AP points for cards in players' hand, if any        
-        List<Card> playerMainDeck = new ArrayList<>();
-        playerMainDeck.addAll(discardDeck);
-        playerMainDeck.addAll(drawDeck);
-        if (gameState != null && gameState.getCurrentPlayerName().equals(player.getName())) {
-            playerMainDeck.addAll(gameState.getCurrentPlayerHand().getPlayedCards());
-            playerMainDeck.addAll(gameState.getCurrentPlayerHand().getUnplayedCards());
-        }
-
-        int score = 0;
-        for (Card card: playerMainDeck) {
-            if (card.getType().getCategory() == Card.Type.Category.VICTORY) {
-                score += card.getType().getValue();
-            }
-        }
-        return score;
-    }   
-
-    public GameState getGameState() {
-        return this.gameState;
+        return scoreCalculator.computeScores(player1, player2);
     }
 }

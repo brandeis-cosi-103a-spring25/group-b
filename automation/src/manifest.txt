@@ -1,0 +1,1 @@
+Main-Class: edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer
