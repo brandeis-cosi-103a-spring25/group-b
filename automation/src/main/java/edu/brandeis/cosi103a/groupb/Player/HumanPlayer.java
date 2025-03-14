@@ -43,11 +43,8 @@ public class HumanPlayer implements AtgPlayer {
     @Override
     public Decision makeDecision(GameState state, ImmutableList<Decision> options, Optional<Event> reason) {
         if (reason.isPresent()) {
-            System.out.println("New Event: " + reason);
-        } else {
-            System.out.println("\n" + name + "'s turn (" + state.getTurnPhase() + " phase)");
-            System.out.println("Available options:");
-        }
+            System.out.println("Decision prompted by event: " + reason);
+        } 
         
         for (int i = 0; i < options.size(); i++) {
             System.out.println("[" + i + "] " + options.get(i).getDescription());

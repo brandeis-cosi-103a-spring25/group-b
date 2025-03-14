@@ -39,6 +39,10 @@ public class BigMoneyPlayer implements AtgPlayer {
     //api changes applied here; fix later.
     @Override
     public Decision makeDecision(GameState state, ImmutableList<Decision> options, Optional<Event> reason) {
+        if (reason.isPresent()) {
+            System.out.println("Decision prompted by event: " + reason);
+        }
+        
         // Always play all available money cards in the MONEY phase
         for (Decision option : options) {
             if (option instanceof PlayCardDecision) {
