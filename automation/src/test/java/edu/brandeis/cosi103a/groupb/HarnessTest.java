@@ -8,19 +8,23 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import com.google.common.collect.ImmutableMap;
+
+import edu.brandeis.cosi.atg.api.PlayerViolationException;
+import edu.brandeis.cosi.atg.api.GameDeck;
+import edu.brandeis.cosi.atg.api.GameObserver;
+import edu.brandeis.cosi.atg.api.cards.*;
+import edu.brandeis.cosi.atg.api.decisions.*;
+import edu.brandeis.cosi.atg.api.event.*;
+import edu.brandeis.cosi.atg.api.GameState;
+import edu.brandeis.cosi.atg.api.GameState.TurnPhase;
 import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
-import edu.brandeis.cosi103a.groupb.AtgPlayer.PlayerViolationException;
 import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
 import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
 import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
-import edu.brandeis.cosi103a.groupb.Game.GameObserver;
-import edu.brandeis.cosi103a.groupb.Game.GameState;
-import edu.brandeis.cosi103a.groupb.Game.GameState.TurnPhase;
 import edu.brandeis.cosi103a.groupb.Game.GameEngine;
-import edu.brandeis.cosi103a.groupb.Decisions.*;
-import edu.brandeis.cosi103a.groupb.Cards.*;
-import edu.brandeis.cosi103a.groupb.Events.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.lang.reflect.Method;
 
@@ -47,7 +51,7 @@ public class HarnessTest {
         initializeGameStateMethod.invoke(gameEngine, bigMoneyPlayer);
 
         // Initialize gameState and options
-        gameState = new GameState("Alice", null, TurnPhase.MONEY, 0, 1, null);
+        gameState = new GameState("Alice", null, GameState.TurnPhase.MONEY, 1, 0, 1, null);
         options = new ArrayList<>();
         options.add(new EndPhaseDecision(TurnPhase.MONEY));
     }
@@ -104,9 +108,9 @@ public class HarnessTest {
             if (score.getScore() > highestScore) {
                 highestScore = score.getScore();
                 winners.clear();
-                winners.add(score.player);
+                winners.add((AtgPlayer) score.player);
             } else if (score.getScore() == highestScore) {
-                winners.add(score.player);
+                winners.add((AtgPlayer) score.player);
             }
         }
 
@@ -133,7 +137,7 @@ public class HarnessTest {
         gameEngine = new GameEngine(humanPlayer, bigMoneyPlayer, mockObserver);
 
         // Simulate ending a turn
-        EndTurnEvent endTurnEvent = new EndTurnEvent("Alice");
+        EndTurnEvent endTurnEvent = new EndTurnEvent();
         mockObserver.notifyEvent(gameState, endTurnEvent);
 
         // Verify that the observer is notified of the end turn event

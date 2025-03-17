@@ -10,15 +10,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue; //Use java reflection to test private method
 import org.junit.jupiter.api.Test;
 
-import edu.brandeis.cosi103a.groupb.Cards.Card;
-import edu.brandeis.cosi103a.groupb.Decks.GameDeck;
+import edu.brandeis.cosi.atg.api.GameDeck;
+import edu.brandeis.cosi.atg.api.GameObserver;
+import edu.brandeis.cosi.atg.api.cards.Card;
 import edu.brandeis.cosi103a.groupb.Decks.PlayerDeck;
 import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
 import edu.brandeis.cosi103a.groupb.Game.GameEngine;
-import edu.brandeis.cosi103a.groupb.Game.GameObserver;
+import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
 import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
 import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
-import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
 
 public class EngineTest {
     private AtgPlayer player1 = new BigMoneyPlayer("Nancy");
