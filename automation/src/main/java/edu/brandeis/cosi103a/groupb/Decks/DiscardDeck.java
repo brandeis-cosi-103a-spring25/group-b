@@ -10,7 +10,7 @@ public class DiscardDeck extends PlayerDeck {
 
     @Override
     public String toString() {
-        return "Draw Deck: " + super.toString();
+        return "Discard Deck: " + super.toString();
     }   
 
 }
