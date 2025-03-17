@@ -42,6 +42,7 @@ public class BigMoneyPlayerTest {
         // Provide a PlayCardDecision option and an EndPhaseDecision.
         Card dummyCard = new Card(Card.Type.BITCOIN, 1);
         List<Decision> options = new ArrayList<>();
+        
         options.add(new PlayCardDecision(dummyCard));
         options.add(new EndPhaseDecision(GameState.TurnPhase.MONEY));
 
@@ -178,7 +179,7 @@ public class BigMoneyPlayerTest {
         GameObserver observer = new ConsoleGameObserver();
         
         // Initialize GameEngine with both players so that currentEngine is set.
-        GameEngine engine = new GameEngine(player, opponent, observer);
+       // GameEngine engine = new GameEngine(player, opponent, observer,deck);
         
         // Force the opponent to have a higher victory score.
         // For example, add a victory card to the opponent's discard deck.
@@ -197,9 +198,9 @@ public class BigMoneyPlayerTest {
         GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.MONEY, 1, 8, 1, controlledDeck);
         
         // Force the GameEngine's gameState to our controlled state (using reflection).
-        Field gameStateField = engine.getClass().getDeclaredField("gameState");
-        gameStateField.setAccessible(true);
-        gameStateField.set(engine, state);
+        //Field gameStateField = engine.getClass().getDeclaredField("gameState");
+       // gameStateField.setAccessible(true);
+        //gameStateField.set(engine, state);
         
         // Prepare the decision options for BUY phase.
         List<Decision> options = new ArrayList<>();

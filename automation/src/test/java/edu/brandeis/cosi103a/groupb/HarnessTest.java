@@ -42,7 +42,15 @@ public class HarnessTest {
         humanPlayer = new HumanPlayer("Alice");
         bigMoneyPlayer = new BigMoneyPlayer("Bot");
         observer = new ConsoleGameObserver();
-        gameEngine = new GameEngine(humanPlayer, bigMoneyPlayer, observer);
+        GameDeck deck = new GameDeck(ImmutableMap.of(
+            Card.Type.BITCOIN, 60,
+            Card.Type.ETHEREUM, 40,
+            Card.Type.DOGECOIN, 30,
+            Card.Type.METHOD, 14,
+            Card.Type.MODULE, 8,
+            Card.Type.FRAMEWORK, 8
+        ));
+        gameEngine = new GameEngine(humanPlayer, bigMoneyPlayer, observer,deck);
 
         // Use reflection to access the private initializeGameState method
         Method initializeGameStateMethod = GameEngine.class.getDeclaredMethod("initializeGameState", AtgPlayer.class);
