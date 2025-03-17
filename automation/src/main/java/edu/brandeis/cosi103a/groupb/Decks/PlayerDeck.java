@@ -62,10 +62,12 @@ public abstract class PlayerDeck {
         return deck.size();
     }
 
-    public void printDeck() {
-        System.out.println("This Deck: ");
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("This deck: ");
         for (Card card : deck) {
-            System.out.println(card); // Assumes Card has a toString() method
+            sb.append(card).append("\n");
         }
+        return sb.toString();
     }
 }

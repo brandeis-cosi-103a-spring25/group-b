@@ -9,10 +9,7 @@ public class DrawDeck extends PlayerDeck {
     }
 
     @Override
-    public void printDeck() {
-        System.out.println("Draw Deck: ");
-        for (Card card : deck) {
-            System.out.println(card);
-        }
-    }        
+    public String toString() {
+        return "Draw Deck: " + super.toString();
+    }       
 }
