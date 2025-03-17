@@ -1,5 +1,6 @@
 package edu.brandeis.cosi103a.groupb.Decks;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
@@ -24,6 +25,19 @@ public abstract class PlayerDeck {
             return deck.pop();
         }
         return null; // No cards left
+    }
+
+    // Retrieve multiple cards from the deck
+    public List<Card> getCards(int count) {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            if (!deck.isEmpty()) {
+                cards.add(deck.pop());
+            } else {
+                break; // Stop if the deck runs out of cards
+            }
+        }
+        return cards;
     }
 
     // Shuffle the discard pile
