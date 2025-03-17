@@ -3,22 +3,27 @@ package edu.brandeis.cosi103a.groupb.Player;
 import java.util.List;
 import java.util.Optional;
 
-import edu.brandeis.cosi103a.groupb.Decisions.BuyDecision;
-import edu.brandeis.cosi103a.groupb.Decisions.Decision;
-import edu.brandeis.cosi103a.groupb.Decisions.EndPhaseDecision;
-import edu.brandeis.cosi103a.groupb.Decisions.PlayCardDecision;
+import com.google.common.collect.ImmutableList;
+
+import edu.brandeis.cosi.atg.api.GameObserver;
+import edu.brandeis.cosi.atg.api.GameState;
+import edu.brandeis.cosi.atg.api.Player;
+import edu.brandeis.cosi.atg.api.cards.Card;
+import edu.brandeis.cosi.atg.api.decisions.BuyDecision;
+import edu.brandeis.cosi.atg.api.decisions.Decision;
+import edu.brandeis.cosi.atg.api.decisions.EndPhaseDecision;
+import edu.brandeis.cosi.atg.api.decisions.PlayCardDecision;
+import edu.brandeis.cosi.atg.api.event.Event;
 import edu.brandeis.cosi103a.groupb.Decks.DiscardDeck;
 import edu.brandeis.cosi103a.groupb.Decks.DrawDeck;
 import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
 import edu.brandeis.cosi103a.groupb.Game.GameEngine;
-import edu.brandeis.cosi103a.groupb.Game.GameObserver;
-import edu.brandeis.cosi103a.groupb.Game.GameState;
-import edu.brandeis.cosi103a.groupb.Cards.Card;
+
 
 /**
  * Represents an automated player, following the basic strategy.
  */
-public class BigMoneyPlayer implements Player {
+public class BigMoneyPlayer implements AtgPlayer {
     private final String name;
     private DiscardDeck discardDeck = new DiscardDeck();
     private DrawDeck drawDeck = new DrawDeck();
@@ -36,7 +41,11 @@ public class BigMoneyPlayer implements Player {
     }
 
     @Override
-    public Decision makeDecision(GameState state, List<Decision> options) {
+    public Decision makeDecision(GameState state, ImmutableList<Decision> options, Optional<Event> reason) {
+        if (reason.isPresent()) {
+            System.out.println("Decision prompted by event: " + reason);
+        }
+
         // Always play all available money cards in the MONEY phase
         for (Decision option : options) {
             if (option instanceof PlayCardDecision) {
@@ -48,12 +57,11 @@ public class BigMoneyPlayer implements Player {
         Decision bestBuy = null;
         int highestCost = 0;
         for (Decision option : options) {
-            if (option instanceof BuyDecision) {
-                BuyDecision buy = (BuyDecision) option;
+            if (option instanceof BuyDecision buy) {
                 // Implemented advanced Strategy 2: Avoid purchasing the last Framework if not winning.
                 if (buy.getCardType() == Card.Type.FRAMEWORK) {
                     int remainingFramework = state.getDeck().getNumAvailable(Card.Type.FRAMEWORK);
-                    if (remainingFramework == 1 && !isWinning(state)) {
+                    if (remainingFramework == 1 && !isWinning()) {
                         // Skip buying framework even if it is normally the most expensive.
                         continue;
                     }
@@ -80,17 +88,17 @@ public class BigMoneyPlayer implements Player {
     /**
      * Calculates if the player is winning based on the current game state.
      */
-    private boolean isWinning(GameState state) {
+    private boolean isWinning() {
         List<Player.ScorePair> scores = GameEngine.getCurrentScores();
         int myScore = 0;
         for (Player.ScorePair pair : scores) {
-            if (pair.getPlayer().getName().equals(this.name)) {
+            if (pair.player.getName().equals(this.name)) {
                 myScore = pair.getScore();
                 break;
             }
         }
         for (Player.ScorePair pair : scores) {
-            if (!pair.getPlayer().getName().equals(this.name) && pair.getScore() >= myScore) {
+            if (!pair.player.getName().equals(this.name) && pair.getScore() >= myScore) {
                 return false;
             }
         }

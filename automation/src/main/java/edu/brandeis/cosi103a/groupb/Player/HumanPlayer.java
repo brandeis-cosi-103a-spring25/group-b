@@ -1,18 +1,21 @@
 package edu.brandeis.cosi103a.groupb.Player;
 
-import edu.brandeis.cosi103a.groupb.Decisions.*;
+import edu.brandeis.cosi.atg.api.event.Event;
 import edu.brandeis.cosi103a.groupb.Decks.DiscardDeck;
 import edu.brandeis.cosi103a.groupb.Decks.DrawDeck;
 import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
-import edu.brandeis.cosi103a.groupb.Game.GameObserver;
-import edu.brandeis.cosi103a.groupb.Game.GameState;
+import edu.brandeis.cosi.atg.api.decisions.Decision;
+import edu.brandeis.cosi.atg.api.GameObserver;
+import edu.brandeis.cosi.atg.api.GameState;
 
 import java.util.*;
+
+import com.google.common.collect.ImmutableList;
 
 /**
  * Represents a human-controlled player using console input.
  */
-public class HumanPlayer implements Player {
+public class HumanPlayer implements AtgPlayer {
     private final String name;
     private DiscardDeck discardDeck = new DiscardDeck();
     private DrawDeck drawDeck = new DrawDeck();
@@ -38,9 +41,11 @@ public class HumanPlayer implements Player {
     }
 
     @Override
-    public Decision makeDecision(GameState state, List<Decision> options) {
-        System.out.println("\n" + name + "'s turn (" + state.getTurnPhase() + " phase)");
-        System.out.println("Available options:");
+    public Decision makeDecision(GameState state, ImmutableList<Decision> options, Optional<Event> reason) {
+        if (reason.isPresent()) {
+            System.out.println("Decision prompted by event: " + reason);
+        } 
+        
         for (int i = 0; i < options.size(); i++) {
             System.out.println("[" + i + "] " + options.get(i).getDescription());
         }
@@ -64,12 +69,10 @@ public class HumanPlayer implements Player {
         return observer;
     }
 
-    @Override
     public DiscardDeck getDiscardDeck() {
         return this.discardDeck;
     }
 
-    @Override
     public DrawDeck getDrawDeck() {
         return this.drawDeck;
     }

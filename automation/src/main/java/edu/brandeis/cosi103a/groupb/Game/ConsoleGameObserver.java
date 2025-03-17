@@ -1,6 +1,8 @@
 package edu.brandeis.cosi103a.groupb.Game;
 
-import edu.brandeis.cosi103a.groupb.Events.Event;
+import edu.brandeis.cosi.atg.api.event.Event;
+import edu.brandeis.cosi.atg.api.GameObserver;
+import edu.brandeis.cosi.atg.api.GameState;
 
 /**
  * A simple game observer that logs events to the console.
