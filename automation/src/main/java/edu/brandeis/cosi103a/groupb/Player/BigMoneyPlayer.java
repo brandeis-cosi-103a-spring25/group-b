@@ -88,7 +88,7 @@ public class BigMoneyPlayer implements AtgPlayer {
     /**
      * Calculates if the player is winning based on the current game state.
      */
-    private boolean isWinning() {
+    public boolean isWinning() {
         List<Player.ScorePair> scores = GameEngine.getCurrentScores();
         int myScore = 0;
         for (Player.ScorePair pair : scores) {

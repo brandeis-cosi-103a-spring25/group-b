@@ -2,18 +2,20 @@ package edu.brandeis.cosi103a.groupb;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+
 import java.io.ByteArrayInputStream;
 import java.util.*;
-import java.util.Scanner;
 
+import edu.brandeis.cosi.atg.api.decisions.*;
+import edu.brandeis.cosi.atg.api.cards.*;
+import edu.brandeis.cosi.atg.api.event.*;
 import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
-import edu.brandeis.cosi103a.groupb.Decisions.Decision;
-import edu.brandeis.cosi103a.groupb.Decisions.EndPhaseDecision;
-import edu.brandeis.cosi103a.groupb.Decisions.PlayCardDecision;
-import edu.brandeis.cosi103a.groupb.Game.GameState;
-import edu.brandeis.cosi103a.groupb.Decks.GameDeck;
-import edu.brandeis.cosi103a.groupb.Decks.Hand;
-import edu.brandeis.cosi103a.groupb.Cards.Card;
+import edu.brandeis.cosi.atg.api.GameState;
+import edu.brandeis.cosi.atg.api.GameDeck;
+import edu.brandeis.cosi.atg.api.Hand;
 
 public class HumanPlayerTest {
 
@@ -26,13 +28,13 @@ public class HumanPlayerTest {
         HumanPlayer player = new HumanPlayer("TestPlayer", scanner);
         
         // Create a dummy GameState with an empty hand and a dummy deck.
-        Hand dummyHand = new Hand(new ArrayList<>(), new ArrayList<>());
-        GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.MONEY, 0, 1, new GameDeck(new HashMap<>()));
+        Hand dummyHand = new Hand(ImmutableList.copyOf(new ArrayList<>()), ImmutableList.copyOf(new ArrayList<>()));
+        GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.MONEY, 1, 0, 1, new GameDeck(ImmutableMap.copyOf(new HashMap<>())));
         
         List<Decision> options = new ArrayList<>();
         options.add(new EndPhaseDecision(GameState.TurnPhase.MONEY));
         
-        Decision decision = player.makeDecision(state, options);
+        Decision decision = player.makeDecision(state, ImmutableList.copyOf(options), Optional.empty());
         assertTrue(decision instanceof EndPhaseDecision, "Expected decision to be EndPhaseDecision.");
     }
     
@@ -45,8 +47,8 @@ public class HumanPlayerTest {
         HumanPlayer player = new HumanPlayer("TestPlayer", scanner);
         
         // Create dummy GameState
-        Hand dummyHand = new Hand(new ArrayList<>(), new ArrayList<>());
-        GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.MONEY, 0, 1, new GameDeck(new HashMap<>()));
+        Hand dummyHand = new Hand(ImmutableList.copyOf(new ArrayList<>()), ImmutableList.copyOf(new ArrayList<>()));
+        GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.MONEY, 1, 0, 1, new GameDeck(ImmutableMap.copyOf(new HashMap<>())));
         
         // Two options available: index 0 and 1.
         List<Decision> options = new ArrayList<>();
@@ -55,7 +57,7 @@ public class HumanPlayerTest {
         options.add(new EndPhaseDecision(GameState.TurnPhase.MONEY));
         
         // The invalid input should be consumed and then "0" selects the first option.
-        Decision decision = player.makeDecision(state, options);
+        Decision decision = player.makeDecision(state, ImmutableList.copyOf(options), Optional.empty());
         assertTrue(decision instanceof PlayCardDecision, "Expected decision to be PlayCardDecision after invalid input followed by valid input.");
     }
     
@@ -68,8 +70,8 @@ public class HumanPlayerTest {
         HumanPlayer player = new HumanPlayer("TestPlayer", scanner);
         
         // Create dummy GameState.
-        Hand dummyHand = new Hand(new ArrayList<>(), new ArrayList<>());
-        GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.MONEY, 0, 1, new GameDeck(new HashMap<>()));
+        Hand dummyHand = new Hand(ImmutableList.copyOf(new ArrayList<>()), ImmutableList.copyOf(new ArrayList<>()));
+        GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.MONEY, 1, 0, 1, new GameDeck(ImmutableMap.copyOf(new HashMap<>())));
         
         // Provide three options.
         List<Decision> options = new ArrayList<>();
@@ -80,7 +82,7 @@ public class HumanPlayerTest {
         // Option 2: Another EndPhaseDecision (for variety).
         options.add(new EndPhaseDecision(GameState.TurnPhase.MONEY));
         
-        Decision decision = player.makeDecision(state, options);
+        Decision decision = player.makeDecision(state, ImmutableList.copyOf(options), Optional.empty());
         // With input "1", we expect the second option to be chosen.
         assertTrue(decision instanceof EndPhaseDecision, "Expected decision to be EndPhaseDecision from multiple options.");
     }
