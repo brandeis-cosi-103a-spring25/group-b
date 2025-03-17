@@ -9,11 +9,8 @@ public class DiscardDeck extends PlayerDeck {
     }
 
     @Override
-    public void printDeck() {
-        System.out.println("Discard Deck: ");
-        for (Card card : deck) {
-            System.out.println(card);
-        }
-    }    
+    public String toString() {
+        return "Draw Deck: " + super.toString();
+    }   
 
 }
