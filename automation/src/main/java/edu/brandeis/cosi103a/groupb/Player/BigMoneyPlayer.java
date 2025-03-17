@@ -11,8 +11,10 @@ import edu.brandeis.cosi.atg.api.Player;
 import edu.brandeis.cosi.atg.api.cards.Card;
 import edu.brandeis.cosi.atg.api.decisions.BuyDecision;
 import edu.brandeis.cosi.atg.api.decisions.Decision;
+import edu.brandeis.cosi.atg.api.decisions.DiscardCardDecision;
 import edu.brandeis.cosi.atg.api.decisions.EndPhaseDecision;
 import edu.brandeis.cosi.atg.api.decisions.PlayCardDecision;
+import edu.brandeis.cosi.atg.api.decisions.TrashCardDecision;
 import edu.brandeis.cosi.atg.api.event.Event;
 import edu.brandeis.cosi103a.groupb.Decks.DiscardDeck;
 import edu.brandeis.cosi103a.groupb.Decks.DrawDeck;
@@ -74,6 +76,43 @@ public class BigMoneyPlayer implements AtgPlayer {
             }
         }
         if (bestBuy != null) return bestBuy;
+
+        // Trash card phase logic (so far) -- throw away the card with the lowest value, either AP or purchase power
+        Decision bestTrash = null;
+        int lowestValue = -1;
+        for (Decision option : options) {
+            if (option instanceof TrashCardDecision trash) {
+                if (trash.getCard().getValue() < lowestValue) {
+                    lowestValue = trash.getCard().getValue();
+                    bestTrash = trash;
+                }
+            }
+        }
+        if (bestTrash != null) return bestTrash;
+
+        // Discard card phase logic with advanced strategy
+        Decision bestDiscard = null;
+        int lowestVal = -1;
+        for (Decision option : options) {
+            if (option instanceof DiscardCardDecision discard) {
+                if (discard.getCard().getCategory() == Card.Type.Category.MONEY) {
+                    bestDiscard = discard;
+                }
+            }
+        }
+        if (bestDiscard != null) {
+            return bestDiscard;
+        } else {
+            for (Decision option : options) {
+                if (option instanceof DiscardCardDecision discard) {
+                    if (discard.getCard().getValue() < lowestVal) {
+                        lowestVal = discard.getCard().getValue();
+                        bestDiscard = discard;
+                    }
+                }
+            }
+        }
+        if (bestDiscard != null) return bestDiscard;
         
         // If no buy option qualifies, check for an EndPhaseDecision.
         for (Decision option : options) {
