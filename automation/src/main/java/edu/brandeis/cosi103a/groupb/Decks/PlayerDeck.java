@@ -28,15 +28,9 @@ public abstract class PlayerDeck {
     }
 
     // Retrieve multiple cards from the deck
-    public List<Card> getCards(int count) {
+    public List<Card> getCards() {
         List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            if (!deck.isEmpty()) {
-                cards.add(deck.pop());
-            } else {
-                break; // Stop if the deck runs out of cards
-            }
-        }
+        cards.addAll(deck);
         return cards;
     }
 
@@ -78,7 +72,7 @@ public abstract class PlayerDeck {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("This deck: ");
+        StringBuilder sb = new StringBuilder();
         for (Card card : deck) {
             sb.append(card).append("\n");
         }

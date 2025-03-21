@@ -1,8 +1,8 @@
 package edu.brandeis.cosi103a.groupb;
 
 import java.io.ByteArrayInputStream;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,9 +27,11 @@ import edu.brandeis.cosi.atg.api.decisions.Decision;
 import edu.brandeis.cosi.atg.api.decisions.EndPhaseDecision;
 import edu.brandeis.cosi.atg.api.decisions.PlayCardDecision;
 import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
-import edu.brandeis.cosi103a.groupb.Game.GameEngine;
 import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
 import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
+import edu.brandeis.cosi103a.groupb.Game.GameEngine;
+import edu.brandeis.cosi.atg.api.Engine;
+
 
 public class BigMoneyPlayerTest {
 
@@ -56,7 +58,7 @@ public class BigMoneyPlayerTest {
         BigMoneyPlayer player = new BigMoneyPlayer("BigMoney");
         // Create dummy GameState for BUY phase with enough money.
         Hand dummyHand = new Hand(ImmutableList.copyOf(new ArrayList<>()), ImmutableList.copyOf(new ArrayList<>()));
-        GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.BUY, 1, 5, 1, new GameDeck(ImmutableMap.copyOf(new HashMap<>())));
+        GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.BUY, 1, 5, 1, new GameDeck(ImmutableMap.of(Card.Type.FRAMEWORK, 2, Card.Type.BITCOIN, 2)));
 
         // Provide BuyDecision options (one cheap and one expensive) and an EndPhaseDecision.
         List<Decision> options = new ArrayList<>();
@@ -179,7 +181,7 @@ public class BigMoneyPlayerTest {
         GameObserver observer = new ConsoleGameObserver();
         
         // Initialize GameEngine with both players so that currentEngine is set.
-       // GameEngine engine = new GameEngine(player, opponent, observer,deck);
+        Engine engine = GameEngine.createEngine(player, opponent, observer);
         
         // Force the opponent to have a higher victory score.
         // For example, add a victory card to the opponent's discard deck.
@@ -198,9 +200,9 @@ public class BigMoneyPlayerTest {
         GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.MONEY, 1, 8, 1, controlledDeck);
         
         // Force the GameEngine's gameState to our controlled state (using reflection).
-        //Field gameStateField = engine.getClass().getDeclaredField("gameState");
-       // gameStateField.setAccessible(true);
-        //gameStateField.set(engine, state);
+        Field gameStateField = engine.getClass().getDeclaredField("gameState");
+        gameStateField.setAccessible(true);
+        gameStateField.set(engine, state);
         
         // Prepare the decision options for BUY phase.
         List<Decision> options = new ArrayList<>();
