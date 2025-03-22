@@ -3,46 +3,33 @@ package edu.brandeis.cosi103a.groupb;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.common.collect.ImmutableMap;
 import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
 import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
 import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
 import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
 import edu.brandeis.cosi103a.groupb.Game.GameEngine;
 import edu.brandeis.cosi.atg.api.Engine;
-import edu.brandeis.cosi.atg.api.GameDeck;
 import edu.brandeis.cosi.atg.api.GameObserver;
 import edu.brandeis.cosi.atg.api.PlayerViolationException;
 import edu.brandeis.cosi.atg.api.Player;
-import edu.brandeis.cosi.atg.api.cards.Card;
 
 public class Main {
     public static void main(String[] args) {
         // Step 1: Create players
-        AtgPlayer player1 = new HumanPlayer("Alice");
-        AtgPlayer player2 = new BigMoneyPlayer("Bot");
+        AtgPlayer player1 = new BigMoneyPlayer("Bot1");
+        AtgPlayer player2 = new BigMoneyPlayer("Bot2");
 
         // Step 2: Create a game observer
         GameObserver observer = new ConsoleGameObserver();
 
-        // Step 3: Create the game deck
-        GameDeck deck = new GameDeck(ImmutableMap.of(
-            Card.Type.BITCOIN, 60,
-            Card.Type.ETHEREUM, 40,
-            Card.Type.DOGECOIN, 30,
-            Card.Type.METHOD, 14,
-            Card.Type.MODULE, 8,
-            Card.Type.FRAMEWORK, 8
-        ));
-
-        // Step 4: Create the game engine
-        Engine gameEngine = new GameEngine(player1, player2, observer, deck);
+        // Step 3: Create the game engine
+        Engine gameEngine = GameEngine.createEngine(player1, player2, observer);
 
         try {
-            // Step 5: Start the game and get the results
+            // Step 4: Start the game and get the results
             List<Player.ScorePair> results = gameEngine.play();
 
-            // Step 6: Display the final scores
+            // Step 5: Display the final scores
             System.out.println("\nGame Over! Final Scores:");
             int highestScore = -1;
             List<AtgPlayer> winners = new ArrayList<>();
@@ -59,7 +46,7 @@ public class Main {
                 }
             }
 
-            // Step 7: Announce the winner(s)
+            // Step 6: Announce the winner(s)
             if (!winners.isEmpty()) {
                 System.out.print("The winner(s): ");
                 System.out.println(winners.stream().map(AtgPlayer::getName).toList());

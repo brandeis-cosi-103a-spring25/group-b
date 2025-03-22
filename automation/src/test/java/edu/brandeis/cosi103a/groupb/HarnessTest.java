@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
 import edu.brandeis.cosi.atg.api.PlayerViolationException;
@@ -23,8 +24,8 @@ import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
 import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
 import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
 import edu.brandeis.cosi103a.groupb.Game.GameEngine;
+import edu.brandeis.cosi.atg.api.Engine;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.lang.reflect.Method;
 
@@ -35,7 +36,7 @@ public class HarnessTest {
     private GameObserver observer;
     private GameState gameState;
     private List<Decision> options;
-    private GameEngine gameEngine;
+    private Engine gameEngine;
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -79,7 +80,7 @@ public class HarnessTest {
         mockResults.add(new AtgPlayer.ScorePair(bigMoneyPlayer, 5));
 
         GameEngine mockGameEngine = Mockito.mock(GameEngine.class);
-        when(mockGameEngine.play()).thenReturn(mockResults);
+        when(mockGameEngine.play()).thenReturn(ImmutableList.copyOf(mockResults));
 
         List<AtgPlayer.ScorePair> results = mockGameEngine.play();
         assertEquals(2, results.size());
@@ -106,8 +107,7 @@ public class HarnessTest {
         mockResults.add(new AtgPlayer.ScorePair(bigMoneyPlayer, 10));
 
         GameEngine mockGameEngine = Mockito.mock(GameEngine.class);
-        when(mockGameEngine.play()).thenReturn(mockResults);
-
+        when(mockGameEngine.play()).thenReturn(ImmutableList.copyOf(mockResults));
         List<AtgPlayer.ScorePair> results = mockGameEngine.play();
         int highestScore = -1;
         List<AtgPlayer> winners = new ArrayList<>();
@@ -129,7 +129,7 @@ public class HarnessTest {
     @Test
     public void testObserverNotificationOnGainCard() {
         GameObserver mockObserver = Mockito.mock(GameObserver.class);
-        gameEngine = new GameEngine(humanPlayer, bigMoneyPlayer, mockObserver);
+        gameEngine = GameEngine.createEngine(humanPlayer, bigMoneyPlayer, mockObserver);
 
         // Simulate gaining a card
         GainCardEvent gainCardEvent = new GainCardEvent(Card.Type.BITCOIN, "Alice");
@@ -142,7 +142,7 @@ public class HarnessTest {
     @Test
     public void testObserverNotificationOnEndTurn() {
         GameObserver mockObserver = Mockito.mock(GameObserver.class);
-        gameEngine = new GameEngine(humanPlayer, bigMoneyPlayer, mockObserver);
+        gameEngine = GameEngine.createEngine(humanPlayer, bigMoneyPlayer, mockObserver);
 
         // Simulate ending a turn
         EndTurnEvent endTurnEvent = new EndTurnEvent();
@@ -155,7 +155,7 @@ public class HarnessTest {
     @Test
     public void testObserverNotificationOnPlayCard() {
         GameObserver mockObserver = Mockito.mock(GameObserver.class);
-        gameEngine = new GameEngine(humanPlayer, bigMoneyPlayer, mockObserver);
+        gameEngine = GameEngine.createEngine(humanPlayer, bigMoneyPlayer, mockObserver);
 
         // Simulate playing a card
         PlayCardEvent playCardEvent = new PlayCardEvent(new Card(Card.Type.BITCOIN, 1), "Alice");

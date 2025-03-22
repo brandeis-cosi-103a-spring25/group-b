@@ -7,32 +7,32 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
+
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
-import edu.brandeis.cosi103a.groupb.Decks.DrawDeck;
-import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
-
-import edu.brandeis.cosi.atg.api.cards.Card;
-import edu.brandeis.cosi.atg.api.cards.Card.Type;
-import edu.brandeis.cosi.atg.api.event.Event;
-import edu.brandeis.cosi.atg.api.event.GainCardEvent;
-import edu.brandeis.cosi.atg.api.event.GameEvent;
-import edu.brandeis.cosi.atg.api.event.PlayCardEvent;
-import edu.brandeis.cosi.atg.api.decisions.BuyDecision;
-import edu.brandeis.cosi.atg.api.decisions.Decision;
-import edu.brandeis.cosi.atg.api.decisions.EndPhaseDecision;
-import edu.brandeis.cosi.atg.api.decisions.PlayCardDecision;
 import edu.brandeis.cosi.atg.api.Engine;
+import edu.brandeis.cosi.atg.api.EngineCreator;
 import edu.brandeis.cosi.atg.api.GameDeck;
 import edu.brandeis.cosi.atg.api.GameObserver;
 import edu.brandeis.cosi.atg.api.GameState;
 import edu.brandeis.cosi.atg.api.Hand;
 import edu.brandeis.cosi.atg.api.Player;
 import edu.brandeis.cosi.atg.api.PlayerViolationException;
+import edu.brandeis.cosi.atg.api.cards.Card;
+import edu.brandeis.cosi.atg.api.decisions.BuyDecision;
+import edu.brandeis.cosi.atg.api.decisions.Decision;
+import edu.brandeis.cosi.atg.api.decisions.EndPhaseDecision;
+import edu.brandeis.cosi.atg.api.decisions.PlayCardDecision;
+import edu.brandeis.cosi.atg.api.event.Event;
+import edu.brandeis.cosi.atg.api.event.GainCardEvent;
+import edu.brandeis.cosi.atg.api.event.GameEvent;
+import edu.brandeis.cosi.atg.api.event.PlayCardEvent;
+import edu.brandeis.cosi103a.groupb.Decks.DrawDeck;
+import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
 
 public class GameEngine implements Engine {
-    private final GameDeck deck;
+    private GameDeck deck;
     private final AtgPlayer player1;
     private final AtgPlayer player2;
     private final GameObserver observer;
@@ -52,6 +52,19 @@ public class GameEngine implements Engine {
         currentEngine = this;
     }
 
+    @EngineCreator
+    public static Engine createEngine(AtgPlayer player1, AtgPlayer player2, GameObserver observer) {
+        // Encapsulate the creation of the game deck
+        GameDeck deck = new GameDeck(ImmutableMap.of(
+            Card.Type.BITCOIN, 60,
+            Card.Type.ETHEREUM, 40,
+            Card.Type.DOGECOIN, 30,
+            Card.Type.METHOD, 14,
+            Card.Type.MODULE, 8,
+            Card.Type.FRAMEWORK, 8
+        ));
+        return new GameEngine(player1, player2, observer, deck);
+    }
 
     private void initializePhysicalDeck() {
         for (Card.Type type : this.deck.getCardTypes()) {
@@ -63,18 +76,13 @@ public class GameEngine implements Engine {
         Collections.shuffle(physicalDeck); // Shuffle the deck
         System.out.println("Physical deck initialized with " + physicalDeck.size() + " cards.");
     }
-    private Card drawCard() {
-        if (physicalDeck.isEmpty()) {
-            throw new IllegalStateException("The physical deck is empty!");
-        }
-        return physicalDeck.remove(0); // Remove and return the top card
-    }
+
     private Card drawCardFromGameDeck(Card.Type cardType) {
         // Search for a card of the specified type in the physical deck
         for (Card card : physicalDeck) {
             if (card.getType() == cardType) {
                 physicalDeck.remove(card); // Remove the card from the physical deck
-                System.out.println("DEBUG: Drawing card of type " + cardType + " from the physical deck.");
+                System.out.println("DEBUG: Removing card of type " + cardType + " from the physical deck.");
                 return card; // Return the drawn card
             }
         }
@@ -101,7 +109,10 @@ public class GameEngine implements Engine {
             Card card = drawCardFromGameDeck(Card.Type.METHOD); // Explicitly draw a Method card
             drawDeck.addCard(card); // Add to player's DrawDeck
         }
-    
+        Map<Card.Type, Integer> cardCounts = new HashMap<>(this.deck.getCardCounts());
+        cardCounts.put(Card.Type.BITCOIN, cardCounts.get(Card.Type.BITCOIN) - 7);
+        cardCounts.put(Card.Type.METHOD, cardCounts.get(Card.Type.METHOD) - 3);
+        this.deck = new GameDeck(ImmutableMap.copyOf(cardCounts));
         // Shuffle the player's draw deck
         drawDeck.shuffle();
     
@@ -291,15 +302,18 @@ public class GameEngine implements Engine {
                 Card.Type boughtCard = buyDecision.getCardType();
                 observer.notifyEvent(gameState, new GainCardEvent(boughtCard, player.getName()));
     
-                // Add the bought card to the player's discard deck & remove the card from the physical deck
+                // Add the bought card to the player's discard deck & remove the card from the physical deck and gamedeck
                 player.getDiscardDeck().addCard(drawCardFromGameDeck(boughtCard));
+                Map<Card.Type, Integer> cardCounts = new HashMap<>(this.deck.getCardCounts());
+                cardCounts.put(boughtCard, cardCounts.get(boughtCard) - 1);
+                this.deck = new GameDeck(ImmutableMap.copyOf(cardCounts));
     
                 // ✅ Deduct money after buying
                 int newMoney = gameState.getSpendableMoney() - boughtCard.getCost();
     
                 System.out.println("DEBUG: Updated spendable money after buying: " + newMoney);
                 System.out.println("DEBUG: Updated " + player.getName() + "'s discard deck:");
-                player.getDiscardDeck().toString();
+                System.out.println(player.getDiscardDeck());
     
                 // ✅ Update game state after a purchase
                 gameState = new GameState(
@@ -352,7 +366,7 @@ public class GameEngine implements Engine {
     
         System.out.println("DEBUG: Discarding current hand...");
         System.out.println("DEBUG: Updated " + player.getName() + "'s discard deck:");
-        player.getDiscardDeck().toString();
+        System.out.println(player.getDiscardDeck());
         observer.notifyEvent(gameState, new GameEvent(player.getName() + "'s turn ends"));
     }
 
@@ -382,8 +396,8 @@ public class GameEngine implements Engine {
     private int calculateScore(AtgPlayer player) {
         // Retrieve all cards from the player's discard and draw decks
         List<Card> playerMainDeck = new ArrayList<>();
-        playerMainDeck.addAll(player.getDiscardDeck().getCards(player.getDiscardDeck().size())); // Get all cards from discard deck
-        playerMainDeck.addAll(player.getDrawDeck().getCards(player.getDrawDeck().size()));       // Get all cards from draw deck
+        playerMainDeck.addAll(player.getDiscardDeck().getCards()); // Get all cards from discard deck
+        playerMainDeck.addAll(player.getDrawDeck().getCards());       // Get all cards from draw deck
 
         // Add cards from the player's current hand if it's their turn
         if (gameState != null && gameState.getCurrentPlayerName().equals(player.getName())) {

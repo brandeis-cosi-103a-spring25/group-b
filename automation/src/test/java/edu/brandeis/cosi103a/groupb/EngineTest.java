@@ -2,14 +2,13 @@ package edu.brandeis.cosi103a.groupb;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue; //Use java reflection to test private method
 import org.junit.jupiter.api.Test;
 
+import com.google.common.collect.ImmutableList;
 import edu.brandeis.cosi.atg.api.GameDeck;
 import edu.brandeis.cosi.atg.api.GameObserver;
 import edu.brandeis.cosi.atg.api.cards.Card;
@@ -19,18 +18,19 @@ import edu.brandeis.cosi103a.groupb.Game.GameEngine;
 import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
 import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
 import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
+import edu.brandeis.cosi.atg.api.Engine;
 
 public class EngineTest {
     private AtgPlayer player1 = new BigMoneyPlayer("Nancy");
     private AtgPlayer player2 = new HumanPlayer("Abby");
     private GameObserver observer = new ConsoleGameObserver();
-    private GameEngine gameEngine = new GameEngine(player1, player2, observer);
+    private Engine gameEngine = GameEngine.createEngine(player1, player2, observer);
 
     @Test
     void testInitializeDeck() throws Exception {
-        Method initializeDeck = gameEngine.getClass().getDeclaredMethod("initializeDeck");
-        initializeDeck.setAccessible(true);
-        GameDeck deck = (GameDeck) initializeDeck.invoke(gameEngine);
+        Field deckField = gameEngine.getClass().getDeclaredField("deck");
+        deckField.setAccessible(true);
+        GameDeck deck = (GameDeck) deckField.get(gameEngine);
 
         assertEquals(60, deck.getNumAvailable(Card.Type.BITCOIN));
         assertEquals(40, deck.getNumAvailable(Card.Type.ETHEREUM));
@@ -84,8 +84,8 @@ public class EngineTest {
         assertEquals(player1.getDrawDeck().size(), 5);
 
         // Check if all cards in hand and played cards moved to discard
-        int handSize = gameEngine.getGameState().getCurrentPlayerHand().getUnplayedCards().size();
-        int playedCardsSize = gameEngine.getGameState().getCurrentPlayerHand().getPlayedCards().size();
+        int handSize = ((GameEngine)gameEngine).getGameState().getCurrentPlayerHand().getUnplayedCards().size();
+        int playedCardsSize = ((GameEngine)gameEngine).getGameState().getCurrentPlayerHand().getPlayedCards().size();
         assertEquals(0, handSize + playedCardsSize); // All played/unplayed cards should move to discard;
 
         // Verify draw deck has correct count (10-5)
@@ -104,8 +104,8 @@ public class EngineTest {
         assertEquals(player1.getDrawDeck().size(), 5-5);
 
         // Check if all cards in hand and played cards moved to discard
-        int handSize2 = gameEngine.getGameState().getCurrentPlayerHand().getUnplayedCards().size();
-        int playedCardsSize2 = gameEngine.getGameState().getCurrentPlayerHand().getPlayedCards().size();
+        int handSize2 = ((GameEngine)gameEngine).getGameState().getCurrentPlayerHand().getUnplayedCards().size();
+        int playedCardsSize2 = ((GameEngine)gameEngine).getGameState().getCurrentPlayerHand().getPlayedCards().size();
         assertEquals(0, handSize2 + playedCardsSize2); // All played/unplayed cards should move to discard;
 
         // Verify draw deck has correct count (10-5)
@@ -126,8 +126,8 @@ public class EngineTest {
         assertEquals(player1.getDrawDeck().size(), newSize-5); // Draw deck should -5 cards after this cleanup; 2 here
 
         // Check if all cards in hand and played cards moved to discard
-        int handSize3 = gameEngine.getGameState().getCurrentPlayerHand().getUnplayedCards().size();
-        int playedCardsSize3 = gameEngine.getGameState().getCurrentPlayerHand().getPlayedCards().size();
+        int handSize3 = ((GameEngine)gameEngine).getGameState().getCurrentPlayerHand().getUnplayedCards().size();
+        int playedCardsSize3 = ((GameEngine)gameEngine).getGameState().getCurrentPlayerHand().getPlayedCards().size();
         assertEquals(0, handSize3 + playedCardsSize3); // All played/unplayed cards should move to discard;
 
         // Verify draw deck has correct count
@@ -147,8 +147,8 @@ public class EngineTest {
         assertEquals(player1.getDrawDeck().size(), 2); // Unchanged, still 2
 
         // Check if all cards in hand and played cards moved to discard
-        int handSize4 = gameEngine.getGameState().getCurrentPlayerHand().getUnplayedCards().size();
-        int playedCardsSize4 = gameEngine.getGameState().getCurrentPlayerHand().getPlayedCards().size();
+        int handSize4 = ((GameEngine)gameEngine).getGameState().getCurrentPlayerHand().getUnplayedCards().size();
+        int playedCardsSize4 = ((GameEngine)gameEngine).getGameState().getCurrentPlayerHand().getPlayedCards().size();
         assertEquals(0, handSize4 + playedCardsSize4); // All played/unplayed cards should move to discard;
 
         // Verify draw deck has correct count (10-5)
@@ -157,10 +157,6 @@ public class EngineTest {
 
     //Test if the calculate point mechanism is correct by calculating card values at the end of one simulated 1-player game.
     @Test void calculateAPs() throws Exception {
-        Field mainDeck = gameEngine.getClass().getDeclaredField("deck"); 
-        mainDeck.setAccessible(true);
-        GameDeck deck = (GameDeck) mainDeck.get(gameEngine);
-
         Method initializeGameState = gameEngine.getClass().getDeclaredMethod("initializeGameState", AtgPlayer.class);
         initializeGameState.setAccessible(true);
         initializeGameState.invoke(gameEngine, player1);
@@ -181,8 +177,12 @@ public class EngineTest {
         }
 
         @SuppressWarnings("unchecked")
-        List<AtgPlayer.ScorePair> scorePair = (ArrayList<AtgPlayer.ScorePair>) computeScores.invoke(gameEngine);
+        ImmutableList<AtgPlayer.ScorePair> scorePair = (ImmutableList<AtgPlayer.ScorePair>) computeScores.invoke(gameEngine);
         int score = scorePair.get(0).getScore(); // Only one player in the test so far
+
+        Field mainDeck = gameEngine.getClass().getDeclaredField("deck"); 
+        mainDeck.setAccessible(true);
+        GameDeck deck = (GameDeck) mainDeck.get(gameEngine);
 
         int money = 0;
         for (Map.Entry<Card.Type, Integer> entry: deck.getCardCounts().entrySet()) {
