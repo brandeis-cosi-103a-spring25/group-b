@@ -11,8 +11,11 @@ import edu.brandeis.cosi.atg.api.Player;
 import edu.brandeis.cosi.atg.api.cards.Card;
 import edu.brandeis.cosi.atg.api.decisions.BuyDecision;
 import edu.brandeis.cosi.atg.api.decisions.Decision;
+import edu.brandeis.cosi.atg.api.decisions.DiscardCardDecision;
 import edu.brandeis.cosi.atg.api.decisions.EndPhaseDecision;
+import edu.brandeis.cosi.atg.api.decisions.GainCardDecision;
 import edu.brandeis.cosi.atg.api.decisions.PlayCardDecision;
+import edu.brandeis.cosi.atg.api.decisions.TrashCardDecision;
 import edu.brandeis.cosi.atg.api.event.Event;
 import edu.brandeis.cosi103a.groupb.Decks.DiscardDeck;
 import edu.brandeis.cosi103a.groupb.Decks.DrawDeck;
@@ -48,7 +51,7 @@ public class BigMoneyPlayer implements AtgPlayer {
 
         // Always play all available money cards in the MONEY phase
         for (Decision option : options) {
-            if (option instanceof PlayCardDecision) {
+            if (option instanceof PlayCardDecision && state.getTurnPhase() == GameState.TurnPhase.MONEY) {
                 return option;
             }
         }
@@ -74,6 +77,34 @@ public class BigMoneyPlayer implements AtgPlayer {
             }
         }
         if (bestBuy != null) return bestBuy;
+
+        int lowestValue = -1;
+        Decision bestTrash = null;
+        for (Decision option: options) {
+            if (option instanceof TrashCardDecision trash) {  // Trash card phase logic (so far) -- throw away the card with the lowest value, either AP or purchase power
+                if (trash.getCard().getValue() < lowestValue) {
+                    lowestValue = trash.getCard().getValue();
+                    bestTrash = trash;
+                }
+            }
+        }
+        if (bestTrash != null) return bestTrash;
+
+        int lowestVal = -1;
+        Decision bestDiscard = null;
+        for (Decision option: options) {
+            if (option instanceof DiscardCardDecision discard) {
+                if (discard.getCard().getCategory() == Card.Type.Category.VICTORY) { //Victory points don't do anything in the hand
+                    return discard;
+                } else {
+                    if (discard.getCard().getValue() < lowestVal) {
+                        lowestVal = discard.getCard().getValue();
+                            bestDiscard = discard;
+                    }
+                }
+            }
+        }
+        if (bestDiscard != null) return bestDiscard;
         
         // If no buy option qualifies, check for an EndPhaseDecision.
         for (Decision option : options) {
@@ -81,6 +112,25 @@ public class BigMoneyPlayer implements AtgPlayer {
                 return option;
             }
         }
+
+        // int highestValue = 0;
+        // Decision bestGain = null;
+        // for (Decision option: options) {
+        //     if (option instanceof GainCardDecision gain) {
+        //         if (gain.getCardType().getValue() > highestValue) {
+        //             highestValue = gain.getCardType().getValue();
+        //             bestGain = gain;
+        //         }
+        //     }
+        // }
+        // if (bestGain != null) return bestGain;
+
+        for (Decision option: options) {
+            if (option instanceof GainCardDecision gain) {
+                return gain;
+            }
+        }
+        
         
         throw new IllegalStateException("Big Money Player could not find a valid decision.");
     }
