@@ -1,5 +1,6 @@
 package edu.brandeis.cosi103a.groupb.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import com.google.common.collect.ImmutableList;
 
 import edu.brandeis.cosi.atg.api.GameObserver;
 import edu.brandeis.cosi.atg.api.GameState;
+import edu.brandeis.cosi.atg.api.Hand;
 import edu.brandeis.cosi.atg.api.Player;
 import edu.brandeis.cosi.atg.api.cards.Card;
 import edu.brandeis.cosi.atg.api.decisions.BuyDecision;
@@ -27,6 +29,10 @@ public class BigMoneyPlayer implements AtgPlayer {
     private final String name;
     private DiscardDeck discardDeck = new DiscardDeck();
     private DrawDeck drawDeck = new DrawDeck();
+    private Hand hand = new Hand(
+                ImmutableList.copyOf(new ArrayList<Card>()), // Played cards (empty)
+                ImmutableList.copyOf(new ArrayList<Card>())  // Unplayed cards (empty)
+            );
 
     private final Optional<GameObserver> observer;
 
@@ -118,5 +124,15 @@ public class BigMoneyPlayer implements AtgPlayer {
     @Override
     public DrawDeck getDrawDeck() {
         return this.drawDeck;
+    }
+
+    @Override
+    public Hand getHand() {
+        return this.hand;
+    }
+
+    @Override
+    public void setHand(Hand hand) {
+        this.hand = hand;
     }
 }
