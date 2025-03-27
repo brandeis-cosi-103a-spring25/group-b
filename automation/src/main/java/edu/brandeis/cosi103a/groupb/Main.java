@@ -1,7 +1,9 @@
 package edu.brandeis.cosi103a.groupb;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
 import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
@@ -16,8 +18,8 @@ import edu.brandeis.cosi.atg.api.Player;
 public class Main {
     public static void main(String[] args) {
         // Step 1: Create players
-        AtgPlayer player1 = new BigMoneyPlayer("Bot1");
-        AtgPlayer player2 = new BigMoneyPlayer("Bot2");
+        AtgPlayer player1 = new HumanPlayer("Alice");
+        AtgPlayer player2 = new HumanPlayer("Jamie");
 
         // Step 2: Create a game observer
         GameObserver observer = new ConsoleGameObserver();
