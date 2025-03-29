@@ -57,6 +57,13 @@ public class BigMoneyPlayer implements AtgPlayer {
 
         // Plays whatever action cards so far
         for (Decision option : options) {
+            if (option instanceof PlayCardDecision && state.getTurnPhase() == GameState.TurnPhase.ACTION) {
+                return option;
+            }
+        }
+
+        // Plays whatever reaction cards so far
+        for (Decision option : options) {
             if (option instanceof PlayCardDecision && state.getTurnPhase() == GameState.TurnPhase.REACTION) {
                 return option;
             }
