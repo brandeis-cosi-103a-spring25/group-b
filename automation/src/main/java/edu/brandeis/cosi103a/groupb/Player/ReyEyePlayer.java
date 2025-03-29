@@ -55,6 +55,13 @@ public class ReyEyePlayer implements AtgPlayer {
             System.out.println("Decision prompted by event: " + reason);
         }
 
+        // Plays whatever action cards so far
+        for (Decision option : options) {
+            if (option instanceof PlayCardDecision && state.getTurnPhase() == GameState.TurnPhase.REACTION) {
+                return option;
+            }
+        }
+
         // Always play all available money cards in the MONEY phase
         for (Decision option : options) {
             if (option instanceof PlayCardDecision && state.getTurnPhase() == GameState.TurnPhase.MONEY) {
@@ -66,7 +73,7 @@ public class ReyEyePlayer implements AtgPlayer {
         Decision bestBuy = null;
         int highestCost = 0;
         for (Decision option : options) {
-            if (option instanceof BuyDecision buy) {
+            if (option instanceof BuyDecision buy && state.getTurnPhase() == GameState.TurnPhase.BUY) {
                 // Implemented advanced Strategy 2: Avoid purchasing the last Framework if not winning.
                 if (buy.getCardType() == Card.Type.FRAMEWORK) {
                     int remainingFramework = state.getDeck().getNumAvailable(Card.Type.FRAMEWORK);
@@ -84,22 +91,10 @@ public class ReyEyePlayer implements AtgPlayer {
         }
         if (bestBuy != null) return bestBuy;
 
-        int lowestValue = -1;
-        Decision bestTrash = null;
-        for (Decision option: options) {
-            if (option instanceof TrashCardDecision trash) {  // Trash card phase logic (so far) -- throw away the card with the lowest value, either AP or purchase power
-                if (trash.getCard().getValue() < lowestValue) {
-                    lowestValue = trash.getCard().getValue();
-                    bestTrash = trash;
-                }
-            }
-        }
-        if (bestTrash != null) return bestTrash;
-
         int lowestVal = -1;
         Decision bestDiscard = null;
         for (Decision option: options) {
-            if (option instanceof DiscardCardDecision discard) {
+            if (option instanceof DiscardCardDecision discard && state.getTurnPhase() == GameState.TurnPhase.DISCARD) {
                 if (discard.getCard().getCategory() == Card.Type.Category.VICTORY) { //Victory points don't do anything in the hand
                     return discard;
                 } else {
@@ -111,32 +106,19 @@ public class ReyEyePlayer implements AtgPlayer {
             }
         }
         if (bestDiscard != null) return bestDiscard;
-        
-        // If no buy option qualifies, check for an EndPhaseDecision.
+
+        for (Decision option: options) {
+            if (option instanceof GainCardDecision gain && state.getTurnPhase() == GameState.TurnPhase.GAIN) {
+                return gain;
+            }
+        }
+
+        // If no other option qualifies, check for an EndPhaseDecision.
         for (Decision option : options) {
             if (option instanceof EndPhaseDecision) {
                 return option;
             }
         }
-
-        // int highestValue = 0;
-        // Decision bestGain = null;
-        // for (Decision option: options) {
-        //     if (option instanceof GainCardDecision gain) {
-        //         if (gain.getCardType().getValue() > highestValue) {
-        //             highestValue = gain.getCardType().getValue();
-        //             bestGain = gain;
-        //         }
-        //     }
-        // }
-        // if (bestGain != null) return bestGain;
-
-        for (Decision option: options) {
-            if (option instanceof GainCardDecision gain) {
-                return gain;
-            }
-        }
-        
         
         throw new IllegalStateException("Big Money Player could not find a valid decision.");
     }
