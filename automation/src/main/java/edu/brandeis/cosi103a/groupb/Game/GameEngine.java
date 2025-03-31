@@ -88,7 +88,7 @@ public class GameEngine implements Engine {
         for (Card card : physicalDeck) {
             if (card.getType() == cardType) {
                 physicalDeck.remove(card); // Remove the card from the physical deck
-                System.out.println("DEBUG: Removing card of type " + cardType + " from the physical deck.");
+                //System.out.println("DEBUG: Removing card of type " + cardType + " from the physical deck.");
                 return card; // Return the drawn card
             }
         }
@@ -311,7 +311,7 @@ public class GameEngine implements Engine {
             // Add an option to end the Money Phase
             options.add(new EndPhaseDecision(GameState.TurnPhase.MONEY));
     
-            System.out.println("DEBUG: Available decisions -> " + options.size());
+           //System.out.println("DEBUG: Available decisions -> " + options.size());
     
             // Convert options to an ImmutableList
             ImmutableList<Decision> immutableOptions = ImmutableList.copyOf(options);
@@ -330,7 +330,7 @@ public class GameEngine implements Engine {
     
                 // ✅ Increase spendable money when playing a money card
                 int newMoney = gameState.getSpendableMoney() + playedCard.getType().getValue();
-                System.out.println("DEBUG: Updated spendable money: " + newMoney);
+                //System.out.println("DEBUG: Updated spendable money: " + newMoney);
                 Hand newHand = new Hand(
                     ImmutableList.copyOf(playedCards),
                     ImmutableList.copyOf(updatedUnplayedCards)
@@ -364,7 +364,7 @@ public class GameEngine implements Engine {
     }
     
     private void handleBuyPhase(AtgPlayer player) throws PlayerViolationException {
-        System.out.println("DEBUG: Entering BUY phase. Available money: " + gameState.getSpendableMoney());
+        //System.out.println("DEBUG: Entering BUY phase. Available money: " + gameState.getSpendableMoney());
     
         while (gameState.getTurnPhase() == GameState.TurnPhase.BUY && gameState.getAvailableBuys() >= 1) {
             List<Decision> options = new ArrayList<>();
@@ -372,7 +372,7 @@ public class GameEngine implements Engine {
             // ✅ Add buyable cards based on money
             for (Card.Type type : deck.getCardTypes()) {
                 if (deck.getNumAvailable(type) > 0 && gameState.getSpendableMoney() >= type.getCost()) {
-                    System.out.println("DEBUG: Adding buy option for " + type + " (Cost: " + type.getCost() + ", Value: " + type.getValue() + ")");
+                    //System.out.println("DEBUG: Adding buy option for " + type + " (Cost: " + type.getCost() + ", Value: " + type.getValue() + ")");
                     options.add(new BuyDecision(type));
                 }
             }
@@ -380,7 +380,7 @@ public class GameEngine implements Engine {
             // Add an option to end the Buy Phase
             options.add(new EndPhaseDecision(GameState.TurnPhase.BUY));
     
-            System.out.println("DEBUG: Available decisions in BUY phase -> " + options.size());
+            //System.out.println("DEBUG: Available decisions in BUY phase -> " + options.size());
     
             // Convert options to an ImmutableList
             ImmutableList<Decision> immutableOptions = ImmutableList.copyOf(options);
@@ -404,8 +404,8 @@ public class GameEngine implements Engine {
                 // ✅ Deduct money after buying
                 int newMoney = gameState.getSpendableMoney() - boughtCard.getCost();
     
-                System.out.println("DEBUG: Updated spendable money after buying: " + newMoney);
-                System.out.println("DEBUG: Updated " + player.getName() + "'s discard deck:");
+                //System.out.println("DEBUG: Updated spendable money after buying: " + newMoney);
+                //System.out.println("DEBUG: Updated " + player.getName() + "'s discard deck:");
                 System.out.println(player.getDiscardDeck());
     
                 // ✅ Update game state after a purchase
@@ -450,8 +450,8 @@ public class GameEngine implements Engine {
         cardsToMove.addAll(gameState.getCurrentPlayerHand().getPlayedCards());
         cardsToMove.addAll(gameState.getCurrentPlayerHand().getUnplayedCards());
         player.getDiscardDeck().addAllCards(cardsToMove);
-        System.out.println("DEBUG: Discarding current hand...");
-        System.out.println("DEBUG: Updated " + player.getName() + "'s discard deck:");
+        //System.out.println("DEBUG: Discarding current hand...");
+        //System.out.println("DEBUG: Updated " + player.getName() + "'s discard deck:");
         System.out.println(player.getDiscardDeck());
         this.distributeCard(player); // draw 5 new cards at the end of each turn
         observer.notifyEvent(gameState, new GameEvent(player.getName() + "'s turn ends"));
@@ -465,7 +465,7 @@ public class GameEngine implements Engine {
         );
         // Draw 5 cards
         Hand newHand = this.playerDrawCard(player, 5);    
-        System.out.println("DEBUG: Assigning hand to " + player.getName() + ":\n" + startingHand + "\n");
+        //System.out.println("DEBUG: Assigning hand to " + player.getName() + ":\n" + startingHand + "\n");
         // Update the GameState after dealing a hand
         this.gameState = new GameState(
             player.getName(),

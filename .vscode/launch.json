@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "RatingMain",
+            "request": "launch",
+            "mainClass": "edu.brandeis.cosi103a.groupb.Rating.RatingMain",
+            "projectName": "automation"
+        },
+        {
+            "type": "java",
             "name": "GameEngine",
             "request": "launch",
             "mainClass": "edu.brandeis.cosi103a.groupb.Game.GameEngine",
