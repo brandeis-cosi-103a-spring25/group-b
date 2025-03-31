@@ -7,13 +7,15 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue; //Use java reflection to test private method
 import org.junit.jupiter.api.Test;
+import java.util.List;
+import java.util.ArrayList;
 
 import com.google.common.collect.ImmutableList;
 import edu.brandeis.cosi.atg.api.GameState;
 import edu.brandeis.cosi.atg.api.GameDeck;
 import edu.brandeis.cosi.atg.api.GameObserver;
 import edu.brandeis.cosi.atg.api.cards.Card;
-import edu.brandeis.cosi.atg.api.decisions.Decision;
+import edu.brandeis.cosi.atg.api.Hand;
 import edu.brandeis.cosi103a.groupb.Decks.PlayerDeck;
 import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
 import edu.brandeis.cosi103a.groupb.Game.GameEngine;
@@ -317,6 +319,7 @@ public class EngineTest {
         assertEquals(beforeState.getSpendableMoney() + 2, afterState.getSpendableMoney());
     }
 
+    // Test for CODE_REVIEW effect.
     @Test
     void testProcessCodeReviewEffect() throws Exception {
         Method initState = gameEngine.getClass().getDeclaredMethod("initializeGameState", AtgPlayer.class);
@@ -336,6 +339,7 @@ public class EngineTest {
                    beforeState.getCurrentPlayerHand().getUnplayedCards().size());
     }
 
+    // Test for TECH_DEBT effect.
     @Test
     void testProcessTechDebtEffect() throws Exception {
         // For this test, assume no empty supply piles so that no discarding occurs.
@@ -354,51 +358,27 @@ public class EngineTest {
         assertEquals(beforeState.getSpendableMoney() + 1, afterState.getSpendableMoney());
     }
 
-    // Refactor test has to be rewritten to properly test the trashCardDecision and GainCardDecision
+    // Test for REFACTOR effect.
+    @Test
+    void testProcessRefactorEffect() throws Exception {
 
-    // @Test
-    // void testProcessRefactorEffect() throws Exception {
-    //     // Create a test-specific player that will always provide a trash decision.
-    //     AtgPlayer testPlayer = new BigMoneyPlayer("Nancy") {
-    //         @Override
-    //         public Decision makeDecision(GameState state, ImmutableList<Decision> options, Optional<?> reason)
-    //                 throws PlayerViolationException {
-    //             // If no trash decision exists in the options, build a fallback trash decision.
-    //             if (options.isEmpty()) {
-    //                 // Assume that player's hand is not empty
-    //                 Card cardToTrash = this.getHand().getUnplayedCards().get(0);
-    //                 return new TrashCardDecision(cardToTrash);
-    //             }
-    //             // If a trash decision is available, return the first one.
-    //             for (Decision option : options) {
-    //                 if (option instanceof TrashCardDecision) {
-    //                     return option;
-    //                 }
-    //             }
-    //             // As a fallback, return the first available option.
-    //             return options.get(0);
-    //         }
-    //     };
+        Method initState = gameEngine.getClass().getDeclaredMethod("initializeGameState", AtgPlayer.class);
+        initState.setAccessible(true);
+        initState.invoke(gameEngine, player1);
 
-    //     // Reinitialize the engine with the test-specific player.
-    //     Engine engine = GameEngine.createEngine(testPlayer, player2, observer);
+        GameState beforeState = ((GameEngine) gameEngine).getGameState();
 
-    //     Method initState = engine.getClass().getDeclaredMethod("initializeGameState", AtgPlayer.class);
-    //     initState.setAccessible(true);
-    //     initState.invoke(engine, testPlayer);
+        // Invoke processRefactorEffect via reflection.
+        Method refactorMethod = gameEngine.getClass().getDeclaredMethod("processRefactorEffect", AtgPlayer.class, GameState.class);
+        refactorMethod.setAccessible(true);
+        GameState afterState = (GameState) refactorMethod.invoke(gameEngine, player1, beforeState);
 
-    //     GameState beforeState = ((GameEngine) engine).getGameState();
+        // For testing purposes, verify that available actions and spendable money remain consistent.
+        assertEquals(beforeState.getAvailableActions(), afterState.getAvailableActions());
+        assertEquals(beforeState.getSpendableMoney(), afterState.getSpendableMoney());
+    }
 
-    //     // Invoke processRefactorEffect via reflection.
-    //     Method refactorMethod = engine.getClass().getDeclaredMethod("processRefactorEffect", AtgPlayer.class, GameState.class);
-    //     refactorMethod.setAccessible(true);
-    //     GameState afterState = (GameState) refactorMethod.invoke(engine, testPlayer, beforeState);
-
-    //     // For testing purposes, verify that available actions and spendable money remain consistent.
-    //     assertEquals(beforeState.getAvailableActions(), afterState.getAvailableActions());
-    //     assertEquals(beforeState.getSpendableMoney(), afterState.getSpendableMoney());
-    // }
-
+    // Test for PARALLELIZATION effect.
     @Test
     void testProcessParallelizationEffect() throws Exception {
         // Initialize state and assume the player has at least one valid action card to duplicate.
@@ -416,6 +396,7 @@ public class EngineTest {
         assertEquals(beforeState.getTurnPhase(), afterState.getTurnPhase());
     }
 
+    // Test for EVERGREEN_TEST effect.
     @Test
     void testProcessEvergreenTestEffect() throws Exception {
         // Initialize state for the active player.
@@ -441,5 +422,44 @@ public class EngineTest {
             }
         }
         assertTrue(bugCount > 0);
+    }
+
+    // Test for MONITORING effect.
+    @Test
+    void testMonitoringReactionEvergreenTestEffect() throws Exception {
+        // Create a test-specific opponent that always chooses to reveal its MONITORING card.
+        
+        // Reinitialize the engine with player1 as the active player and our test-specific opponent.
+        // Initialize game state for both players.
+        Method initializeGameState = gameEngine.getClass().getDeclaredMethod("initializeGameState", AtgPlayer.class);
+        initializeGameState.setAccessible(true);
+        initializeGameState.invoke(gameEngine, player2);
+        
+        // Force the opponent's hand to include a MONITORING card.
+        List<Card> oppUnplayed = new ArrayList<>(player1.getHand().getUnplayedCards());
+        Card monitoringCard = new Card(Card.Type.MONITORING, 1000); // arbitrary id
+        oppUnplayed.add(monitoringCard);
+        player1.setHand(new Hand(player1.getHand().getPlayedCards(), ImmutableList.copyOf(oppUnplayed)));
+        
+        // Capture the current game state.
+        GameState beforeState = ((GameEngine) gameEngine).getGameState();
+        
+        // Invoke the EVERGREEN_TEST effect from player1.
+        Method evergreenMethod = gameEngine.getClass().getDeclaredMethod("processEvergreenTestEffect", AtgPlayer.class, GameState.class);
+        evergreenMethod.setAccessible(true);
+        GameState afterState = (GameState) evergreenMethod.invoke(gameEngine, player2, beforeState);
+        
+        // Check that player1's hand unplayed card count increased by 2 (as per the card effect).
+        int expectedCount = beforeState.getCurrentPlayerHand().getUnplayedCards().size() + 2;
+        assertEquals(expectedCount, afterState.getCurrentPlayerHand().getUnplayedCards().size());
+        
+        // Verify that the opponent did NOT receive any BUG card.
+        int bugCount = 0;
+        for (Card card : player1.getDiscardDeck().getCards()) {
+            if (card.getType() == Card.Type.BUG) {
+                bugCount++;
+            }
+        }
+        assertEquals(0, bugCount);
     }
 }
