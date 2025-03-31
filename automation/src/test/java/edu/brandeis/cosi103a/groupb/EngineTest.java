@@ -423,9 +423,15 @@ public class EngineTest {
         initState.setAccessible(true);
         initState.invoke(gameEngine, player1);
 
+        // Get the current GameState.
+        GameState beforeState = ((GameEngine)gameEngine).getGameState();
+        
         // Invoke the Evergreen Test effect.
         Method evergreenMethod = gameEngine.getClass().getDeclaredMethod("processEvergreenTestEffect", AtgPlayer.class, GameState.class);
         evergreenMethod.setAccessible(true);
+        GameState afterState = (GameState) evergreenMethod.invoke(gameEngine, player1, beforeState);
+
+        assertEquals(afterState.getCurrentPlayerHand().getUnplayedCards().size(), beforeState.getCurrentPlayerHand().getUnplayedCards().size() + 2);
 
         // Verify that the opponent (player2) received a BUG card.
         int bugCount = 0;
