@@ -197,7 +197,7 @@ public class BigMoneyPlayerTest {
         // Create a dummy hand (for this test it can be empty) and then a game state for BUY phase.
         Hand dummyHand = new Hand(ImmutableList.copyOf(new ArrayList<>()), ImmutableList.copyOf(new ArrayList<>()));
         // Set money to 8 so both buy options are affordable.
-        GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.MONEY, 1, 8, 1, controlledDeck);
+        GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.BUY, 1, 8, 1, controlledDeck);
         
         // Force the GameEngine's gameState to our controlled state (using reflection).
         Field gameStateField = engine.getClass().getDeclaredField("gameState");

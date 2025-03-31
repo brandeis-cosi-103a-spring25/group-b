@@ -120,6 +120,12 @@ public class BigMoneyPlayer implements AtgPlayer {
             }
         }
 
+        for (Decision option : options) {
+            if (option instanceof TrashCardDecision) {
+                return option;
+            }
+        }
+
         // If no other option qualifies, check for an EndPhaseDecision.
         for (Decision option : options) {
             if (option instanceof EndPhaseDecision) {
