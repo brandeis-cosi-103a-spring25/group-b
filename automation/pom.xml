@@ -9,16 +9,17 @@
   <version>1.0-SNAPSHOT</version>
 
   <name>automation</name>
-  <!-- FIXME change it to the project's website -->
+    <!-- FIXME change it to the project's website -->
+
   <url>http://www.example.com</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>23</maven.compiler.source>
-    <maven.compiler.target>23</maven.compiler.target>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
   </properties>
 
-<dependencies>
+  <dependencies>
     <!-- JUnit 5 API for writing tests -->
     <dependency>
         <groupId>org.junit.jupiter</groupId>
@@ -26,48 +27,52 @@
         <version>5.8.1</version>
         <scope>test</scope>
     </dependency>
+    <!-- Mockito Core -->
     <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-core</artifactId>
-        <version>4.0.0</version>
+        <version>4.11.0</version>
         <scope>test</scope>
     </dependency>
-    <!-- JUnit 5 Engine to run tests -->
+    <!-- Mockito Inline -->
+    <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-inline</artifactId>
+        <version>4.11.0</version>
+        <scope>test</scope>
+    </dependency>
+    <!-- JUnit 5 Engine -->
     <dependency>
         <groupId>org.junit.jupiter</groupId>
         <artifactId>junit-jupiter-engine</artifactId>
         <version>5.8.1</version>
         <scope>test</scope>
     </dependency>
-
-    <!-- JUnit Vintage (for backward compatibility with JUnit 4) -->
+    <!-- JUnit Vintage -->
     <dependency>
         <groupId>org.junit.vintage</groupId>
         <artifactId>junit-vintage-engine</artifactId>
         <version>5.8.1</version>
         <scope>test</scope>
     </dependency>
-
+    <!-- ATG API -->
     <dependency>
         <groupId>io.github.brandeis-cosi-103a</groupId>
         <artifactId>atg-api</artifactId>
         <version>2.4.1</version>
     </dependency>
-</dependencies>
+  </dependencies>
 
-<build>
+  <repositories>
+    <repository>
+        <id>central</id>
+        <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
+  </repositories>
+
+  <build>
     <pluginManagement>
         <plugins>
-            <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>3.1.0</version>
-            </plugin>
-            <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.0.2</version>
-            </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
@@ -83,28 +88,7 @@
                     </argLine>
                 </configuration>
             </plugin>
-            <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
-            </plugin>
-            <plugin>
-                <artifactId>maven-install-plugin</artifactId>
-                <version>2.5.2</version>
-            </plugin>
-            <plugin>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>2.8.2</version>
-            </plugin>
-            <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
-            <plugin>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>3.7.1</version>
-            </plugin>
-            <plugin>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>3.0.0</version>
-            </plugin>
         </plugins>
     </pluginManagement>
-</build>
+  </build>
 </project>
