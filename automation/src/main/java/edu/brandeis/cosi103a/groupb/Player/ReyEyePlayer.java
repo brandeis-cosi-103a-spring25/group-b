@@ -28,7 +28,10 @@ import edu.brandeis.cosi103a.groupb.Game.GameEngine;
 /**
  * Represents an automated player, following the basic strategy.
  */
-public class BigMoneyPlayer implements AtgPlayer {
+public class ReyEyePlayer implements AtgPlayer {
+    private int cardsBought;
+    private int moneyCards;
+
     private final String name;
     private DiscardDeck discardDeck = new DiscardDeck();
     private DrawDeck drawDeck = new DrawDeck();
@@ -39,7 +42,7 @@ public class BigMoneyPlayer implements AtgPlayer {
 
     private final Optional<GameObserver> observer;
 
-    public BigMoneyPlayer(String name) {
+    public ReyEyePlayer (String name) {
         this.name = name;
         this.observer = Optional.of((GameObserver) new ConsoleGameObserver());
     }
@@ -47,6 +50,26 @@ public class BigMoneyPlayer implements AtgPlayer {
     @Override
     public String getName() {
         return name;
+    }
+
+    public int countCardCategory(Hand hand, Card.Type.Category category) {
+        int count = 0;
+        for (Card card : hand.getAllCards()) {
+            if (card.getType().getCategory() == category) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int countHardCardType(Hand hand, Card.Type type) {
+        int count = 0;
+        for (Card card : hand.getAllCards()) {
+            if (card.getType() == type) {
+                count++;
+            }
+        }
+        return count;
     }
 
     @Override
@@ -57,17 +80,22 @@ public class BigMoneyPlayer implements AtgPlayer {
 
         // Plays whatever action cards so far
         for (Decision option : options) {
-            if (option instanceof PlayCardDecision && state.getTurnPhase() == GameState.TurnPhase.ACTION) {
-                return option;
-            }
-        }
-
-        // Plays whatever reaction cards so far
-        for (Decision option : options) {
             if (option instanceof PlayCardDecision && state.getTurnPhase() == GameState.TurnPhase.REACTION) {
                 return option;
             }
         }
+
+        // Action strategies
+        for (Decision option : options) {
+            if (option instanceof PlayCardDecision decision && state.getTurnPhase() == GameState.TurnPhase.ACTION) {
+                if (countCardCategory(hand, Card.Type.Category.MONEY) <= 2 && decision.getCard().getType() == Card.Type.BACKLOG) {
+                    return option; // Attempts a save
+                } else if (countCardCategory(hand, Card.Type.Category.MONEY) <= 1 && decision.getCard().getType() == Card.Type.HACK) {
+                    return option; // Mutual destruction
+                }
+            }
+        }
+
 
         // Always play all available money cards in the MONEY phase
         for (Decision option : options) {
@@ -81,6 +109,7 @@ public class BigMoneyPlayer implements AtgPlayer {
         int highestCost = 0;
         for (Decision option : options) {
             if (option instanceof BuyDecision buy && state.getTurnPhase() == GameState.TurnPhase.BUY) {
+
                 // Implemented advanced Strategy 2: Avoid purchasing the last Framework if not winning.
                 if (buy.getCardType() == Card.Type.FRAMEWORK) {
                     int remainingFramework = state.getDeck().getNumAvailable(Card.Type.FRAMEWORK);
@@ -94,9 +123,31 @@ public class BigMoneyPlayer implements AtgPlayer {
                     highestCost = cost;
                     bestBuy = buy;
                 }
+
+                // Action strategy1: This 0.57 can be a parameter later
+                if (cardsBought > 0 && moneyCards/ (double) cardsBought > 0.57) {
+                    if (buy.getCardType() == Card.Type.BACKLOG) {
+                        bestBuy = buy;
+                        break;
+                    }
+                }
+
+                // Action strategy2: This 0.7 can be a parameter later
+                if (cardsBought > 0 && moneyCards/ (double) cardsBought > 0.7) {
+                    if (buy.getCardType() == Card.Type.HACK) {
+                        bestBuy = buy;
+                        break;
+                    }
+                }
             }
         }
-        if (bestBuy != null) return bestBuy;
+        if (bestBuy != null) {
+            cardsBought++;
+            if (((BuyDecision)bestBuy).getCardType().getCategory() == Card.Type.Category.MONEY) {
+                moneyCards++;
+            }
+            return bestBuy;
+        }
 
         int lowestVal = -1;
         Decision bestDiscard = null;
