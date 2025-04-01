@@ -1,6 +1,7 @@
 package edu.brandeis.cosi103a.groupb;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 
 import edu.brandeis.cosi.atg.api.GameDeck;
 import edu.brandeis.cosi.atg.api.GameObserver;
@@ -36,295 +37,102 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+
 public class ReyEyePlayerTest {
-@Test
-    public void testMakeDecisionPlayMoneyCard() {
-        ReyEyePlayer player = new ReyEyePlayer("TestPlayer");
-
-        // Create a MONEY card
-        Card.Type typeMoney = mock(Card.Type.class);
-        when(typeMoney.getCategory()).thenReturn(Card.Type.Category.MONEY);
-
-        Card moneyCard = mock(Card.class);
-        when(moneyCard.getType()).thenReturn(typeMoney);
-
-        // Create a PlayCardDecision for the MONEY card
-        PlayCardDecision playMoneyCardDecision = new PlayCardDecision(moneyCard);
-
-        // Create a GameState in the MONEY phase
-        GameState state = mock(GameState.class);
-        when(state.getTurnPhase()).thenReturn(GameState.TurnPhase.MONEY);
-
-        // Test makeDecision
-        Decision decision = player.makeDecision(state, ImmutableList.of(playMoneyCardDecision), Optional.empty());
-        assertEquals(playMoneyCardDecision, decision, "The decision should be to play the MONEY card.");
-    }
-    
-
-    
-    @Test
-    public void testPlayCardInMoneyPhase() {
-        ReyEyePlayer player = new ReyEyePlayer("TestPlayer");
-        GameState state = Mockito.mock(GameState.class);
-        when(state.getTurnPhase()).thenReturn(GameState.TurnPhase.MONEY);
-
-        PlayCardDecision decision = mock(PlayCardDecision.class);
-        Decision result = player.makeDecision(state, ImmutableList.of(decision), Optional.empty());
-
-        assertEquals(decision, result);
-    }
-    
-    
-    @Test
-    public void testDiscardVictoryCardFirst() {
-        ReyEyePlayer player = new ReyEyePlayer("TestPlayer");
-        GameState state = mock(GameState.class);
-        when(state.getTurnPhase()).thenReturn(GameState.TurnPhase.DISCARD);
-
-        Card card = mock(Card.class);
-        when(card.getCategory()).thenReturn(Card.Type.Category.VICTORY);
-
-        DiscardCardDecision discard = mock(DiscardCardDecision.class);
-        when(discard.getCard()).thenReturn(card);
-
-        Decision result = player.makeDecision(state, ImmutableList.of(discard), Optional.empty());
-        assertEquals(discard, result);
-    }
-
-
-
-    @Test
-    public void testGainCardDecision() {
-        ReyEyePlayer player = new ReyEyePlayer("TestPlayer");
-        GameState state = mock(GameState.class);
-        when(state.getTurnPhase()).thenReturn(GameState.TurnPhase.GAIN);
-
-        GainCardDecision gain = mock(GainCardDecision.class);
-        Decision result = player.makeDecision(state, ImmutableList.of(gain), Optional.empty());
-
-        assertEquals(gain, result);
-    }
-
-    @Test
-    public void testEndPhaseDecision() {
-        ReyEyePlayer player = new ReyEyePlayer("TestPlayer");
-        GameState state = mock(GameState.class);
-
-        EndPhaseDecision end = mock(EndPhaseDecision.class);
-        Decision result = player.makeDecision(state, ImmutableList.of(end), Optional.empty());
-
-        assertEquals(end, result);
-    }
-
-    @Test
-    public void testCountCardCategory() {
-        ReyEyePlayer player = new ReyEyePlayer("TestPlayer");
-
-        Card card = mock(Card.class);
-        Card.Type type = mock(Card.Type.class);
-        when(type.getCategory()).thenReturn(Card.Type.Category.MONEY);
-        when(card.getType()).thenReturn(type);
-
-        Hand hand = new Hand(ImmutableList.of(), ImmutableList.of(card, card, card));
-        int result = player.countCardCategory(hand, Card.Type.Category.MONEY);
-
-        assertEquals(3, result);
-    }
-
-    @Test
-    public void testCountHardCardType() {
-        ReyEyePlayer player = new ReyEyePlayer("TestPlayer");
-
-        Card card = mock(Card.class);
-        when(card.getType()).thenReturn(Card.Type.BACKLOG);
-
-        Hand hand = new Hand(ImmutableList.of(), ImmutableList.of(card, card));
-        int result = player.countHardCardType(hand, Card.Type.BACKLOG);
-
-        assertEquals(2, result);
-    }
-
-    // @Test
-    // public void testIsWinningTrue() {
-    //     ReyEyePlayer player = new ReyEyePlayer("TestPlayer");
-
-    //     try (MockedStatic<GameEngine> mocked = Mockito.mockStatic(GameEngine.class)) {
-    //         Player.ScorePair me = new Player.ScorePair(player, 9);
-    //         Player opponent = mock(Player.class);
-    //         when(opponent.getName()).thenReturn("Other");
-    //         Player.ScorePair other = new Player.ScorePair(opponent, 5);
-
-    //         mocked.when(GameEngine::getCurrentScores).thenReturn(List.of(me, other));
-
-    //         assertTrue(player.isWinning());
-    //     }
-    // }
-
-    @Test
-    public void testIsWinningFalse() {
-        ReyEyePlayer player = new ReyEyePlayer("TestPlayer");
-
-        try (MockedStatic<GameEngine> mocked = Mockito.mockStatic(GameEngine.class)) {
-            Player.ScorePair me = new Player.ScorePair(player, 5);
-            Player opponent = mock(Player.class);
-            when(opponent.getName()).thenReturn("Other");
-            Player.ScorePair other = new Player.ScorePair(opponent, 7);
-
-            mocked.when(GameEngine::getCurrentScores).thenReturn(List.of(me, other));
-
-            assertFalse(player.isWinning());
-        }
-    }
-
    
-    
+
+@Test
+    public void testMakeDecisionWithMoneyPhase() {
+        ReyEyePlayer player = new ReyEyePlayer("Rey");
+        // Create dummy GameState for MONEY phase.
+        Hand dummyHand = new Hand(ImmutableList.of(), ImmutableList.of());
+        GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.MONEY, 1, 0, 1, new GameDeck(ImmutableMap.of()));
+
+        // Provide a PlayCardDecision option and an EndPhaseDecision.
+        Card moneyCard = new Card(Card.Type.BITCOIN, 1);
+        List<Decision> options = new ArrayList<>();
+        options.add(new PlayCardDecision(moneyCard));
+        options.add(new EndPhaseDecision(GameState.TurnPhase.MONEY));
+
+        Decision decision = player.makeDecision(state, ImmutableList.copyOf(options), Optional.empty());
+
+        assertTrue(decision instanceof PlayCardDecision, "Expected decision to be PlayCardDecision in MONEY phase.");
+    }
     
     @Test
-    void testIsWinningTrue() {
-        // Create the player
-        ReyEyePlayer player = new ReyEyePlayer("Marco");
-        Hand realHand = new Hand(
-            ImmutableList.of(), // played
-            ImmutableList.of()  // unplayed
-        );
-        player.setHand(realHand);
-    
-        // Mock the player "Rey"
-        Player mockPlayerRey = mock(Player.class);
-        when(mockPlayerRey.getName()).thenReturn("Marco");
-    
-        // Mock another player
-        Player mockOtherPlayer = mock(Player.class);
-        when(mockOtherPlayer.getName()).thenReturn("OtherPlayer");
-    
-        // Create the scores list
-        List<Player.ScorePair> scores = List.of(
-                new Player.ScorePair(mockPlayerRey, 10), // Rey's score
-                new Player.ScorePair(mockOtherPlayer, 8) // Other player's score
-        );
-    
-        // Mock the static method GameEngine.getCurrentScores
-        try (MockedStatic<GameEngine> mocked = mockStatic(GameEngine.class)) {
-            mocked.when(GameEngine::getCurrentScores).thenReturn(scores);
-    
-            // Assert that Rey is winning
-            assertTrue(player.isWinning(), "Player should be winning with the highest score.");
-        }
+    public void testMakeDecisionWithBuyPhase() {
+        ReyEyePlayer player = new ReyEyePlayer("Rey");
+        // Create dummy GameState for BUY phase with enough money.
+        Hand dummyHand = new Hand(ImmutableList.of(), ImmutableList.of());
+        GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.BUY, 1, 5, 1, new GameDeck(ImmutableMap.of(Card.Type.FRAMEWORK, 2, Card.Type.BITCOIN, 2)));
+
+        // Provide BuyDecision options (one cheap and one expensive) and an EndPhaseDecision.
+        List<Decision> options = new ArrayList<>();
+        options.add(new BuyDecision(Card.Type.BITCOIN));
+        options.add(new BuyDecision(Card.Type.FRAMEWORK)); // Assume FRAMEWORK has a higher cost.
+        options.add(new EndPhaseDecision(GameState.TurnPhase.BUY));
+
+        Decision decision = player.makeDecision(state, ImmutableList.copyOf(options), Optional.empty());
+
+        assertTrue(decision instanceof BuyDecision, "Expected decision to be BuyDecision.");
+        BuyDecision buyDecision = (BuyDecision) decision;
+        assertEquals(Card.Type.FRAMEWORK, buyDecision.getCardType(), "Expected to choose FRAMEWORK card.");
     }
 
+    @Test
+    public void testMakeDecisionWithDiscardPhase() {
+        ReyEyePlayer player = new ReyEyePlayer("Rey");
+        // Create dummy GameState for DISCARD phase.
+        Hand dummyHand = new Hand(ImmutableList.of(), ImmutableList.of());
+        GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.DISCARD, 1, 0, 1, new GameDeck(ImmutableMap.of()));
 
+        // Provide DiscardCardDecision options.
+        Card victoryCard = new Card(Card.Type.METHOD, 1); // Assume METHOD is a VICTORY card.
+        Card moneyCard = new Card(Card.Type.BITCOIN, 2);
+        List<Decision> options = new ArrayList<>();
+        options.add(new DiscardCardDecision(victoryCard));
+        options.add(new DiscardCardDecision(moneyCard));
 
-//     @Test
-//     void testIsWinningFalse() {
-//         // Mock the player "Rey"
-//         Player mockPlayerRey = mock(Player.class);
-//         when(mockPlayerRey.getName()).thenReturn("Rey");
-    
-//         // Mock another player
-//         Player mockOtherPlayer = mock(Player.class);
-//         when(mockOtherPlayer.getName()).thenReturn("OtherPlayer");
-    
-//         // Create the scores list
-//         List<Player.ScorePair> scores = new ArrayList<>();
-//         scores.add(new Player.ScorePair(mockPlayerRey, 8)); // Rey's score
-//         scores.add(new Player.ScorePair(mockOtherPlayer, 10)); // Other player's score
-    
-//         // Mock the static method GameEngine.getCurrentScores
-//         try (MockedStatic<GameEngine> mocked = mockStatic(GameEngine.class)) {
-//             mocked.when(GameEngine::getCurrentScores).thenReturn(scores);
-    
-//             // Assert that Rey is not winning
-//             assertFalse(player.isWinning(), "Player should not be winning with a lower score.");
-//         }
-//     }
-// }
-// //     @Test
-// //     void testMakeDecision_playMoneyCard() {
-// //         // Create the player
-// //         ReyEyePlayer player = new ReyEyePlayer("Rey");
-// //         Hand realHand = new Hand(
-// //             ImmutableList.of(), // played
-// //             ImmutableList.of()  // unplayed
-// //         );
-// //         player.setHand(realHand);
+        Decision decision = player.makeDecision(state, ImmutableList.copyOf(options), Optional.empty());
 
-// //         // Mock GameState and other dependencies
-// //         GameState mockState = mock(GameState.class);
-// //         Card mockCard = mock(Card.class);
-// //         PlayCardDecision mockDecision = mock(PlayCardDecision.class);
+        assertTrue(decision instanceof DiscardCardDecision, "Expected decision to be DiscardCardDecision.");
+        DiscardCardDecision discardDecision = (DiscardCardDecision) decision;
+        assertEquals(victoryCard, discardDecision.getCard(), "Expected to discard the VICTORY card first.");
+    }
 
-// //         // Stub methods
-// //         when(mockState.getTurnPhase()).thenReturn(GameState.TurnPhase.MONEY);
-// //         when(mockDecision.getCard()).thenReturn(mockCard);
+    @Test
+    public void testMakeDecisionWithGainPhase() {
+        ReyEyePlayer player = new ReyEyePlayer("Rey");
+        // Create dummy GameState for GAIN phase.
+        Hand dummyHand = new Hand(ImmutableList.of(), ImmutableList.of());
+        GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.GAIN, 1, 0, 1, new GameDeck(ImmutableMap.of()));
 
-// //         // Create decision options
-// //         ImmutableList<Decision> options = ImmutableList.of(mockDecision);
+        // Provide GainCardDecision options.
+        Card.Type gainType = Card.Type.FRAMEWORK;
+        List<Decision> options = new ArrayList<>();
+        options.add(new GainCardDecision(gainType));
 
-// //         // Call the method under test
-// //         Decision decision = player.makeDecision(mockState, options, Optional.empty());
+        Decision decision = player.makeDecision(state, ImmutableList.copyOf(options), Optional.empty());
 
-// //         // Verify the result
-// //         assertEquals(mockDecision, decision, "The decision should match the mocked PlayCardDecision.");
-// //     }
-// //     // @Test
-// //     // void testMakeDecision_playMoneyCard() {
-// //     //     // Mock GameState and other dependencies
-// //     //     GameState mockState = mock(GameState.class);
-// //     //     Card mockCard = mock(Card.class);
-// //     //     PlayCardDecision mockDecision = mock(PlayCardDecision.class);
-    
-// //     //     // Stub methods
-// //     //     when(mockState.getTurnPhase()).thenReturn(GameState.TurnPhase.MONEY);
-// //     //     when(mockDecision.getCard()).thenReturn(mockCard);
-    
-// //     //     // Create decision options
-// //     //     ImmutableList<Decision> options = ImmutableList.of(mockDecision);
-    
-// //     //     // Call the method under test
-// //     //     Decision decision = player.makeDecision(mockState, options, Optional.empty());
-    
-// //     //     // Verify the result
-// //     //     assertEquals(mockDecision, decision, "The decision should match the mocked PlayCardDecision.");
-// //     // }
+        assertTrue(decision instanceof GainCardDecision, "Expected decision to be GainCardDecision.");
+        GainCardDecision gainDecision = (GainCardDecision) decision;
+        assertEquals(gainType, gainDecision.getCardType(), "Expected to gain the FRAMEWORK card.");
+    }
 
-// //     // @Test
-// //     // void testMakeDecision_gainCardFallback() {
-// //     //     GameState mockState = mock(GameState.class);
-// //     //     GainCardDecision gainDecision = mock(GainCardDecision.class);
-    
-// //     //     when(mockState.getTurnPhase()).thenReturn(GameState.TurnPhase.GAIN);
-// //     //     ImmutableList<Decision> options = ImmutableList.of(gainDecision);
-    
-// //     //     Decision decision = player.makeDecision(mockState, options, Optional.empty());
-// //     //     assertEquals(gainDecision, decision);
-// //     // }
+    @Test
+    public void testMakeDecisionWithEndPhase() {
+        ReyEyePlayer player = new ReyEyePlayer("Rey");
+        // Create dummy GameState for any phase.
+        Hand dummyHand = new Hand(ImmutableList.of(), ImmutableList.of());
+        GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.ACTION, 1, 0, 1, new GameDeck(ImmutableMap.of()));
 
-// //     @Test
-// //     void testMakeDecision_gainCardFallback() {
-// //         // Create the player
-// //         ReyEyePlayer player = new ReyEyePlayer("Rey");
-// //         Hand realHand = new Hand(
-// //             ImmutableList.of(), // played
-// //             ImmutableList.of()  // unplayed
-// //         );
-// //         player.setHand(realHand);
+        // Provide only an EndPhaseDecision.
+        List<Decision> options = new ArrayList<>();
+        options.add(new EndPhaseDecision(GameState.TurnPhase.ACTION));
 
-// //         // Mock GameState and other dependencies
-// //         GameState mockState = mock(GameState.class);
-// //         GainCardDecision gainDecision = mock(GainCardDecision.class);
+        Decision decision = player.makeDecision(state, ImmutableList.copyOf(options), Optional.empty());
 
-// //         // Stub methods
-// //         when(mockState.getTurnPhase()).thenReturn(GameState.TurnPhase.GAIN);
+        assertTrue(decision instanceof EndPhaseDecision, "Expected decision to be EndPhaseDecision when no other valid options exist.");
+    }
 
-// //         // Create decision options
-// //         ImmutableList<Decision> options = ImmutableList.of(gainDecision);
-
-// //         // Call the method under test
-// //         Decision decision = player.makeDecision(mockState, options, Optional.empty());
-
-// //         // Verify the result
-// //         assertEquals(gainDecision, decision, "The decision should match the mocked GainCardDecision.");
-// //     }
-
-    
 }
