@@ -120,6 +120,12 @@ public class BigMoneyPlayer implements AtgPlayer {
             }
         }
 
+        for (Decision option : options) {
+            if (option instanceof TrashCardDecision trash && state.getTurnPhase() == GameState.TurnPhase.ACTION) {
+                return trash;
+            }
+        }
+
         // If no other option qualifies, check for an EndPhaseDecision.
         for (Decision option : options) {
             if (option instanceof EndPhaseDecision) {

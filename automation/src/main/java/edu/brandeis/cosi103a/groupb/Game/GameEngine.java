@@ -834,7 +834,7 @@ public class GameEngine implements Engine {
         GameState newState = new GameState(
             state.getCurrentPlayerName(),
             newHand,
-            state.getTurnPhase(),
+            GameState.TurnPhase.GAIN,
             state.getAvailableActions(),
             state.getSpendableMoney(),
             state.getAvailableBuys(),
@@ -866,7 +866,7 @@ public class GameEngine implements Engine {
         return new GameState(
                 newState.getCurrentPlayerName(),
                 newState.getCurrentPlayerHand(),
-                newState.getTurnPhase(),
+                GameState.TurnPhase.ACTION,
                 newState.getAvailableActions(),
                 newState.getSpendableMoney(),
                 newState.getAvailableBuys(),
