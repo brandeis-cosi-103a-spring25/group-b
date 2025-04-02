@@ -125,7 +125,7 @@ public class ReyEyePlayer implements AtgPlayer {
                 }
 
                 // Action strategy1: This 0.57 can be a parameter later
-                if (cardsBought > 0 && moneyCards/ (double) cardsBought > 0.57) {
+                if (cardsBought > 0 && moneyCards/ (double) cardsBought < 0.3) {
                     if (buy.getCardType() == Card.Type.BACKLOG) {
                         bestBuy = buy;
                         break;
@@ -133,7 +133,7 @@ public class ReyEyePlayer implements AtgPlayer {
                 }
 
                 // Action strategy2: This 0.7 can be a parameter later
-                if (cardsBought > 0 && moneyCards/ (double) cardsBought > 0.7) {
+                if (cardsBought > 0 && moneyCards/ (double) cardsBought < 0.2) {
                     if (buy.getCardType() == Card.Type.HACK) {
                         bestBuy = buy;
                         break;
