@@ -1,0 +1,17 @@
+package edu.brandeis.cosi103a.groupb;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class GameDominion {
+
+	/**
+	* To test:
+	* curl -X POST -H "Content-Type: application/json" -d '{"maxes": [500, 10]}' http://localhost:8080/generate
+	*/
+	public static void main(String[] args) {
+		System.out.println("Hi from the server!");
+		SpringApplication.run(GameDominion.class, args);
+	}
+}
