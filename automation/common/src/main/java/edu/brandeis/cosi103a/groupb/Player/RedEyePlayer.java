@@ -28,7 +28,7 @@ import edu.brandeis.cosi103a.groupb.Game.GameEngine;
 /**
  * Represents an automated player, following the basic strategy.
  */
-public class ReyEyePlayer implements AtgPlayer {
+public class RedEyePlayer implements AtgPlayer {
     private int cardsBought;
     private int moneyCards;
 
@@ -42,7 +42,7 @@ public class ReyEyePlayer implements AtgPlayer {
 
     private final Optional<GameObserver> observer;
 
-    public ReyEyePlayer (String name) {
+    public RedEyePlayer (String name) {
         this.name = name;
         this.observer = Optional.of((GameObserver) new ConsoleGameObserver());
     }

@@ -1,0 +1,3703 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="edu.brandeis.cosi103a.groupb.EngineTest" time="0.038" tests="14" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="23"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/Users/huayizhang/Documents/GitHub/group-b/automation/common/target/test-classes:/Users/huayizhang/Documents/GitHub/group-b/automation/common/target/classes:/Users/huayizhang/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.8.1/junit-jupiter-api-5.8.1.jar:/Users/huayizhang/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/huayizhang/.m2/repository/org/junit/platform/junit-platform-commons/1.8.1/junit-platform-commons-1.8.1.jar:/Users/huayizhang/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/huayizhang/.m2/repository/org/mockito/mockito-core/4.11.0/mockito-core-4.11.0.jar:/Users/huayizhang/.m2/repository/net/bytebuddy/byte-buddy/1.12.19/byte-buddy-1.12.19.jar:/Users/huayizhang/.m2/repository/net/bytebuddy/byte-buddy-agent/1.12.19/byte-buddy-agent-1.12.19.jar:/Users/huayizhang/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/Users/huayizhang/.m2/repository/org/mockito/mockito-inline/4.11.0/mockito-inline-4.11.0.jar:/Users/huayizhang/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.8.1/junit-jupiter-engine-5.8.1.jar:/Users/huayizhang/.m2/repository/org/junit/platform/junit-platform-engine/1.8.1/junit-platform-engine-1.8.1.jar:/Users/huayizhang/.m2/repository/org/junit/vintage/junit-vintage-engine/5.8.1/junit-vintage-engine-5.8.1.jar:/Users/huayizhang/.m2/repository/junit/junit/4.13.2/junit-4.13.2.jar:/Users/huayizhang/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/Users/huayizhang/.m2/repository/io/github/brandeis-cosi-103a/atg-api/2.4.1/atg-api-2.4.1.jar:/Users/huayizhang/.m2/repository/com/google/guava/guava/33.3.1-jre/guava-33.3.1-jre.jar:/Users/huayizhang/.m2/repository/com/google/guava/failureaccess/1.0.2/failureaccess-1.0.2.jar:/Users/huayizhang/.m2/repository/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar:/Users/huayizhang/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/Users/huayizhang/.m2/repository/org/checkerframework/checker-qual/3.43.0/checker-qual-3.43.0.jar:/Users/huayizhang/.m2/repository/com/google/errorprone/error_prone_annotations/2.28.0/error_prone_annotations-2.28.0.jar:/Users/huayizhang/.m2/repository/com/google/j2objc/j2objc-annotations/3.0.0/j2objc-annotations-3.0.0.jar:/Users/huayizhang/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.18.2/jackson-databind-2.18.2.jar:/Users/huayizhang/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.18.2/jackson-annotations-2.18.2.jar:/Users/huayizhang/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.18.2/jackson-core-2.18.2.jar:"/>
+    <property name="java.vm.vendor" value="Homebrew"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="net.bytebuddy.experimental" value="true"/>
+    <property name="java.vendor.url" value="https://github.com/Homebrew/homebrew-core/issues"/>
+    <property name="user.timezone" value="America/New_York"/>
+    <property name="os.name" value="Mac OS X"/>
+    <property name="java.vm.specification.version" value="23"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="CN"/>
+    <property name="sun.boot.library.path" value="/opt/homebrew/Cellar/openjdk/23.0.2/libexec/openjdk.jdk/Contents/Home/lib"/>
+    <property name="sun.java.command" value="/Users/huayizhang/Documents/GitHub/group-b/automation/common/target/surefire/surefirebooter-20250407162859263_3.jar /Users/huayizhang/Documents/GitHub/group-b/automation/common/target/surefire 2025-04-07T16-28-59_177-jvmRun1 surefire-20250407162859263_1tmp surefire_0-20250407162859263_2tmp"/>
+    <property name="http.nonProxyHosts" value="127.0.0.1|192.168.0.0/16|*.192.168.0.0/16|10.0.0.0/8|*.10.0.0.0/8|172.16.0.0/12|*.172.16.0.0/12|100.64.0.0/10|*.100.64.0.0/10|17.0.0.0/8|*.17.0.0.0/8|localhost|*.localhost|local|*.local|169.254.0.0/16|*.169.254.0.0/16|224.0.0.0/4|*.224.0.0.0/4|240.0.0.0/4|*.240.0.0.0/4"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/Users/huayizhang/Documents/GitHub/group-b/automation/common/target/test-classes:/Users/huayizhang/Documents/GitHub/group-b/automation/common/target/classes:/Users/huayizhang/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.8.1/junit-jupiter-api-5.8.1.jar:/Users/huayizhang/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/huayizhang/.m2/repository/org/junit/platform/junit-platform-commons/1.8.1/junit-platform-commons-1.8.1.jar:/Users/huayizhang/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/huayizhang/.m2/repository/org/mockito/mockito-core/4.11.0/mockito-core-4.11.0.jar:/Users/huayizhang/.m2/repository/net/bytebuddy/byte-buddy/1.12.19/byte-buddy-1.12.19.jar:/Users/huayizhang/.m2/repository/net/bytebuddy/byte-buddy-agent/1.12.19/byte-buddy-agent-1.12.19.jar:/Users/huayizhang/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/Users/huayizhang/.m2/repository/org/mockito/mockito-inline/4.11.0/mockito-inline-4.11.0.jar:/Users/huayizhang/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.8.1/junit-jupiter-engine-5.8.1.jar:/Users/huayizhang/.m2/repository/org/junit/platform/junit-platform-engine/1.8.1/junit-platform-engine-1.8.1.jar:/Users/huayizhang/.m2/repository/org/junit/vintage/junit-vintage-engine/5.8.1/junit-vintage-engine-5.8.1.jar:/Users/huayizhang/.m2/repository/junit/junit/4.13.2/junit-4.13.2.jar:/Users/huayizhang/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/Users/huayizhang/.m2/repository/io/github/brandeis-cosi-103a/atg-api/2.4.1/atg-api-2.4.1.jar:/Users/huayizhang/.m2/repository/com/google/guava/guava/33.3.1-jre/guava-33.3.1-jre.jar:/Users/huayizhang/.m2/repository/com/google/guava/failureaccess/1.0.2/failureaccess-1.0.2.jar:/Users/huayizhang/.m2/repository/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar:/Users/huayizhang/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/Users/huayizhang/.m2/repository/org/checkerframework/checker-qual/3.43.0/checker-qual-3.43.0.jar:/Users/huayizhang/.m2/repository/com/google/errorprone/error_prone_annotations/2.28.0/error_prone_annotations-2.28.0.jar:/Users/huayizhang/.m2/repository/com/google/j2objc/j2objc-annotations/3.0.0/j2objc-annotations-3.0.0.jar:/Users/huayizhang/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.18.2/jackson-databind-2.18.2.jar:/Users/huayizhang/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.18.2/jackson-annotations-2.18.2.jar:/Users/huayizhang/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.18.2/jackson-core-2.18.2.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/Users/huayizhang"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2025-01-21"/>
+    <property name="java.home" value="/opt/homebrew/Cellar/openjdk/23.0.2/libexec/openjdk.jdk/Contents/Home"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/Users/huayizhang/Documents/GitHub/group-b/automation/common"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="apple.awt.application.name" value="ForkedBooter"/>
+    <property name="surefire.real.class.path" value="/Users/huayizhang/Documents/GitHub/group-b/automation/common/target/surefire/surefirebooter-20250407162859263_3.jar"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="ftp.nonProxyHosts" value="127.0.0.1|192.168.0.0/16|*.192.168.0.0/16|10.0.0.0/8|*.10.0.0.0/8|172.16.0.0/12|*.172.16.0.0/12|100.64.0.0/10|*.100.64.0.0/10|17.0.0.0/8|*.17.0.0.0/8|localhost|*.localhost|local|*.local|169.254.0.0/16|*.169.254.0.0/16|224.0.0.0/4|*.224.0.0.0/4|240.0.0.0/4|*.240.0.0.0/4"/>
+    <property name="java.runtime.version" value="23.0.2"/>
+    <property name="user.name" value="huayizhang"/>
+    <property name="stdout.encoding" value="UTF-8"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="15.3.2"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="Homebrew"/>
+    <property name="localRepository" value="/Users/huayizhang/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="https://github.com/Homebrew/homebrew-core/issues"/>
+    <property name="java.io.tmpdir" value="/var/folders/7v/nlysn7gx6wb87y771h_byfcw0000gn/T/"/>
+    <property name="java.version" value="23.0.2"/>
+    <property name="user.dir" value="/Users/huayizhang/Documents/GitHub/group-b/automation/common"/>
+    <property name="os.arch" value="aarch64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="native.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/Users/huayizhang/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="UTF-8"/>
+    <property name="java.vendor" value="Homebrew"/>
+    <property name="java.vm.version" value="23.0.2"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
+    <property name="socksNonProxyHosts" value="127.0.0.1|192.168.0.0/16|*.192.168.0.0/16|10.0.0.0/8|*.10.0.0.0/8|172.16.0.0/12|*.172.16.0.0/12|100.64.0.0/10|*.100.64.0.0/10|17.0.0.0/8|*.17.0.0.0/8|localhost|*.localhost|local|*.local|169.254.0.0/16|*.169.254.0.0/16|224.0.0.0/4|*.224.0.0.0/4|240.0.0.0/4|*.240.0.0.0/4"/>
+    <property name="java.class.version" value="67.0"/>
+  </properties>
+  <testcase name="testProcessHackEffect" classname="edu.brandeis.cosi103a.groupb.EngineTest" time="0.002">
+    <system-out><![CDATA[Physical deck initialized with 260 cards.
+Initialized Nancy's draw deck.
+Nancy draws [Bitcoin(id: 18)] from draw deck.
+Nancy draws [Bitcoin(id: 7)] from draw deck.
+Nancy draws [Bitcoin(id: 17)] from draw deck.
+Nancy draws [Bitcoin(id: 3)] from draw deck.
+Nancy draws [Method(id: 12)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+Processing HACK effect for Nancy
+Abby lacks MONITORING and must discard down to 3 cards.
+Abby now has 0 unplayed card(s).
+Nancy gains 2 money from HACK attack. Money now: 2
+]]></system-out>
+  </testcase>
+  <testcase name="testProcessTechDebtEffect" classname="edu.brandeis.cosi103a.groupb.EngineTest" time="0.003">
+    <system-out><![CDATA[Physical deck initialized with 260 cards.
+Initialized Nancy's draw deck.
+Nancy draws [Method(id: 1)] from draw deck.
+Nancy draws [Bitcoin(id: 15)] from draw deck.
+Nancy draws [Bitcoin(id: 0)] from draw deck.
+Nancy draws [Bitcoin(id: 27)] from draw deck.
+Nancy draws [Bitcoin(id: 8)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+Processing TECH_DEBT effect for Nancy
+Nancy draws [Bitcoin(id: 50)] from draw deck.
+Nancy updated actions are 1 and buys are 1
+]]></system-out>
+  </testcase>
+  <testcase name="testMonitoringReactionEvergreenTestEffect" classname="edu.brandeis.cosi103a.groupb.EngineTest" time="0.002">
+    <system-out><![CDATA[Physical deck initialized with 260 cards.
+Initialized Abby's draw deck.
+Abby draws [Bitcoin(id: 10)] from draw deck.
+Abby draws [Bitcoin(id: 46)] from draw deck.
+Abby draws [Method(id: 5)] from draw deck.
+Abby draws [Bitcoin(id: 52)] from draw deck.
+Abby draws [Bitcoin(id: 23)] from draw deck.
+[LOG] Abby -- Turn 1.
+
+Processing EVERGREEN_TEST effect for Abby
+Abby draws [Bitcoin(id: 2)] from draw deck.
+Abby draws [Bitcoin(id: 47)] from draw deck.
+Nancy reveals a MONITORING card to avoid EVERGREEN attack.
+[LOG] Nancy played card: [Monitoring(id: 1000)]
+
+WARNING: Player Nancy does not have enough cards to draw a full hand!
+]]></system-out>
+  </testcase>
+  <testcase name="testProcessEvergreenTestEffect" classname="edu.brandeis.cosi103a.groupb.EngineTest" time="0">
+    <system-out><![CDATA[Physical deck initialized with 260 cards.
+Initialized Nancy's draw deck.
+Nancy draws [Method(id: 8)] from draw deck.
+Nancy draws [Bitcoin(id: 5)] from draw deck.
+Nancy draws [Method(id: 1)] from draw deck.
+Nancy draws [Bitcoin(id: 31)] from draw deck.
+Nancy draws [Bitcoin(id: 14)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+Processing EVERGREEN_TEST effect for Nancy
+Nancy draws [Bitcoin(id: 42)] from draw deck.
+Nancy draws [Bitcoin(id: 40)] from draw deck.
+Abby lacks MONITORING and gains a BUG card.
+[LOG] Abby gained card: Bug
+
+BUG card added to Abby's discard deck due to EVERGREEN_TEST.
+]]></system-out>
+  </testcase>
+  <testcase name="testInitializeGameState" classname="edu.brandeis.cosi103a.groupb.EngineTest" time="0">
+    <system-out><![CDATA[Physical deck initialized with 260 cards.
+Initialized Nancy's draw deck.
+Nancy draws [Bitcoin(id: 20)] from draw deck.
+Nancy draws [Method(id: 6)] from draw deck.
+Nancy draws [Bitcoin(id: 43)] from draw deck.
+Nancy draws [Bitcoin(id: 39)] from draw deck.
+Nancy draws [Bitcoin(id: 42)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+Initialized Abby's draw deck.
+Abby draws [Bitcoin(id: 48)] from draw deck.
+Abby draws [Bitcoin(id: 15)] from draw deck.
+Abby draws [Bitcoin(id: 36)] from draw deck.
+Abby draws [Method(id: 2)] from draw deck.
+Abby draws [Bitcoin(id: 0)] from draw deck.
+[LOG] Abby -- Turn 1.
+
+]]></system-out>
+  </testcase>
+  <testcase name="testPhasesAgainAndAgain" classname="edu.brandeis.cosi103a.groupb.EngineTest" time="0.002">
+    <system-out><![CDATA[Physical deck initialized with 260 cards.
+Initialized Nancy's draw deck.
+Nancy draws [Method(id: 1)] from draw deck.
+Nancy draws [Bitcoin(id: 14)] from draw deck.
+Nancy draws [Bitcoin(id: 51)] from draw deck.
+Nancy draws [Method(id: 0)] from draw deck.
+Nancy draws [Method(id: 7)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 14)]
+
+[LOG] Nancy played card: [Bitcoin(id: 51)]
+
+[LOG] Nancy gained card: Method
+
+Discard Deck: [Method(id: 4)]
+
+Discard Deck: [Method(id: 4)]
+[Bitcoin(id: 14)]
+[Bitcoin(id: 51)]
+[Method(id: 1)]
+[Method(id: 0)]
+[Method(id: 7)]
+
+Nancy draws [Bitcoin(id: 33)] from draw deck.
+Nancy draws [Bitcoin(id: 59)] from draw deck.
+Nancy draws [Bitcoin(id: 29)] from draw deck.
+Nancy draws [Bitcoin(id: 30)] from draw deck.
+Nancy draws [Bitcoin(id: 35)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 33)]
+
+[LOG] Nancy played card: [Bitcoin(id: 59)]
+
+[LOG] Nancy played card: [Bitcoin(id: 29)]
+
+[LOG] Nancy played card: [Bitcoin(id: 30)]
+
+[LOG] Nancy played card: [Bitcoin(id: 35)]
+
+[LOG] Nancy gained card: Module
+
+Discard Deck: [Method(id: 4)]
+[Bitcoin(id: 14)]
+[Bitcoin(id: 51)]
+[Method(id: 1)]
+[Method(id: 0)]
+[Method(id: 7)]
+[Module(id: 0)]
+
+Discard Deck: [Method(id: 4)]
+[Bitcoin(id: 14)]
+[Bitcoin(id: 51)]
+[Method(id: 1)]
+[Method(id: 0)]
+[Method(id: 7)]
+[Module(id: 0)]
+[Bitcoin(id: 33)]
+[Bitcoin(id: 59)]
+[Bitcoin(id: 29)]
+[Bitcoin(id: 30)]
+[Bitcoin(id: 35)]
+
+Nancy draws [Method(id: 0)] from draw deck.
+Nancy draws [Bitcoin(id: 59)] from draw deck.
+Nancy draws [Module(id: 0)] from draw deck.
+Nancy draws [Bitcoin(id: 51)] from draw deck.
+Nancy draws [Bitcoin(id: 33)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 59)]
+
+[LOG] Nancy played card: [Bitcoin(id: 51)]
+
+[LOG] Nancy played card: [Bitcoin(id: 33)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Ethereum(id: 26)]
+
+Discard Deck: [Ethereum(id: 26)]
+[Bitcoin(id: 59)]
+[Bitcoin(id: 51)]
+[Bitcoin(id: 33)]
+[Method(id: 0)]
+[Module(id: 0)]
+
+Nancy draws [Method(id: 7)] from draw deck.
+Nancy draws [Bitcoin(id: 29)] from draw deck.
+Nancy draws [Bitcoin(id: 14)] from draw deck.
+Nancy draws [Bitcoin(id: 30)] from draw deck.
+Nancy draws [Method(id: 4)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 29)]
+
+[LOG] Nancy played card: [Bitcoin(id: 14)]
+
+[LOG] Nancy played card: [Bitcoin(id: 30)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Ethereum(id: 26)]
+[Bitcoin(id: 59)]
+[Bitcoin(id: 51)]
+[Bitcoin(id: 33)]
+[Method(id: 0)]
+[Module(id: 0)]
+[Ethereum(id: 22)]
+
+Discard Deck: [Ethereum(id: 26)]
+[Bitcoin(id: 59)]
+[Bitcoin(id: 51)]
+[Bitcoin(id: 33)]
+[Method(id: 0)]
+[Module(id: 0)]
+[Ethereum(id: 22)]
+[Bitcoin(id: 29)]
+[Bitcoin(id: 14)]
+[Bitcoin(id: 30)]
+[Method(id: 7)]
+[Method(id: 4)]
+
+Nancy draws [Bitcoin(id: 35)] from draw deck.
+Nancy draws [Method(id: 1)] from draw deck.
+Nancy draws [Bitcoin(id: 33)] from draw deck.
+Nancy draws [Bitcoin(id: 29)] from draw deck.
+Nancy draws [Bitcoin(id: 59)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+]]></system-out>
+  </testcase>
+  <testcase name="testProcessRefactorEffect" classname="edu.brandeis.cosi103a.groupb.EngineTest" time="0.001">
+    <system-out><![CDATA[Physical deck initialized with 260 cards.
+Initialized Nancy's draw deck.
+Nancy draws [Method(id: 12)] from draw deck.
+Nancy draws [Bitcoin(id: 15)] from draw deck.
+Nancy draws [Bitcoin(id: 29)] from draw deck.
+Nancy draws [Bitcoin(id: 8)] from draw deck.
+Nancy draws [Bitcoin(id: 38)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+Processing REFACTOR effect for Nancy
+[LOG] Nancy trashed card: Method
+
+Nancy trashes [Method(id: 12)] via REFACTOR.
+[LOG] Nancy gained card: Backlog
+
+Nancy gains a BACKLOG card via REFACTOR.
+]]></system-out>
+  </testcase>
+  <testcase name="testProcessCodeReviewEffect" classname="edu.brandeis.cosi103a.groupb.EngineTest" time="0.001">
+    <system-out><![CDATA[Physical deck initialized with 260 cards.
+Initialized Nancy's draw deck.
+Nancy draws [Bitcoin(id: 53)] from draw deck.
+Nancy draws [Method(id: 0)] from draw deck.
+Nancy draws [Method(id: 10)] from draw deck.
+Nancy draws [Method(id: 12)] from draw deck.
+Nancy draws [Bitcoin(id: 17)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+Processing CODE_REVIEW effect for Nancy
+Nancy draws [Bitcoin(id: 38)] from draw deck.
+Nancy draws 1 card. The available actions are updated to: 2
+]]></system-out>
+  </testcase>
+  <testcase name="testInitializeDeck" classname="edu.brandeis.cosi103a.groupb.EngineTest" time="0">
+    <system-out><![CDATA[Physical deck initialized with 260 cards.
+]]></system-out>
+  </testcase>
+  <testcase name="testProcessDailyScrumEffect" classname="edu.brandeis.cosi103a.groupb.EngineTest" time="0.001">
+    <system-out><![CDATA[Physical deck initialized with 260 cards.
+Initialized Nancy's draw deck.
+Nancy draws [Bitcoin(id: 16)] from draw deck.
+Nancy draws [Method(id: 2)] from draw deck.
+Nancy draws [Bitcoin(id: 22)] from draw deck.
+Nancy draws [Bitcoin(id: 15)] from draw deck.
+Nancy draws [Bitcoin(id: 44)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+Processing DAILY_SCRUM effect for Nancy
+Nancy draws [Bitcoin(id: 47)] from draw deck.
+Nancy draws [Bitcoin(id: 4)] from draw deck.
+Nancy draws [Bitcoin(id: 40)] from draw deck.
+Nancy draws [Method(id: 3)] from draw deck.
+Nancy draws 4 cards. The available buy is updated to: 1
+WARNING: Player Abby does not have enough cards to draw a full hand!
+]]></system-out>
+  </testcase>
+  <testcase name="testProcessParallelizationEffect" classname="edu.brandeis.cosi103a.groupb.EngineTest" time="0.001">
+    <system-out><![CDATA[Physical deck initialized with 260 cards.
+Initialized Nancy's draw deck.
+Nancy draws [Method(id: 11)] from draw deck.
+Nancy draws [Bitcoin(id: 50)] from draw deck.
+Nancy draws [Method(id: 1)] from draw deck.
+Nancy draws [Bitcoin(id: 12)] from draw deck.
+Nancy draws [Bitcoin(id: 59)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+Processing PARALLELIZATION effect for Nancy
+No available action to duplicate.
+]]></system-out>
+  </testcase>
+  <testcase name="calculateAPs" classname="edu.brandeis.cosi103a.groupb.EngineTest" time="0.01">
+    <system-out><![CDATA[Physical deck initialized with 260 cards.
+Initialized Nancy's draw deck.
+Nancy draws [Bitcoin(id: 1)] from draw deck.
+Nancy draws [Method(id: 1)] from draw deck.
+Nancy draws [Bitcoin(id: 12)] from draw deck.
+Nancy draws [Bitcoin(id: 38)] from draw deck.
+Nancy draws [Bitcoin(id: 42)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 1)]
+
+[LOG] Nancy played card: [Bitcoin(id: 12)]
+
+[LOG] Nancy played card: [Bitcoin(id: 38)]
+
+[LOG] Nancy played card: [Bitcoin(id: 42)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Ethereum(id: 23)]
+
+Discard Deck: [Ethereum(id: 23)]
+[Bitcoin(id: 1)]
+[Bitcoin(id: 12)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 42)]
+[Method(id: 1)]
+
+Nancy draws [Bitcoin(id: 41)] from draw deck.
+Nancy draws [Bitcoin(id: 7)] from draw deck.
+Nancy draws [Method(id: 12)] from draw deck.
+Nancy draws [Bitcoin(id: 15)] from draw deck.
+Nancy draws [Method(id: 13)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 41)]
+
+[LOG] Nancy played card: [Bitcoin(id: 7)]
+
+[LOG] Nancy played card: [Bitcoin(id: 15)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Ethereum(id: 23)]
+[Bitcoin(id: 1)]
+[Bitcoin(id: 12)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 42)]
+[Method(id: 1)]
+[Ethereum(id: 14)]
+
+Discard Deck: [Ethereum(id: 23)]
+[Bitcoin(id: 1)]
+[Bitcoin(id: 12)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 42)]
+[Method(id: 1)]
+[Ethereum(id: 14)]
+[Bitcoin(id: 41)]
+[Bitcoin(id: 7)]
+[Bitcoin(id: 15)]
+[Method(id: 12)]
+[Method(id: 13)]
+
+Nancy draws [Bitcoin(id: 15)] from draw deck.
+Nancy draws [Bitcoin(id: 1)] from draw deck.
+Nancy draws [Method(id: 12)] from draw deck.
+Nancy draws [Bitcoin(id: 38)] from draw deck.
+Nancy draws [Ethereum(id: 14)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 15)]
+
+[LOG] Nancy played card: [Bitcoin(id: 1)]
+
+[LOG] Nancy played card: [Bitcoin(id: 38)]
+
+[LOG] Nancy played card: [Ethereum(id: 14)]
+
+[LOG] Nancy gained card: Module
+
+Discard Deck: [Module(id: 1)]
+
+Discard Deck: [Module(id: 1)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 1)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 12)]
+
+Nancy draws [Bitcoin(id: 12)] from draw deck.
+Nancy draws [Bitcoin(id: 7)] from draw deck.
+Nancy draws [Ethereum(id: 23)] from draw deck.
+Nancy draws [Method(id: 1)] from draw deck.
+Nancy draws [Bitcoin(id: 42)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 12)]
+
+[LOG] Nancy played card: [Bitcoin(id: 7)]
+
+[LOG] Nancy played card: [Ethereum(id: 23)]
+
+[LOG] Nancy played card: [Bitcoin(id: 42)]
+
+[LOG] Nancy gained card: Module
+
+Discard Deck: [Module(id: 1)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 1)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 12)]
+[Module(id: 3)]
+
+Discard Deck: [Module(id: 1)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 1)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 12)]
+[Module(id: 3)]
+[Bitcoin(id: 12)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 23)]
+[Bitcoin(id: 42)]
+[Method(id: 1)]
+
+Nancy draws [Method(id: 13)] from draw deck.
+Nancy draws [Bitcoin(id: 41)] from draw deck.
+Nancy draws [Bitcoin(id: 1)] from draw deck.
+Nancy draws [Method(id: 1)] from draw deck.
+Nancy draws [Ethereum(id: 23)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 41)]
+
+[LOG] Nancy played card: [Bitcoin(id: 1)]
+
+[LOG] Nancy played card: [Ethereum(id: 23)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Ethereum(id: 2)]
+
+Discard Deck: [Ethereum(id: 2)]
+[Bitcoin(id: 41)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 23)]
+[Method(id: 13)]
+[Method(id: 1)]
+
+Nancy draws [Bitcoin(id: 7)] from draw deck.
+Nancy draws [Module(id: 3)] from draw deck.
+Nancy draws [Method(id: 12)] from draw deck.
+Nancy draws [Ethereum(id: 14)] from draw deck.
+Nancy draws [Bitcoin(id: 42)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 7)]
+
+[LOG] Nancy played card: [Ethereum(id: 14)]
+
+[LOG] Nancy played card: [Bitcoin(id: 42)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Ethereum(id: 2)]
+[Bitcoin(id: 41)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 23)]
+[Method(id: 13)]
+[Method(id: 1)]
+[Ethereum(id: 8)]
+
+Discard Deck: [Ethereum(id: 2)]
+[Bitcoin(id: 41)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 23)]
+[Method(id: 13)]
+[Method(id: 1)]
+[Ethereum(id: 8)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 14)]
+[Bitcoin(id: 42)]
+[Module(id: 3)]
+[Method(id: 12)]
+
+Nancy draws [Bitcoin(id: 15)] from draw deck.
+Nancy draws [Bitcoin(id: 38)] from draw deck.
+Nancy draws [Bitcoin(id: 12)] from draw deck.
+Nancy draws [Module(id: 1)] from draw deck.
+Nancy draws [Method(id: 1)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 15)]
+
+[LOG] Nancy played card: [Bitcoin(id: 38)]
+
+[LOG] Nancy played card: [Bitcoin(id: 12)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Ethereum(id: 31)]
+
+Discard Deck: [Ethereum(id: 31)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 12)]
+[Module(id: 1)]
+[Method(id: 1)]
+
+Nancy draws [Module(id: 3)] from draw deck.
+Nancy draws [Ethereum(id: 8)] from draw deck.
+Nancy draws [Bitcoin(id: 7)] from draw deck.
+Nancy draws [Ethereum(id: 2)] from draw deck.
+Nancy draws [Bitcoin(id: 1)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 8)]
+
+[LOG] Nancy played card: [Bitcoin(id: 7)]
+
+[LOG] Nancy played card: [Ethereum(id: 2)]
+
+[LOG] Nancy played card: [Bitcoin(id: 1)]
+
+[LOG] Nancy gained card: Module
+
+Discard Deck: [Ethereum(id: 31)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 12)]
+[Module(id: 1)]
+[Method(id: 1)]
+[Module(id: 6)]
+
+Discard Deck: [Ethereum(id: 31)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 12)]
+[Module(id: 1)]
+[Method(id: 1)]
+[Module(id: 6)]
+[Ethereum(id: 8)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 2)]
+[Bitcoin(id: 1)]
+[Module(id: 3)]
+
+Nancy draws [Method(id: 13)] from draw deck.
+Nancy draws [Bitcoin(id: 42)] from draw deck.
+Nancy draws [Ethereum(id: 23)] from draw deck.
+Nancy draws [Method(id: 12)] from draw deck.
+Nancy draws [Ethereum(id: 14)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 42)]
+
+[LOG] Nancy played card: [Ethereum(id: 23)]
+
+[LOG] Nancy played card: [Ethereum(id: 14)]
+
+[LOG] Nancy gained card: Module
+
+Discard Deck: [Ethereum(id: 31)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 12)]
+[Module(id: 1)]
+[Method(id: 1)]
+[Module(id: 6)]
+[Ethereum(id: 8)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 2)]
+[Bitcoin(id: 1)]
+[Module(id: 3)]
+[Module(id: 7)]
+
+Discard Deck: [Ethereum(id: 31)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 12)]
+[Module(id: 1)]
+[Method(id: 1)]
+[Module(id: 6)]
+[Ethereum(id: 8)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 2)]
+[Bitcoin(id: 1)]
+[Module(id: 3)]
+[Module(id: 7)]
+[Bitcoin(id: 42)]
+[Ethereum(id: 23)]
+[Ethereum(id: 14)]
+[Method(id: 13)]
+[Method(id: 12)]
+
+Nancy draws [Bitcoin(id: 41)] from draw deck.
+Nancy draws [Ethereum(id: 31)] from draw deck.
+Nancy draws [Bitcoin(id: 38)] from draw deck.
+Nancy draws [Bitcoin(id: 7)] from draw deck.
+Nancy draws [Ethereum(id: 8)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 41)]
+
+[LOG] Nancy played card: [Ethereum(id: 31)]
+
+[LOG] Nancy played card: [Bitcoin(id: 38)]
+
+[LOG] Nancy played card: [Bitcoin(id: 7)]
+
+[LOG] Nancy played card: [Ethereum(id: 8)]
+
+[LOG] Nancy gained card: Module
+
+Discard Deck: [Module(id: 5)]
+
+Discard Deck: [Module(id: 5)]
+[Bitcoin(id: 41)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 8)]
+
+Nancy draws [Bitcoin(id: 42)] from draw deck.
+Nancy draws [Ethereum(id: 2)] from draw deck.
+Nancy draws [Ethereum(id: 14)] from draw deck.
+Nancy draws [Bitcoin(id: 1)] from draw deck.
+Nancy draws [Module(id: 7)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 42)]
+
+[LOG] Nancy played card: [Ethereum(id: 2)]
+
+[LOG] Nancy played card: [Ethereum(id: 14)]
+
+[LOG] Nancy played card: [Bitcoin(id: 1)]
+
+[LOG] Nancy gained card: Module
+
+Discard Deck: [Module(id: 5)]
+[Bitcoin(id: 41)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 8)]
+[Module(id: 0)]
+
+Discard Deck: [Module(id: 5)]
+[Bitcoin(id: 41)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 8)]
+[Module(id: 0)]
+[Bitcoin(id: 42)]
+[Ethereum(id: 2)]
+[Ethereum(id: 14)]
+[Bitcoin(id: 1)]
+[Module(id: 7)]
+
+Nancy draws [Bitcoin(id: 15)] from draw deck.
+Nancy draws [Bitcoin(id: 12)] from draw deck.
+Nancy draws [Ethereum(id: 23)] from draw deck.
+Nancy draws [Method(id: 12)] from draw deck.
+Nancy draws [Method(id: 13)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 15)]
+
+[LOG] Nancy played card: [Bitcoin(id: 12)]
+
+[LOG] Nancy played card: [Ethereum(id: 23)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Module(id: 5)]
+[Bitcoin(id: 41)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 8)]
+[Module(id: 0)]
+[Bitcoin(id: 42)]
+[Ethereum(id: 2)]
+[Ethereum(id: 14)]
+[Bitcoin(id: 1)]
+[Module(id: 7)]
+[Ethereum(id: 34)]
+
+Discard Deck: [Module(id: 5)]
+[Bitcoin(id: 41)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 8)]
+[Module(id: 0)]
+[Bitcoin(id: 42)]
+[Ethereum(id: 2)]
+[Ethereum(id: 14)]
+[Bitcoin(id: 1)]
+[Module(id: 7)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 12)]
+[Ethereum(id: 23)]
+[Method(id: 12)]
+[Method(id: 13)]
+
+Nancy draws [Module(id: 1)] from draw deck.
+Nancy draws [Module(id: 3)] from draw deck.
+Nancy draws [Module(id: 6)] from draw deck.
+Nancy draws [Method(id: 1)] from draw deck.
+Nancy draws [Ethereum(id: 14)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 14)]
+
+[LOG] Nancy gained card: Method
+
+Discard Deck: [Method(id: 3)]
+
+Discard Deck: [Method(id: 3)]
+[Ethereum(id: 14)]
+[Module(id: 1)]
+[Module(id: 3)]
+[Module(id: 6)]
+[Method(id: 1)]
+
+Nancy draws [Bitcoin(id: 15)] from draw deck.
+Nancy draws [Module(id: 7)] from draw deck.
+Nancy draws [Bitcoin(id: 12)] from draw deck.
+Nancy draws [Ethereum(id: 2)] from draw deck.
+Nancy draws [Ethereum(id: 8)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 15)]
+
+[LOG] Nancy played card: [Bitcoin(id: 12)]
+
+[LOG] Nancy played card: [Ethereum(id: 2)]
+
+[LOG] Nancy played card: [Ethereum(id: 8)]
+
+[LOG] Nancy gained card: Module
+
+Discard Deck: [Method(id: 3)]
+[Ethereum(id: 14)]
+[Module(id: 1)]
+[Module(id: 3)]
+[Module(id: 6)]
+[Method(id: 1)]
+[Module(id: 2)]
+
+Discard Deck: [Method(id: 3)]
+[Ethereum(id: 14)]
+[Module(id: 1)]
+[Module(id: 3)]
+[Module(id: 6)]
+[Method(id: 1)]
+[Module(id: 2)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 12)]
+[Ethereum(id: 2)]
+[Ethereum(id: 8)]
+[Module(id: 7)]
+
+Nancy draws [Ethereum(id: 23)] from draw deck.
+Nancy draws [Method(id: 13)] from draw deck.
+Nancy draws [Bitcoin(id: 42)] from draw deck.
+Nancy draws [Ethereum(id: 31)] from draw deck.
+Nancy draws [Bitcoin(id: 38)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 23)]
+
+[LOG] Nancy played card: [Bitcoin(id: 42)]
+
+[LOG] Nancy played card: [Ethereum(id: 31)]
+
+[LOG] Nancy played card: [Bitcoin(id: 38)]
+
+[LOG] Nancy gained card: Module
+
+Discard Deck: [Method(id: 3)]
+[Ethereum(id: 14)]
+[Module(id: 1)]
+[Module(id: 3)]
+[Module(id: 6)]
+[Method(id: 1)]
+[Module(id: 2)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 12)]
+[Ethereum(id: 2)]
+[Ethereum(id: 8)]
+[Module(id: 7)]
+[Module(id: 4)]
+
+Discard Deck: [Method(id: 3)]
+[Ethereum(id: 14)]
+[Module(id: 1)]
+[Module(id: 3)]
+[Module(id: 6)]
+[Method(id: 1)]
+[Module(id: 2)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 12)]
+[Ethereum(id: 2)]
+[Ethereum(id: 8)]
+[Module(id: 7)]
+[Module(id: 4)]
+[Ethereum(id: 23)]
+[Bitcoin(id: 42)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 38)]
+[Method(id: 13)]
+
+Nancy draws [Bitcoin(id: 7)] from draw deck.
+Nancy draws [Ethereum(id: 34)] from draw deck.
+Nancy draws [Bitcoin(id: 41)] from draw deck.
+Nancy draws [Method(id: 12)] from draw deck.
+Nancy draws [Bitcoin(id: 1)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 7)]
+
+[LOG] Nancy played card: [Ethereum(id: 34)]
+
+[LOG] Nancy played card: [Bitcoin(id: 41)]
+
+[LOG] Nancy played card: [Bitcoin(id: 1)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Method(id: 3)]
+[Ethereum(id: 14)]
+[Module(id: 1)]
+[Module(id: 3)]
+[Module(id: 6)]
+[Method(id: 1)]
+[Module(id: 2)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 12)]
+[Ethereum(id: 2)]
+[Ethereum(id: 8)]
+[Module(id: 7)]
+[Module(id: 4)]
+[Ethereum(id: 23)]
+[Bitcoin(id: 42)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 38)]
+[Method(id: 13)]
+[Ethereum(id: 37)]
+
+Discard Deck: [Method(id: 3)]
+[Ethereum(id: 14)]
+[Module(id: 1)]
+[Module(id: 3)]
+[Module(id: 6)]
+[Method(id: 1)]
+[Module(id: 2)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 12)]
+[Ethereum(id: 2)]
+[Ethereum(id: 8)]
+[Module(id: 7)]
+[Module(id: 4)]
+[Ethereum(id: 23)]
+[Bitcoin(id: 42)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 38)]
+[Method(id: 13)]
+[Ethereum(id: 37)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 41)]
+[Bitcoin(id: 1)]
+[Method(id: 12)]
+
+Nancy draws [Module(id: 5)] from draw deck.
+Nancy draws [Module(id: 0)] from draw deck.
+Nancy draws [Method(id: 3)] from draw deck.
+Nancy draws [Module(id: 4)] from draw deck.
+Nancy draws [Ethereum(id: 23)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 23)]
+
+[LOG] Nancy gained card: Method
+
+Discard Deck: [Method(id: 10)]
+
+Discard Deck: [Method(id: 10)]
+[Ethereum(id: 23)]
+[Module(id: 5)]
+[Module(id: 0)]
+[Method(id: 3)]
+[Module(id: 4)]
+
+Nancy draws [Ethereum(id: 31)] from draw deck.
+Nancy draws [Ethereum(id: 37)] from draw deck.
+Nancy draws [Module(id: 2)] from draw deck.
+Nancy draws [Method(id: 1)] from draw deck.
+Nancy draws [Method(id: 12)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 31)]
+
+[LOG] Nancy played card: [Ethereum(id: 37)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Method(id: 10)]
+[Ethereum(id: 23)]
+[Module(id: 5)]
+[Module(id: 0)]
+[Method(id: 3)]
+[Module(id: 4)]
+[Ethereum(id: 39)]
+
+Discard Deck: [Method(id: 10)]
+[Ethereum(id: 23)]
+[Module(id: 5)]
+[Module(id: 0)]
+[Method(id: 3)]
+[Module(id: 4)]
+[Ethereum(id: 39)]
+[Ethereum(id: 31)]
+[Ethereum(id: 37)]
+[Module(id: 2)]
+[Method(id: 1)]
+[Method(id: 12)]
+
+Nancy draws [Method(id: 13)] from draw deck.
+Nancy draws [Bitcoin(id: 12)] from draw deck.
+Nancy draws [Bitcoin(id: 38)] from draw deck.
+Nancy draws [Bitcoin(id: 1)] from draw deck.
+Nancy draws [Ethereum(id: 8)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 12)]
+
+[LOG] Nancy played card: [Bitcoin(id: 38)]
+
+[LOG] Nancy played card: [Bitcoin(id: 1)]
+
+[LOG] Nancy played card: [Ethereum(id: 8)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Method(id: 10)]
+[Ethereum(id: 23)]
+[Module(id: 5)]
+[Module(id: 0)]
+[Method(id: 3)]
+[Module(id: 4)]
+[Ethereum(id: 39)]
+[Ethereum(id: 31)]
+[Ethereum(id: 37)]
+[Module(id: 2)]
+[Method(id: 1)]
+[Method(id: 12)]
+[Ethereum(id: 16)]
+
+Discard Deck: [Method(id: 10)]
+[Ethereum(id: 23)]
+[Module(id: 5)]
+[Module(id: 0)]
+[Method(id: 3)]
+[Module(id: 4)]
+[Ethereum(id: 39)]
+[Ethereum(id: 31)]
+[Ethereum(id: 37)]
+[Module(id: 2)]
+[Method(id: 1)]
+[Method(id: 12)]
+[Ethereum(id: 16)]
+[Bitcoin(id: 12)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 8)]
+[Method(id: 13)]
+
+Nancy draws [Module(id: 7)] from draw deck.
+Nancy draws [Bitcoin(id: 7)] from draw deck.
+Nancy draws [Bitcoin(id: 15)] from draw deck.
+Nancy draws [Bitcoin(id: 42)] from draw deck.
+Nancy draws [Module(id: 6)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 7)]
+
+[LOG] Nancy played card: [Bitcoin(id: 15)]
+
+[LOG] Nancy played card: [Bitcoin(id: 42)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Method(id: 10)]
+[Ethereum(id: 23)]
+[Module(id: 5)]
+[Module(id: 0)]
+[Method(id: 3)]
+[Module(id: 4)]
+[Ethereum(id: 39)]
+[Ethereum(id: 31)]
+[Ethereum(id: 37)]
+[Module(id: 2)]
+[Method(id: 1)]
+[Method(id: 12)]
+[Ethereum(id: 16)]
+[Bitcoin(id: 12)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 8)]
+[Method(id: 13)]
+[Ethereum(id: 32)]
+
+Discard Deck: [Method(id: 10)]
+[Ethereum(id: 23)]
+[Module(id: 5)]
+[Module(id: 0)]
+[Method(id: 3)]
+[Module(id: 4)]
+[Ethereum(id: 39)]
+[Ethereum(id: 31)]
+[Ethereum(id: 37)]
+[Module(id: 2)]
+[Method(id: 1)]
+[Method(id: 12)]
+[Ethereum(id: 16)]
+[Bitcoin(id: 12)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 8)]
+[Method(id: 13)]
+[Ethereum(id: 32)]
+[Bitcoin(id: 7)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 42)]
+[Module(id: 7)]
+[Module(id: 6)]
+
+Nancy draws [Ethereum(id: 14)] from draw deck.
+Nancy draws [Bitcoin(id: 41)] from draw deck.
+Nancy draws [Module(id: 3)] from draw deck.
+Nancy draws [Ethereum(id: 34)] from draw deck.
+Nancy draws [Module(id: 1)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 14)]
+
+[LOG] Nancy played card: [Bitcoin(id: 41)]
+
+[LOG] Nancy played card: [Ethereum(id: 34)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Method(id: 10)]
+[Ethereum(id: 23)]
+[Module(id: 5)]
+[Module(id: 0)]
+[Method(id: 3)]
+[Module(id: 4)]
+[Ethereum(id: 39)]
+[Ethereum(id: 31)]
+[Ethereum(id: 37)]
+[Module(id: 2)]
+[Method(id: 1)]
+[Method(id: 12)]
+[Ethereum(id: 16)]
+[Bitcoin(id: 12)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 8)]
+[Method(id: 13)]
+[Ethereum(id: 32)]
+[Bitcoin(id: 7)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 42)]
+[Module(id: 7)]
+[Module(id: 6)]
+[Ethereum(id: 24)]
+
+Discard Deck: [Method(id: 10)]
+[Ethereum(id: 23)]
+[Module(id: 5)]
+[Module(id: 0)]
+[Method(id: 3)]
+[Module(id: 4)]
+[Ethereum(id: 39)]
+[Ethereum(id: 31)]
+[Ethereum(id: 37)]
+[Module(id: 2)]
+[Method(id: 1)]
+[Method(id: 12)]
+[Ethereum(id: 16)]
+[Bitcoin(id: 12)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 8)]
+[Method(id: 13)]
+[Ethereum(id: 32)]
+[Bitcoin(id: 7)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 42)]
+[Module(id: 7)]
+[Module(id: 6)]
+[Ethereum(id: 24)]
+[Ethereum(id: 14)]
+[Bitcoin(id: 41)]
+[Ethereum(id: 34)]
+[Module(id: 3)]
+[Module(id: 1)]
+
+Nancy draws [Ethereum(id: 2)] from draw deck.
+Nancy draws [Method(id: 3)] from draw deck.
+Nancy draws [Method(id: 10)] from draw deck.
+Nancy draws [Module(id: 4)] from draw deck.
+Nancy draws [Ethereum(id: 39)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 2)]
+
+[LOG] Nancy played card: [Ethereum(id: 39)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Ethereum(id: 22)]
+
+Discard Deck: [Ethereum(id: 22)]
+[Ethereum(id: 2)]
+[Ethereum(id: 39)]
+[Method(id: 3)]
+[Method(id: 10)]
+[Module(id: 4)]
+
+Nancy draws [Ethereum(id: 23)] from draw deck.
+Nancy draws [Ethereum(id: 34)] from draw deck.
+Nancy draws [Bitcoin(id: 42)] from draw deck.
+Nancy draws [Ethereum(id: 37)] from draw deck.
+Nancy draws [Bitcoin(id: 38)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 23)]
+
+[LOG] Nancy played card: [Ethereum(id: 34)]
+
+[LOG] Nancy played card: [Bitcoin(id: 42)]
+
+[LOG] Nancy played card: [Ethereum(id: 37)]
+
+[LOG] Nancy played card: [Bitcoin(id: 38)]
+
+[LOG] Nancy gained card: Framework
+
+Discard Deck: [Ethereum(id: 22)]
+[Ethereum(id: 2)]
+[Ethereum(id: 39)]
+[Method(id: 3)]
+[Method(id: 10)]
+[Module(id: 4)]
+[Framework(id: 6)]
+
+Discard Deck: [Ethereum(id: 22)]
+[Ethereum(id: 2)]
+[Ethereum(id: 39)]
+[Method(id: 3)]
+[Method(id: 10)]
+[Module(id: 4)]
+[Framework(id: 6)]
+[Ethereum(id: 23)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 42)]
+[Ethereum(id: 37)]
+[Bitcoin(id: 38)]
+
+Nancy draws [Bitcoin(id: 15)] from draw deck.
+Nancy draws [Module(id: 3)] from draw deck.
+Nancy draws [Bitcoin(id: 1)] from draw deck.
+Nancy draws [Method(id: 12)] from draw deck.
+Nancy draws [Ethereum(id: 16)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 15)]
+
+[LOG] Nancy played card: [Bitcoin(id: 1)]
+
+[LOG] Nancy played card: [Ethereum(id: 16)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Ethereum(id: 22)]
+[Ethereum(id: 2)]
+[Ethereum(id: 39)]
+[Method(id: 3)]
+[Method(id: 10)]
+[Module(id: 4)]
+[Framework(id: 6)]
+[Ethereum(id: 23)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 42)]
+[Ethereum(id: 37)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 12)]
+
+Discard Deck: [Ethereum(id: 22)]
+[Ethereum(id: 2)]
+[Ethereum(id: 39)]
+[Method(id: 3)]
+[Method(id: 10)]
+[Module(id: 4)]
+[Framework(id: 6)]
+[Ethereum(id: 23)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 42)]
+[Ethereum(id: 37)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 12)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 16)]
+[Module(id: 3)]
+[Method(id: 12)]
+
+Nancy draws [Ethereum(id: 31)] from draw deck.
+Nancy draws [Ethereum(id: 8)] from draw deck.
+Nancy draws [Module(id: 7)] from draw deck.
+Nancy draws [Ethereum(id: 14)] from draw deck.
+Nancy draws [Bitcoin(id: 7)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 31)]
+
+[LOG] Nancy played card: [Ethereum(id: 8)]
+
+[LOG] Nancy played card: [Ethereum(id: 14)]
+
+[LOG] Nancy played card: [Bitcoin(id: 7)]
+
+[LOG] Nancy gained card: Dogecoin
+
+Discard Deck: [Ethereum(id: 22)]
+[Ethereum(id: 2)]
+[Ethereum(id: 39)]
+[Method(id: 3)]
+[Method(id: 10)]
+[Module(id: 4)]
+[Framework(id: 6)]
+[Ethereum(id: 23)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 42)]
+[Ethereum(id: 37)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 12)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 16)]
+[Module(id: 3)]
+[Method(id: 12)]
+[Dogecoin(id: 16)]
+
+Discard Deck: [Ethereum(id: 22)]
+[Ethereum(id: 2)]
+[Ethereum(id: 39)]
+[Method(id: 3)]
+[Method(id: 10)]
+[Module(id: 4)]
+[Framework(id: 6)]
+[Ethereum(id: 23)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 42)]
+[Ethereum(id: 37)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 12)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 16)]
+[Module(id: 3)]
+[Method(id: 12)]
+[Dogecoin(id: 16)]
+[Ethereum(id: 31)]
+[Ethereum(id: 8)]
+[Ethereum(id: 14)]
+[Bitcoin(id: 7)]
+[Module(id: 7)]
+
+Nancy draws [Module(id: 5)] from draw deck.
+Nancy draws [Module(id: 1)] from draw deck.
+Nancy draws [Method(id: 13)] from draw deck.
+Nancy draws [Module(id: 6)] from draw deck.
+Nancy draws [Method(id: 1)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+Discard Deck: [Ethereum(id: 22)]
+[Ethereum(id: 2)]
+[Ethereum(id: 39)]
+[Method(id: 3)]
+[Method(id: 10)]
+[Module(id: 4)]
+[Framework(id: 6)]
+[Ethereum(id: 23)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 42)]
+[Ethereum(id: 37)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 12)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 16)]
+[Module(id: 3)]
+[Method(id: 12)]
+[Dogecoin(id: 16)]
+[Ethereum(id: 31)]
+[Ethereum(id: 8)]
+[Ethereum(id: 14)]
+[Bitcoin(id: 7)]
+[Module(id: 7)]
+[Module(id: 5)]
+[Module(id: 1)]
+[Method(id: 13)]
+[Module(id: 6)]
+[Method(id: 1)]
+
+Nancy draws [Ethereum(id: 24)] from draw deck.
+Nancy draws [Module(id: 2)] from draw deck.
+Nancy draws [Module(id: 0)] from draw deck.
+Nancy draws [Ethereum(id: 32)] from draw deck.
+Nancy draws [Bitcoin(id: 12)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 24)]
+
+[LOG] Nancy played card: [Ethereum(id: 32)]
+
+[LOG] Nancy played card: [Bitcoin(id: 12)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Ethereum(id: 22)]
+[Ethereum(id: 2)]
+[Ethereum(id: 39)]
+[Method(id: 3)]
+[Method(id: 10)]
+[Module(id: 4)]
+[Framework(id: 6)]
+[Ethereum(id: 23)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 42)]
+[Ethereum(id: 37)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 12)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 16)]
+[Module(id: 3)]
+[Method(id: 12)]
+[Dogecoin(id: 16)]
+[Ethereum(id: 31)]
+[Ethereum(id: 8)]
+[Ethereum(id: 14)]
+[Bitcoin(id: 7)]
+[Module(id: 7)]
+[Module(id: 5)]
+[Module(id: 1)]
+[Method(id: 13)]
+[Module(id: 6)]
+[Method(id: 1)]
+[Ethereum(id: 11)]
+
+Discard Deck: [Ethereum(id: 22)]
+[Ethereum(id: 2)]
+[Ethereum(id: 39)]
+[Method(id: 3)]
+[Method(id: 10)]
+[Module(id: 4)]
+[Framework(id: 6)]
+[Ethereum(id: 23)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 42)]
+[Ethereum(id: 37)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 12)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 16)]
+[Module(id: 3)]
+[Method(id: 12)]
+[Dogecoin(id: 16)]
+[Ethereum(id: 31)]
+[Ethereum(id: 8)]
+[Ethereum(id: 14)]
+[Bitcoin(id: 7)]
+[Module(id: 7)]
+[Module(id: 5)]
+[Module(id: 1)]
+[Method(id: 13)]
+[Module(id: 6)]
+[Method(id: 1)]
+[Ethereum(id: 11)]
+[Ethereum(id: 24)]
+[Ethereum(id: 32)]
+[Bitcoin(id: 12)]
+[Module(id: 2)]
+[Module(id: 0)]
+
+Nancy draws [Bitcoin(id: 41)] from draw deck.
+Nancy draws [Ethereum(id: 23)] from draw deck.
+Nancy draws [Ethereum(id: 14)] from draw deck.
+Nancy draws [Ethereum(id: 34)] from draw deck.
+Nancy draws [Module(id: 3)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 41)]
+
+[LOG] Nancy played card: [Ethereum(id: 23)]
+
+[LOG] Nancy played card: [Ethereum(id: 14)]
+
+[LOG] Nancy played card: [Ethereum(id: 34)]
+
+[LOG] Nancy gained card: Dogecoin
+
+Discard Deck: [Dogecoin(id: 4)]
+
+Discard Deck: [Dogecoin(id: 4)]
+[Bitcoin(id: 41)]
+[Ethereum(id: 23)]
+[Ethereum(id: 14)]
+[Ethereum(id: 34)]
+[Module(id: 3)]
+
+Nancy draws [Method(id: 13)] from draw deck.
+Nancy draws [Module(id: 0)] from draw deck.
+Nancy draws [Ethereum(id: 32)] from draw deck.
+Nancy draws [Bitcoin(id: 1)] from draw deck.
+Nancy draws [Module(id: 6)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 32)]
+
+[LOG] Nancy played card: [Bitcoin(id: 1)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Dogecoin(id: 4)]
+[Bitcoin(id: 41)]
+[Ethereum(id: 23)]
+[Ethereum(id: 14)]
+[Ethereum(id: 34)]
+[Module(id: 3)]
+[Ethereum(id: 33)]
+
+Discard Deck: [Dogecoin(id: 4)]
+[Bitcoin(id: 41)]
+[Ethereum(id: 23)]
+[Ethereum(id: 14)]
+[Ethereum(id: 34)]
+[Module(id: 3)]
+[Ethereum(id: 33)]
+[Ethereum(id: 32)]
+[Bitcoin(id: 1)]
+[Method(id: 13)]
+[Module(id: 0)]
+[Module(id: 6)]
+
+Nancy draws [Method(id: 1)] from draw deck.
+Nancy draws [Ethereum(id: 39)] from draw deck.
+Nancy draws [Module(id: 1)] from draw deck.
+Nancy draws [Bitcoin(id: 7)] from draw deck.
+Nancy draws [Ethereum(id: 2)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 39)]
+
+[LOG] Nancy played card: [Bitcoin(id: 7)]
+
+[LOG] Nancy played card: [Ethereum(id: 2)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Dogecoin(id: 4)]
+[Bitcoin(id: 41)]
+[Ethereum(id: 23)]
+[Ethereum(id: 14)]
+[Ethereum(id: 34)]
+[Module(id: 3)]
+[Ethereum(id: 33)]
+[Ethereum(id: 32)]
+[Bitcoin(id: 1)]
+[Method(id: 13)]
+[Module(id: 0)]
+[Module(id: 6)]
+[Ethereum(id: 21)]
+
+Discard Deck: [Dogecoin(id: 4)]
+[Bitcoin(id: 41)]
+[Ethereum(id: 23)]
+[Ethereum(id: 14)]
+[Ethereum(id: 34)]
+[Module(id: 3)]
+[Ethereum(id: 33)]
+[Ethereum(id: 32)]
+[Bitcoin(id: 1)]
+[Method(id: 13)]
+[Module(id: 0)]
+[Module(id: 6)]
+[Ethereum(id: 21)]
+[Ethereum(id: 39)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 2)]
+[Method(id: 1)]
+[Module(id: 1)]
+
+Nancy draws [Bitcoin(id: 15)] from draw deck.
+Nancy draws [Module(id: 5)] from draw deck.
+Nancy draws [Module(id: 4)] from draw deck.
+Nancy draws [Bitcoin(id: 12)] from draw deck.
+Nancy draws [Ethereum(id: 16)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 15)]
+
+[LOG] Nancy played card: [Bitcoin(id: 12)]
+
+[LOG] Nancy played card: [Ethereum(id: 16)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Dogecoin(id: 4)]
+[Bitcoin(id: 41)]
+[Ethereum(id: 23)]
+[Ethereum(id: 14)]
+[Ethereum(id: 34)]
+[Module(id: 3)]
+[Ethereum(id: 33)]
+[Ethereum(id: 32)]
+[Bitcoin(id: 1)]
+[Method(id: 13)]
+[Module(id: 0)]
+[Module(id: 6)]
+[Ethereum(id: 21)]
+[Ethereum(id: 39)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 2)]
+[Method(id: 1)]
+[Module(id: 1)]
+[Ethereum(id: 28)]
+
+Discard Deck: [Dogecoin(id: 4)]
+[Bitcoin(id: 41)]
+[Ethereum(id: 23)]
+[Ethereum(id: 14)]
+[Ethereum(id: 34)]
+[Module(id: 3)]
+[Ethereum(id: 33)]
+[Ethereum(id: 32)]
+[Bitcoin(id: 1)]
+[Method(id: 13)]
+[Module(id: 0)]
+[Module(id: 6)]
+[Ethereum(id: 21)]
+[Ethereum(id: 39)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 2)]
+[Method(id: 1)]
+[Module(id: 1)]
+[Ethereum(id: 28)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 12)]
+[Ethereum(id: 16)]
+[Module(id: 5)]
+[Module(id: 4)]
+
+Nancy draws [Method(id: 3)] from draw deck.
+Nancy draws [Ethereum(id: 22)] from draw deck.
+Nancy draws [Bitcoin(id: 38)] from draw deck.
+Nancy draws [Method(id: 12)] from draw deck.
+Nancy draws [Bitcoin(id: 42)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 22)]
+
+[LOG] Nancy played card: [Bitcoin(id: 38)]
+
+[LOG] Nancy played card: [Bitcoin(id: 42)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Dogecoin(id: 4)]
+[Bitcoin(id: 41)]
+[Ethereum(id: 23)]
+[Ethereum(id: 14)]
+[Ethereum(id: 34)]
+[Module(id: 3)]
+[Ethereum(id: 33)]
+[Ethereum(id: 32)]
+[Bitcoin(id: 1)]
+[Method(id: 13)]
+[Module(id: 0)]
+[Module(id: 6)]
+[Ethereum(id: 21)]
+[Ethereum(id: 39)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 2)]
+[Method(id: 1)]
+[Module(id: 1)]
+[Ethereum(id: 28)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 12)]
+[Ethereum(id: 16)]
+[Module(id: 5)]
+[Module(id: 4)]
+[Ethereum(id: 27)]
+
+Discard Deck: [Dogecoin(id: 4)]
+[Bitcoin(id: 41)]
+[Ethereum(id: 23)]
+[Ethereum(id: 14)]
+[Ethereum(id: 34)]
+[Module(id: 3)]
+[Ethereum(id: 33)]
+[Ethereum(id: 32)]
+[Bitcoin(id: 1)]
+[Method(id: 13)]
+[Module(id: 0)]
+[Module(id: 6)]
+[Ethereum(id: 21)]
+[Ethereum(id: 39)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 2)]
+[Method(id: 1)]
+[Module(id: 1)]
+[Ethereum(id: 28)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 12)]
+[Ethereum(id: 16)]
+[Module(id: 5)]
+[Module(id: 4)]
+[Ethereum(id: 27)]
+[Ethereum(id: 22)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 42)]
+[Method(id: 3)]
+[Method(id: 12)]
+
+Nancy draws [Ethereum(id: 37)] from draw deck.
+Nancy draws [Ethereum(id: 11)] from draw deck.
+Nancy draws [Ethereum(id: 8)] from draw deck.
+Nancy draws [Module(id: 2)] from draw deck.
+Nancy draws [Ethereum(id: 12)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 37)]
+
+[LOG] Nancy played card: [Ethereum(id: 11)]
+
+[LOG] Nancy played card: [Ethereum(id: 8)]
+
+[LOG] Nancy played card: [Ethereum(id: 12)]
+
+[LOG] Nancy gained card: Framework
+
+Discard Deck: [Dogecoin(id: 4)]
+[Bitcoin(id: 41)]
+[Ethereum(id: 23)]
+[Ethereum(id: 14)]
+[Ethereum(id: 34)]
+[Module(id: 3)]
+[Ethereum(id: 33)]
+[Ethereum(id: 32)]
+[Bitcoin(id: 1)]
+[Method(id: 13)]
+[Module(id: 0)]
+[Module(id: 6)]
+[Ethereum(id: 21)]
+[Ethereum(id: 39)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 2)]
+[Method(id: 1)]
+[Module(id: 1)]
+[Ethereum(id: 28)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 12)]
+[Ethereum(id: 16)]
+[Module(id: 5)]
+[Module(id: 4)]
+[Ethereum(id: 27)]
+[Ethereum(id: 22)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 42)]
+[Method(id: 3)]
+[Method(id: 12)]
+[Framework(id: 5)]
+
+Discard Deck: [Dogecoin(id: 4)]
+[Bitcoin(id: 41)]
+[Ethereum(id: 23)]
+[Ethereum(id: 14)]
+[Ethereum(id: 34)]
+[Module(id: 3)]
+[Ethereum(id: 33)]
+[Ethereum(id: 32)]
+[Bitcoin(id: 1)]
+[Method(id: 13)]
+[Module(id: 0)]
+[Module(id: 6)]
+[Ethereum(id: 21)]
+[Ethereum(id: 39)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 2)]
+[Method(id: 1)]
+[Module(id: 1)]
+[Ethereum(id: 28)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 12)]
+[Ethereum(id: 16)]
+[Module(id: 5)]
+[Module(id: 4)]
+[Ethereum(id: 27)]
+[Ethereum(id: 22)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 42)]
+[Method(id: 3)]
+[Method(id: 12)]
+[Framework(id: 5)]
+[Ethereum(id: 37)]
+[Ethereum(id: 11)]
+[Ethereum(id: 8)]
+[Ethereum(id: 12)]
+[Module(id: 2)]
+
+Nancy draws [Module(id: 7)] from draw deck.
+Nancy draws [Framework(id: 6)] from draw deck.
+Nancy draws [Ethereum(id: 24)] from draw deck.
+Nancy draws [Method(id: 10)] from draw deck.
+Nancy draws [Dogecoin(id: 16)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 24)]
+
+[LOG] Nancy played card: [Dogecoin(id: 16)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Dogecoin(id: 4)]
+[Bitcoin(id: 41)]
+[Ethereum(id: 23)]
+[Ethereum(id: 14)]
+[Ethereum(id: 34)]
+[Module(id: 3)]
+[Ethereum(id: 33)]
+[Ethereum(id: 32)]
+[Bitcoin(id: 1)]
+[Method(id: 13)]
+[Module(id: 0)]
+[Module(id: 6)]
+[Ethereum(id: 21)]
+[Ethereum(id: 39)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 2)]
+[Method(id: 1)]
+[Module(id: 1)]
+[Ethereum(id: 28)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 12)]
+[Ethereum(id: 16)]
+[Module(id: 5)]
+[Module(id: 4)]
+[Ethereum(id: 27)]
+[Ethereum(id: 22)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 42)]
+[Method(id: 3)]
+[Method(id: 12)]
+[Framework(id: 5)]
+[Ethereum(id: 37)]
+[Ethereum(id: 11)]
+[Ethereum(id: 8)]
+[Ethereum(id: 12)]
+[Module(id: 2)]
+[Ethereum(id: 15)]
+
+Discard Deck: [Dogecoin(id: 4)]
+[Bitcoin(id: 41)]
+[Ethereum(id: 23)]
+[Ethereum(id: 14)]
+[Ethereum(id: 34)]
+[Module(id: 3)]
+[Ethereum(id: 33)]
+[Ethereum(id: 32)]
+[Bitcoin(id: 1)]
+[Method(id: 13)]
+[Module(id: 0)]
+[Module(id: 6)]
+[Ethereum(id: 21)]
+[Ethereum(id: 39)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 2)]
+[Method(id: 1)]
+[Module(id: 1)]
+[Ethereum(id: 28)]
+[Bitcoin(id: 15)]
+[Bitcoin(id: 12)]
+[Ethereum(id: 16)]
+[Module(id: 5)]
+[Module(id: 4)]
+[Ethereum(id: 27)]
+[Ethereum(id: 22)]
+[Bitcoin(id: 38)]
+[Bitcoin(id: 42)]
+[Method(id: 3)]
+[Method(id: 12)]
+[Framework(id: 5)]
+[Ethereum(id: 37)]
+[Ethereum(id: 11)]
+[Ethereum(id: 8)]
+[Ethereum(id: 12)]
+[Module(id: 2)]
+[Ethereum(id: 15)]
+[Ethereum(id: 24)]
+[Dogecoin(id: 16)]
+[Module(id: 7)]
+[Framework(id: 6)]
+[Method(id: 10)]
+
+Nancy draws [Ethereum(id: 31)] from draw deck.
+Nancy draws [Bitcoin(id: 15)] from draw deck.
+Nancy draws [Ethereum(id: 2)] from draw deck.
+Nancy draws [Ethereum(id: 11)] from draw deck.
+Nancy draws [Module(id: 0)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 31)]
+
+[LOG] Nancy played card: [Bitcoin(id: 15)]
+
+[LOG] Nancy played card: [Ethereum(id: 2)]
+
+[LOG] Nancy played card: [Ethereum(id: 11)]
+
+[LOG] Nancy gained card: Dogecoin
+
+Discard Deck: [Dogecoin(id: 28)]
+
+Discard Deck: [Dogecoin(id: 28)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 2)]
+[Ethereum(id: 11)]
+[Module(id: 0)]
+
+Nancy draws [Bitcoin(id: 42)] from draw deck.
+Nancy draws [Dogecoin(id: 4)] from draw deck.
+Nancy draws [Dogecoin(id: 16)] from draw deck.
+Nancy draws [Method(id: 13)] from draw deck.
+Nancy draws [Method(id: 1)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 42)]
+
+[LOG] Nancy played card: [Dogecoin(id: 4)]
+
+[LOG] Nancy played card: [Dogecoin(id: 16)]
+
+[LOG] Nancy gained card: Dogecoin
+
+Discard Deck: [Dogecoin(id: 28)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 2)]
+[Ethereum(id: 11)]
+[Module(id: 0)]
+[Dogecoin(id: 9)]
+
+Discard Deck: [Dogecoin(id: 28)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 2)]
+[Ethereum(id: 11)]
+[Module(id: 0)]
+[Dogecoin(id: 9)]
+[Bitcoin(id: 42)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 16)]
+[Method(id: 13)]
+[Method(id: 1)]
+
+Nancy draws [Ethereum(id: 24)] from draw deck.
+Nancy draws [Framework(id: 6)] from draw deck.
+Nancy draws [Ethereum(id: 33)] from draw deck.
+Nancy draws [Method(id: 10)] from draw deck.
+Nancy draws [Module(id: 2)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 24)]
+
+[LOG] Nancy played card: [Ethereum(id: 33)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Dogecoin(id: 28)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 2)]
+[Ethereum(id: 11)]
+[Module(id: 0)]
+[Dogecoin(id: 9)]
+[Bitcoin(id: 42)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 16)]
+[Method(id: 13)]
+[Method(id: 1)]
+[Ethereum(id: 30)]
+
+Discard Deck: [Dogecoin(id: 28)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 2)]
+[Ethereum(id: 11)]
+[Module(id: 0)]
+[Dogecoin(id: 9)]
+[Bitcoin(id: 42)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 16)]
+[Method(id: 13)]
+[Method(id: 1)]
+[Ethereum(id: 30)]
+[Ethereum(id: 24)]
+[Ethereum(id: 33)]
+[Framework(id: 6)]
+[Method(id: 10)]
+[Module(id: 2)]
+
+Nancy draws [Module(id: 6)] from draw deck.
+Nancy draws [Bitcoin(id: 1)] from draw deck.
+Nancy draws [Ethereum(id: 28)] from draw deck.
+Nancy draws [Bitcoin(id: 12)] from draw deck.
+Nancy draws [Module(id: 1)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 1)]
+
+[LOG] Nancy played card: [Ethereum(id: 28)]
+
+[LOG] Nancy played card: [Bitcoin(id: 12)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Dogecoin(id: 28)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 2)]
+[Ethereum(id: 11)]
+[Module(id: 0)]
+[Dogecoin(id: 9)]
+[Bitcoin(id: 42)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 16)]
+[Method(id: 13)]
+[Method(id: 1)]
+[Ethereum(id: 30)]
+[Ethereum(id: 24)]
+[Ethereum(id: 33)]
+[Framework(id: 6)]
+[Method(id: 10)]
+[Module(id: 2)]
+[Ethereum(id: 29)]
+
+Discard Deck: [Dogecoin(id: 28)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 2)]
+[Ethereum(id: 11)]
+[Module(id: 0)]
+[Dogecoin(id: 9)]
+[Bitcoin(id: 42)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 16)]
+[Method(id: 13)]
+[Method(id: 1)]
+[Ethereum(id: 30)]
+[Ethereum(id: 24)]
+[Ethereum(id: 33)]
+[Framework(id: 6)]
+[Method(id: 10)]
+[Module(id: 2)]
+[Ethereum(id: 29)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 28)]
+[Bitcoin(id: 12)]
+[Module(id: 6)]
+[Module(id: 1)]
+
+Nancy draws [Bitcoin(id: 7)] from draw deck.
+Nancy draws [Module(id: 5)] from draw deck.
+Nancy draws [Method(id: 3)] from draw deck.
+Nancy draws [Module(id: 3)] from draw deck.
+Nancy draws [Bitcoin(id: 41)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 7)]
+
+[LOG] Nancy played card: [Bitcoin(id: 41)]
+
+[LOG] Nancy gained card: Method
+
+Discard Deck: [Dogecoin(id: 28)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 2)]
+[Ethereum(id: 11)]
+[Module(id: 0)]
+[Dogecoin(id: 9)]
+[Bitcoin(id: 42)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 16)]
+[Method(id: 13)]
+[Method(id: 1)]
+[Ethereum(id: 30)]
+[Ethereum(id: 24)]
+[Ethereum(id: 33)]
+[Framework(id: 6)]
+[Method(id: 10)]
+[Module(id: 2)]
+[Ethereum(id: 29)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 28)]
+[Bitcoin(id: 12)]
+[Module(id: 6)]
+[Module(id: 1)]
+[Method(id: 0)]
+
+Discard Deck: [Dogecoin(id: 28)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 2)]
+[Ethereum(id: 11)]
+[Module(id: 0)]
+[Dogecoin(id: 9)]
+[Bitcoin(id: 42)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 16)]
+[Method(id: 13)]
+[Method(id: 1)]
+[Ethereum(id: 30)]
+[Ethereum(id: 24)]
+[Ethereum(id: 33)]
+[Framework(id: 6)]
+[Method(id: 10)]
+[Module(id: 2)]
+[Ethereum(id: 29)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 28)]
+[Bitcoin(id: 12)]
+[Module(id: 6)]
+[Module(id: 1)]
+[Method(id: 0)]
+[Bitcoin(id: 7)]
+[Bitcoin(id: 41)]
+[Module(id: 5)]
+[Method(id: 3)]
+[Module(id: 3)]
+
+Nancy draws [Ethereum(id: 23)] from draw deck.
+Nancy draws [Ethereum(id: 21)] from draw deck.
+Nancy draws [Ethereum(id: 37)] from draw deck.
+Nancy draws [Ethereum(id: 15)] from draw deck.
+Nancy draws [Ethereum(id: 22)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 23)]
+
+[LOG] Nancy played card: [Ethereum(id: 21)]
+
+[LOG] Nancy played card: [Ethereum(id: 37)]
+
+[LOG] Nancy played card: [Ethereum(id: 15)]
+
+[LOG] Nancy played card: [Ethereum(id: 22)]
+
+[LOG] Nancy gained card: Framework
+
+Discard Deck: [Dogecoin(id: 28)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 2)]
+[Ethereum(id: 11)]
+[Module(id: 0)]
+[Dogecoin(id: 9)]
+[Bitcoin(id: 42)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 16)]
+[Method(id: 13)]
+[Method(id: 1)]
+[Ethereum(id: 30)]
+[Ethereum(id: 24)]
+[Ethereum(id: 33)]
+[Framework(id: 6)]
+[Method(id: 10)]
+[Module(id: 2)]
+[Ethereum(id: 29)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 28)]
+[Bitcoin(id: 12)]
+[Module(id: 6)]
+[Module(id: 1)]
+[Method(id: 0)]
+[Bitcoin(id: 7)]
+[Bitcoin(id: 41)]
+[Module(id: 5)]
+[Method(id: 3)]
+[Module(id: 3)]
+[Framework(id: 0)]
+
+Discard Deck: [Dogecoin(id: 28)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 2)]
+[Ethereum(id: 11)]
+[Module(id: 0)]
+[Dogecoin(id: 9)]
+[Bitcoin(id: 42)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 16)]
+[Method(id: 13)]
+[Method(id: 1)]
+[Ethereum(id: 30)]
+[Ethereum(id: 24)]
+[Ethereum(id: 33)]
+[Framework(id: 6)]
+[Method(id: 10)]
+[Module(id: 2)]
+[Ethereum(id: 29)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 28)]
+[Bitcoin(id: 12)]
+[Module(id: 6)]
+[Module(id: 1)]
+[Method(id: 0)]
+[Bitcoin(id: 7)]
+[Bitcoin(id: 41)]
+[Module(id: 5)]
+[Method(id: 3)]
+[Module(id: 3)]
+[Framework(id: 0)]
+[Ethereum(id: 23)]
+[Ethereum(id: 21)]
+[Ethereum(id: 37)]
+[Ethereum(id: 15)]
+[Ethereum(id: 22)]
+
+Nancy draws [Module(id: 7)] from draw deck.
+Nancy draws [Method(id: 12)] from draw deck.
+Nancy draws [Ethereum(id: 14)] from draw deck.
+Nancy draws [Ethereum(id: 32)] from draw deck.
+Nancy draws [Module(id: 4)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 14)]
+
+[LOG] Nancy played card: [Ethereum(id: 32)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Dogecoin(id: 28)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 2)]
+[Ethereum(id: 11)]
+[Module(id: 0)]
+[Dogecoin(id: 9)]
+[Bitcoin(id: 42)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 16)]
+[Method(id: 13)]
+[Method(id: 1)]
+[Ethereum(id: 30)]
+[Ethereum(id: 24)]
+[Ethereum(id: 33)]
+[Framework(id: 6)]
+[Method(id: 10)]
+[Module(id: 2)]
+[Ethereum(id: 29)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 28)]
+[Bitcoin(id: 12)]
+[Module(id: 6)]
+[Module(id: 1)]
+[Method(id: 0)]
+[Bitcoin(id: 7)]
+[Bitcoin(id: 41)]
+[Module(id: 5)]
+[Method(id: 3)]
+[Module(id: 3)]
+[Framework(id: 0)]
+[Ethereum(id: 23)]
+[Ethereum(id: 21)]
+[Ethereum(id: 37)]
+[Ethereum(id: 15)]
+[Ethereum(id: 22)]
+[Ethereum(id: 19)]
+
+Discard Deck: [Dogecoin(id: 28)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 2)]
+[Ethereum(id: 11)]
+[Module(id: 0)]
+[Dogecoin(id: 9)]
+[Bitcoin(id: 42)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 16)]
+[Method(id: 13)]
+[Method(id: 1)]
+[Ethereum(id: 30)]
+[Ethereum(id: 24)]
+[Ethereum(id: 33)]
+[Framework(id: 6)]
+[Method(id: 10)]
+[Module(id: 2)]
+[Ethereum(id: 29)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 28)]
+[Bitcoin(id: 12)]
+[Module(id: 6)]
+[Module(id: 1)]
+[Method(id: 0)]
+[Bitcoin(id: 7)]
+[Bitcoin(id: 41)]
+[Module(id: 5)]
+[Method(id: 3)]
+[Module(id: 3)]
+[Framework(id: 0)]
+[Ethereum(id: 23)]
+[Ethereum(id: 21)]
+[Ethereum(id: 37)]
+[Ethereum(id: 15)]
+[Ethereum(id: 22)]
+[Ethereum(id: 19)]
+[Ethereum(id: 14)]
+[Ethereum(id: 32)]
+[Module(id: 7)]
+[Method(id: 12)]
+[Module(id: 4)]
+
+Nancy draws [Framework(id: 5)] from draw deck.
+Nancy draws [Ethereum(id: 16)] from draw deck.
+Nancy draws [Ethereum(id: 8)] from draw deck.
+Nancy draws [Ethereum(id: 27)] from draw deck.
+Nancy draws [Ethereum(id: 39)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 16)]
+
+[LOG] Nancy played card: [Ethereum(id: 8)]
+
+[LOG] Nancy played card: [Ethereum(id: 27)]
+
+[LOG] Nancy played card: [Ethereum(id: 39)]
+
+[LOG] Nancy gained card: Framework
+
+Discard Deck: [Dogecoin(id: 28)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 2)]
+[Ethereum(id: 11)]
+[Module(id: 0)]
+[Dogecoin(id: 9)]
+[Bitcoin(id: 42)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 16)]
+[Method(id: 13)]
+[Method(id: 1)]
+[Ethereum(id: 30)]
+[Ethereum(id: 24)]
+[Ethereum(id: 33)]
+[Framework(id: 6)]
+[Method(id: 10)]
+[Module(id: 2)]
+[Ethereum(id: 29)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 28)]
+[Bitcoin(id: 12)]
+[Module(id: 6)]
+[Module(id: 1)]
+[Method(id: 0)]
+[Bitcoin(id: 7)]
+[Bitcoin(id: 41)]
+[Module(id: 5)]
+[Method(id: 3)]
+[Module(id: 3)]
+[Framework(id: 0)]
+[Ethereum(id: 23)]
+[Ethereum(id: 21)]
+[Ethereum(id: 37)]
+[Ethereum(id: 15)]
+[Ethereum(id: 22)]
+[Ethereum(id: 19)]
+[Ethereum(id: 14)]
+[Ethereum(id: 32)]
+[Module(id: 7)]
+[Method(id: 12)]
+[Module(id: 4)]
+[Framework(id: 4)]
+
+Discard Deck: [Dogecoin(id: 28)]
+[Ethereum(id: 31)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 2)]
+[Ethereum(id: 11)]
+[Module(id: 0)]
+[Dogecoin(id: 9)]
+[Bitcoin(id: 42)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 16)]
+[Method(id: 13)]
+[Method(id: 1)]
+[Ethereum(id: 30)]
+[Ethereum(id: 24)]
+[Ethereum(id: 33)]
+[Framework(id: 6)]
+[Method(id: 10)]
+[Module(id: 2)]
+[Ethereum(id: 29)]
+[Bitcoin(id: 1)]
+[Ethereum(id: 28)]
+[Bitcoin(id: 12)]
+[Module(id: 6)]
+[Module(id: 1)]
+[Method(id: 0)]
+[Bitcoin(id: 7)]
+[Bitcoin(id: 41)]
+[Module(id: 5)]
+[Method(id: 3)]
+[Module(id: 3)]
+[Framework(id: 0)]
+[Ethereum(id: 23)]
+[Ethereum(id: 21)]
+[Ethereum(id: 37)]
+[Ethereum(id: 15)]
+[Ethereum(id: 22)]
+[Ethereum(id: 19)]
+[Ethereum(id: 14)]
+[Ethereum(id: 32)]
+[Module(id: 7)]
+[Method(id: 12)]
+[Module(id: 4)]
+[Framework(id: 4)]
+[Ethereum(id: 16)]
+[Ethereum(id: 8)]
+[Ethereum(id: 27)]
+[Ethereum(id: 39)]
+[Framework(id: 5)]
+
+Nancy draws [Ethereum(id: 12)] from draw deck.
+Nancy draws [Ethereum(id: 34)] from draw deck.
+Nancy draws [Bitcoin(id: 38)] from draw deck.
+Nancy draws [Method(id: 0)] from draw deck.
+Nancy draws [Ethereum(id: 14)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 12)]
+
+[LOG] Nancy played card: [Ethereum(id: 34)]
+
+[LOG] Nancy played card: [Bitcoin(id: 38)]
+
+[LOG] Nancy played card: [Ethereum(id: 14)]
+
+[LOG] Nancy gained card: Dogecoin
+
+Discard Deck: [Dogecoin(id: 17)]
+
+Discard Deck: [Dogecoin(id: 17)]
+[Ethereum(id: 12)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 0)]
+
+Nancy draws [Ethereum(id: 22)] from draw deck.
+Nancy draws [Ethereum(id: 24)] from draw deck.
+Nancy draws [Ethereum(id: 23)] from draw deck.
+Nancy draws [Ethereum(id: 39)] from draw deck.
+Nancy draws [Method(id: 12)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 22)]
+
+[LOG] Nancy played card: [Ethereum(id: 24)]
+
+[LOG] Nancy played card: [Ethereum(id: 23)]
+
+[LOG] Nancy played card: [Ethereum(id: 39)]
+
+[LOG] Nancy gained card: Framework
+
+Discard Deck: [Dogecoin(id: 17)]
+[Ethereum(id: 12)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 0)]
+[Framework(id: 3)]
+
+Discard Deck: [Dogecoin(id: 17)]
+[Ethereum(id: 12)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 0)]
+[Framework(id: 3)]
+[Ethereum(id: 22)]
+[Ethereum(id: 24)]
+[Ethereum(id: 23)]
+[Ethereum(id: 39)]
+[Method(id: 12)]
+
+Nancy draws [Framework(id: 5)] from draw deck.
+Nancy draws [Module(id: 0)] from draw deck.
+Nancy draws [Ethereum(id: 28)] from draw deck.
+Nancy draws [Ethereum(id: 19)] from draw deck.
+Nancy draws [Ethereum(id: 33)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 28)]
+
+[LOG] Nancy played card: [Ethereum(id: 19)]
+
+[LOG] Nancy played card: [Ethereum(id: 33)]
+
+[LOG] Nancy gained card: Dogecoin
+
+Discard Deck: [Dogecoin(id: 17)]
+[Ethereum(id: 12)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 0)]
+[Framework(id: 3)]
+[Ethereum(id: 22)]
+[Ethereum(id: 24)]
+[Ethereum(id: 23)]
+[Ethereum(id: 39)]
+[Method(id: 12)]
+[Dogecoin(id: 14)]
+
+Discard Deck: [Dogecoin(id: 17)]
+[Ethereum(id: 12)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 0)]
+[Framework(id: 3)]
+[Ethereum(id: 22)]
+[Ethereum(id: 24)]
+[Ethereum(id: 23)]
+[Ethereum(id: 39)]
+[Method(id: 12)]
+[Dogecoin(id: 14)]
+[Ethereum(id: 28)]
+[Ethereum(id: 19)]
+[Ethereum(id: 33)]
+[Framework(id: 5)]
+[Module(id: 0)]
+
+Nancy draws [Dogecoin(id: 16)] from draw deck.
+Nancy draws [Framework(id: 6)] from draw deck.
+Nancy draws [Module(id: 5)] from draw deck.
+Nancy draws [Bitcoin(id: 42)] from draw deck.
+Nancy draws [Module(id: 1)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Dogecoin(id: 16)]
+
+[LOG] Nancy played card: [Bitcoin(id: 42)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Dogecoin(id: 17)]
+[Ethereum(id: 12)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 0)]
+[Framework(id: 3)]
+[Ethereum(id: 22)]
+[Ethereum(id: 24)]
+[Ethereum(id: 23)]
+[Ethereum(id: 39)]
+[Method(id: 12)]
+[Dogecoin(id: 14)]
+[Ethereum(id: 28)]
+[Ethereum(id: 19)]
+[Ethereum(id: 33)]
+[Framework(id: 5)]
+[Module(id: 0)]
+[Ethereum(id: 10)]
+
+Discard Deck: [Dogecoin(id: 17)]
+[Ethereum(id: 12)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 0)]
+[Framework(id: 3)]
+[Ethereum(id: 22)]
+[Ethereum(id: 24)]
+[Ethereum(id: 23)]
+[Ethereum(id: 39)]
+[Method(id: 12)]
+[Dogecoin(id: 14)]
+[Ethereum(id: 28)]
+[Ethereum(id: 19)]
+[Ethereum(id: 33)]
+[Framework(id: 5)]
+[Module(id: 0)]
+[Ethereum(id: 10)]
+[Dogecoin(id: 16)]
+[Bitcoin(id: 42)]
+[Framework(id: 6)]
+[Module(id: 5)]
+[Module(id: 1)]
+
+Nancy draws [Bitcoin(id: 15)] from draw deck.
+Nancy draws [Ethereum(id: 15)] from draw deck.
+Nancy draws [Ethereum(id: 11)] from draw deck.
+Nancy draws [Bitcoin(id: 1)] from draw deck.
+Nancy draws [Module(id: 3)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 15)]
+
+[LOG] Nancy played card: [Ethereum(id: 15)]
+
+[LOG] Nancy played card: [Ethereum(id: 11)]
+
+[LOG] Nancy played card: [Bitcoin(id: 1)]
+
+[LOG] Nancy gained card: Dogecoin
+
+Discard Deck: [Dogecoin(id: 17)]
+[Ethereum(id: 12)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 0)]
+[Framework(id: 3)]
+[Ethereum(id: 22)]
+[Ethereum(id: 24)]
+[Ethereum(id: 23)]
+[Ethereum(id: 39)]
+[Method(id: 12)]
+[Dogecoin(id: 14)]
+[Ethereum(id: 28)]
+[Ethereum(id: 19)]
+[Ethereum(id: 33)]
+[Framework(id: 5)]
+[Module(id: 0)]
+[Ethereum(id: 10)]
+[Dogecoin(id: 16)]
+[Bitcoin(id: 42)]
+[Framework(id: 6)]
+[Module(id: 5)]
+[Module(id: 1)]
+[Dogecoin(id: 11)]
+
+Discard Deck: [Dogecoin(id: 17)]
+[Ethereum(id: 12)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 0)]
+[Framework(id: 3)]
+[Ethereum(id: 22)]
+[Ethereum(id: 24)]
+[Ethereum(id: 23)]
+[Ethereum(id: 39)]
+[Method(id: 12)]
+[Dogecoin(id: 14)]
+[Ethereum(id: 28)]
+[Ethereum(id: 19)]
+[Ethereum(id: 33)]
+[Framework(id: 5)]
+[Module(id: 0)]
+[Ethereum(id: 10)]
+[Dogecoin(id: 16)]
+[Bitcoin(id: 42)]
+[Framework(id: 6)]
+[Module(id: 5)]
+[Module(id: 1)]
+[Dogecoin(id: 11)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 15)]
+[Ethereum(id: 11)]
+[Bitcoin(id: 1)]
+[Module(id: 3)]
+
+Nancy draws [Ethereum(id: 16)] from draw deck.
+Nancy draws [Module(id: 2)] from draw deck.
+Nancy draws [Dogecoin(id: 4)] from draw deck.
+Nancy draws [Dogecoin(id: 28)] from draw deck.
+Nancy draws [Ethereum(id: 21)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 16)]
+
+[LOG] Nancy played card: [Dogecoin(id: 4)]
+
+[LOG] Nancy played card: [Dogecoin(id: 28)]
+
+[LOG] Nancy played card: [Ethereum(id: 21)]
+
+[LOG] Nancy gained card: Framework
+
+Discard Deck: [Dogecoin(id: 17)]
+[Ethereum(id: 12)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 0)]
+[Framework(id: 3)]
+[Ethereum(id: 22)]
+[Ethereum(id: 24)]
+[Ethereum(id: 23)]
+[Ethereum(id: 39)]
+[Method(id: 12)]
+[Dogecoin(id: 14)]
+[Ethereum(id: 28)]
+[Ethereum(id: 19)]
+[Ethereum(id: 33)]
+[Framework(id: 5)]
+[Module(id: 0)]
+[Ethereum(id: 10)]
+[Dogecoin(id: 16)]
+[Bitcoin(id: 42)]
+[Framework(id: 6)]
+[Module(id: 5)]
+[Module(id: 1)]
+[Dogecoin(id: 11)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 15)]
+[Ethereum(id: 11)]
+[Bitcoin(id: 1)]
+[Module(id: 3)]
+[Framework(id: 7)]
+
+Discard Deck: [Dogecoin(id: 17)]
+[Ethereum(id: 12)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 0)]
+[Framework(id: 3)]
+[Ethereum(id: 22)]
+[Ethereum(id: 24)]
+[Ethereum(id: 23)]
+[Ethereum(id: 39)]
+[Method(id: 12)]
+[Dogecoin(id: 14)]
+[Ethereum(id: 28)]
+[Ethereum(id: 19)]
+[Ethereum(id: 33)]
+[Framework(id: 5)]
+[Module(id: 0)]
+[Ethereum(id: 10)]
+[Dogecoin(id: 16)]
+[Bitcoin(id: 42)]
+[Framework(id: 6)]
+[Module(id: 5)]
+[Module(id: 1)]
+[Dogecoin(id: 11)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 15)]
+[Ethereum(id: 11)]
+[Bitcoin(id: 1)]
+[Module(id: 3)]
+[Framework(id: 7)]
+[Ethereum(id: 16)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 28)]
+[Ethereum(id: 21)]
+[Module(id: 2)]
+
+Nancy draws [Ethereum(id: 27)] from draw deck.
+Nancy draws [Framework(id: 0)] from draw deck.
+Nancy draws [Module(id: 4)] from draw deck.
+Nancy draws [Dogecoin(id: 9)] from draw deck.
+Nancy draws [Framework(id: 4)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 27)]
+
+[LOG] Nancy played card: [Dogecoin(id: 9)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Dogecoin(id: 17)]
+[Ethereum(id: 12)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 0)]
+[Framework(id: 3)]
+[Ethereum(id: 22)]
+[Ethereum(id: 24)]
+[Ethereum(id: 23)]
+[Ethereum(id: 39)]
+[Method(id: 12)]
+[Dogecoin(id: 14)]
+[Ethereum(id: 28)]
+[Ethereum(id: 19)]
+[Ethereum(id: 33)]
+[Framework(id: 5)]
+[Module(id: 0)]
+[Ethereum(id: 10)]
+[Dogecoin(id: 16)]
+[Bitcoin(id: 42)]
+[Framework(id: 6)]
+[Module(id: 5)]
+[Module(id: 1)]
+[Dogecoin(id: 11)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 15)]
+[Ethereum(id: 11)]
+[Bitcoin(id: 1)]
+[Module(id: 3)]
+[Framework(id: 7)]
+[Ethereum(id: 16)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 28)]
+[Ethereum(id: 21)]
+[Module(id: 2)]
+[Ethereum(id: 26)]
+
+Discard Deck: [Dogecoin(id: 17)]
+[Ethereum(id: 12)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 0)]
+[Framework(id: 3)]
+[Ethereum(id: 22)]
+[Ethereum(id: 24)]
+[Ethereum(id: 23)]
+[Ethereum(id: 39)]
+[Method(id: 12)]
+[Dogecoin(id: 14)]
+[Ethereum(id: 28)]
+[Ethereum(id: 19)]
+[Ethereum(id: 33)]
+[Framework(id: 5)]
+[Module(id: 0)]
+[Ethereum(id: 10)]
+[Dogecoin(id: 16)]
+[Bitcoin(id: 42)]
+[Framework(id: 6)]
+[Module(id: 5)]
+[Module(id: 1)]
+[Dogecoin(id: 11)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 15)]
+[Ethereum(id: 11)]
+[Bitcoin(id: 1)]
+[Module(id: 3)]
+[Framework(id: 7)]
+[Ethereum(id: 16)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 28)]
+[Ethereum(id: 21)]
+[Module(id: 2)]
+[Ethereum(id: 26)]
+[Ethereum(id: 27)]
+[Dogecoin(id: 9)]
+[Framework(id: 0)]
+[Module(id: 4)]
+[Framework(id: 4)]
+
+Nancy draws [Method(id: 10)] from draw deck.
+Nancy draws [Ethereum(id: 32)] from draw deck.
+Nancy draws [Method(id: 1)] from draw deck.
+Nancy draws [Method(id: 3)] from draw deck.
+Nancy draws [Module(id: 7)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 32)]
+
+[LOG] Nancy gained card: Method
+
+Discard Deck: [Dogecoin(id: 17)]
+[Ethereum(id: 12)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 0)]
+[Framework(id: 3)]
+[Ethereum(id: 22)]
+[Ethereum(id: 24)]
+[Ethereum(id: 23)]
+[Ethereum(id: 39)]
+[Method(id: 12)]
+[Dogecoin(id: 14)]
+[Ethereum(id: 28)]
+[Ethereum(id: 19)]
+[Ethereum(id: 33)]
+[Framework(id: 5)]
+[Module(id: 0)]
+[Ethereum(id: 10)]
+[Dogecoin(id: 16)]
+[Bitcoin(id: 42)]
+[Framework(id: 6)]
+[Module(id: 5)]
+[Module(id: 1)]
+[Dogecoin(id: 11)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 15)]
+[Ethereum(id: 11)]
+[Bitcoin(id: 1)]
+[Module(id: 3)]
+[Framework(id: 7)]
+[Ethereum(id: 16)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 28)]
+[Ethereum(id: 21)]
+[Module(id: 2)]
+[Ethereum(id: 26)]
+[Ethereum(id: 27)]
+[Dogecoin(id: 9)]
+[Framework(id: 0)]
+[Module(id: 4)]
+[Framework(id: 4)]
+[Method(id: 4)]
+
+Discard Deck: [Dogecoin(id: 17)]
+[Ethereum(id: 12)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 0)]
+[Framework(id: 3)]
+[Ethereum(id: 22)]
+[Ethereum(id: 24)]
+[Ethereum(id: 23)]
+[Ethereum(id: 39)]
+[Method(id: 12)]
+[Dogecoin(id: 14)]
+[Ethereum(id: 28)]
+[Ethereum(id: 19)]
+[Ethereum(id: 33)]
+[Framework(id: 5)]
+[Module(id: 0)]
+[Ethereum(id: 10)]
+[Dogecoin(id: 16)]
+[Bitcoin(id: 42)]
+[Framework(id: 6)]
+[Module(id: 5)]
+[Module(id: 1)]
+[Dogecoin(id: 11)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 15)]
+[Ethereum(id: 11)]
+[Bitcoin(id: 1)]
+[Module(id: 3)]
+[Framework(id: 7)]
+[Ethereum(id: 16)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 28)]
+[Ethereum(id: 21)]
+[Module(id: 2)]
+[Ethereum(id: 26)]
+[Ethereum(id: 27)]
+[Dogecoin(id: 9)]
+[Framework(id: 0)]
+[Module(id: 4)]
+[Framework(id: 4)]
+[Method(id: 4)]
+[Ethereum(id: 32)]
+[Method(id: 10)]
+[Method(id: 1)]
+[Method(id: 3)]
+[Module(id: 7)]
+
+Nancy draws [Bitcoin(id: 41)] from draw deck.
+Nancy draws [Module(id: 6)] from draw deck.
+Nancy draws [Bitcoin(id: 12)] from draw deck.
+Nancy draws [Ethereum(id: 37)] from draw deck.
+Nancy draws [Method(id: 13)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 41)]
+
+[LOG] Nancy played card: [Bitcoin(id: 12)]
+
+[LOG] Nancy played card: [Ethereum(id: 37)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Dogecoin(id: 17)]
+[Ethereum(id: 12)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 0)]
+[Framework(id: 3)]
+[Ethereum(id: 22)]
+[Ethereum(id: 24)]
+[Ethereum(id: 23)]
+[Ethereum(id: 39)]
+[Method(id: 12)]
+[Dogecoin(id: 14)]
+[Ethereum(id: 28)]
+[Ethereum(id: 19)]
+[Ethereum(id: 33)]
+[Framework(id: 5)]
+[Module(id: 0)]
+[Ethereum(id: 10)]
+[Dogecoin(id: 16)]
+[Bitcoin(id: 42)]
+[Framework(id: 6)]
+[Module(id: 5)]
+[Module(id: 1)]
+[Dogecoin(id: 11)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 15)]
+[Ethereum(id: 11)]
+[Bitcoin(id: 1)]
+[Module(id: 3)]
+[Framework(id: 7)]
+[Ethereum(id: 16)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 28)]
+[Ethereum(id: 21)]
+[Module(id: 2)]
+[Ethereum(id: 26)]
+[Ethereum(id: 27)]
+[Dogecoin(id: 9)]
+[Framework(id: 0)]
+[Module(id: 4)]
+[Framework(id: 4)]
+[Method(id: 4)]
+[Ethereum(id: 32)]
+[Method(id: 10)]
+[Method(id: 1)]
+[Method(id: 3)]
+[Module(id: 7)]
+[Ethereum(id: 17)]
+
+Discard Deck: [Dogecoin(id: 17)]
+[Ethereum(id: 12)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 0)]
+[Framework(id: 3)]
+[Ethereum(id: 22)]
+[Ethereum(id: 24)]
+[Ethereum(id: 23)]
+[Ethereum(id: 39)]
+[Method(id: 12)]
+[Dogecoin(id: 14)]
+[Ethereum(id: 28)]
+[Ethereum(id: 19)]
+[Ethereum(id: 33)]
+[Framework(id: 5)]
+[Module(id: 0)]
+[Ethereum(id: 10)]
+[Dogecoin(id: 16)]
+[Bitcoin(id: 42)]
+[Framework(id: 6)]
+[Module(id: 5)]
+[Module(id: 1)]
+[Dogecoin(id: 11)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 15)]
+[Ethereum(id: 11)]
+[Bitcoin(id: 1)]
+[Module(id: 3)]
+[Framework(id: 7)]
+[Ethereum(id: 16)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 28)]
+[Ethereum(id: 21)]
+[Module(id: 2)]
+[Ethereum(id: 26)]
+[Ethereum(id: 27)]
+[Dogecoin(id: 9)]
+[Framework(id: 0)]
+[Module(id: 4)]
+[Framework(id: 4)]
+[Method(id: 4)]
+[Ethereum(id: 32)]
+[Method(id: 10)]
+[Method(id: 1)]
+[Method(id: 3)]
+[Module(id: 7)]
+[Ethereum(id: 17)]
+[Bitcoin(id: 41)]
+[Bitcoin(id: 12)]
+[Ethereum(id: 37)]
+[Module(id: 6)]
+[Method(id: 13)]
+
+Nancy draws [Ethereum(id: 30)] from draw deck.
+Nancy draws [Ethereum(id: 29)] from draw deck.
+Nancy draws [Ethereum(id: 8)] from draw deck.
+Nancy draws [Ethereum(id: 2)] from draw deck.
+Nancy draws [Ethereum(id: 31)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 30)]
+
+[LOG] Nancy played card: [Ethereum(id: 29)]
+
+[LOG] Nancy played card: [Ethereum(id: 8)]
+
+[LOG] Nancy played card: [Ethereum(id: 2)]
+
+[LOG] Nancy played card: [Ethereum(id: 31)]
+
+[LOG] Nancy gained card: Framework
+
+Discard Deck: [Dogecoin(id: 17)]
+[Ethereum(id: 12)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 0)]
+[Framework(id: 3)]
+[Ethereum(id: 22)]
+[Ethereum(id: 24)]
+[Ethereum(id: 23)]
+[Ethereum(id: 39)]
+[Method(id: 12)]
+[Dogecoin(id: 14)]
+[Ethereum(id: 28)]
+[Ethereum(id: 19)]
+[Ethereum(id: 33)]
+[Framework(id: 5)]
+[Module(id: 0)]
+[Ethereum(id: 10)]
+[Dogecoin(id: 16)]
+[Bitcoin(id: 42)]
+[Framework(id: 6)]
+[Module(id: 5)]
+[Module(id: 1)]
+[Dogecoin(id: 11)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 15)]
+[Ethereum(id: 11)]
+[Bitcoin(id: 1)]
+[Module(id: 3)]
+[Framework(id: 7)]
+[Ethereum(id: 16)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 28)]
+[Ethereum(id: 21)]
+[Module(id: 2)]
+[Ethereum(id: 26)]
+[Ethereum(id: 27)]
+[Dogecoin(id: 9)]
+[Framework(id: 0)]
+[Module(id: 4)]
+[Framework(id: 4)]
+[Method(id: 4)]
+[Ethereum(id: 32)]
+[Method(id: 10)]
+[Method(id: 1)]
+[Method(id: 3)]
+[Module(id: 7)]
+[Ethereum(id: 17)]
+[Bitcoin(id: 41)]
+[Bitcoin(id: 12)]
+[Ethereum(id: 37)]
+[Module(id: 6)]
+[Method(id: 13)]
+[Framework(id: 2)]
+
+Discard Deck: [Dogecoin(id: 17)]
+[Ethereum(id: 12)]
+[Ethereum(id: 34)]
+[Bitcoin(id: 38)]
+[Ethereum(id: 14)]
+[Method(id: 0)]
+[Framework(id: 3)]
+[Ethereum(id: 22)]
+[Ethereum(id: 24)]
+[Ethereum(id: 23)]
+[Ethereum(id: 39)]
+[Method(id: 12)]
+[Dogecoin(id: 14)]
+[Ethereum(id: 28)]
+[Ethereum(id: 19)]
+[Ethereum(id: 33)]
+[Framework(id: 5)]
+[Module(id: 0)]
+[Ethereum(id: 10)]
+[Dogecoin(id: 16)]
+[Bitcoin(id: 42)]
+[Framework(id: 6)]
+[Module(id: 5)]
+[Module(id: 1)]
+[Dogecoin(id: 11)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 15)]
+[Ethereum(id: 11)]
+[Bitcoin(id: 1)]
+[Module(id: 3)]
+[Framework(id: 7)]
+[Ethereum(id: 16)]
+[Dogecoin(id: 4)]
+[Dogecoin(id: 28)]
+[Ethereum(id: 21)]
+[Module(id: 2)]
+[Ethereum(id: 26)]
+[Ethereum(id: 27)]
+[Dogecoin(id: 9)]
+[Framework(id: 0)]
+[Module(id: 4)]
+[Framework(id: 4)]
+[Method(id: 4)]
+[Ethereum(id: 32)]
+[Method(id: 10)]
+[Method(id: 1)]
+[Method(id: 3)]
+[Module(id: 7)]
+[Ethereum(id: 17)]
+[Bitcoin(id: 41)]
+[Bitcoin(id: 12)]
+[Ethereum(id: 37)]
+[Module(id: 6)]
+[Method(id: 13)]
+[Framework(id: 2)]
+[Ethereum(id: 30)]
+[Ethereum(id: 29)]
+[Ethereum(id: 8)]
+[Ethereum(id: 2)]
+[Ethereum(id: 31)]
+
+Nancy draws [Bitcoin(id: 7)] from draw deck.
+Nancy draws [Framework(id: 5)] from draw deck.
+Nancy draws [Ethereum(id: 24)] from draw deck.
+Nancy draws [Module(id: 2)] from draw deck.
+Nancy draws [Module(id: 1)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Bitcoin(id: 7)]
+
+[LOG] Nancy played card: [Ethereum(id: 24)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Ethereum(id: 7)]
+
+Discard Deck: [Ethereum(id: 7)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 24)]
+[Framework(id: 5)]
+[Module(id: 2)]
+[Module(id: 1)]
+
+Nancy draws [Ethereum(id: 15)] from draw deck.
+Nancy draws [Bitcoin(id: 15)] from draw deck.
+Nancy draws [Method(id: 3)] from draw deck.
+Nancy draws [Module(id: 4)] from draw deck.
+Nancy draws [Ethereum(id: 16)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 15)]
+
+[LOG] Nancy played card: [Bitcoin(id: 15)]
+
+[LOG] Nancy played card: [Ethereum(id: 16)]
+
+[LOG] Nancy gained card: Ethereum
+
+Discard Deck: [Ethereum(id: 7)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 24)]
+[Framework(id: 5)]
+[Module(id: 2)]
+[Module(id: 1)]
+[Ethereum(id: 5)]
+
+Discard Deck: [Ethereum(id: 7)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 24)]
+[Framework(id: 5)]
+[Module(id: 2)]
+[Module(id: 1)]
+[Ethereum(id: 5)]
+[Ethereum(id: 15)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 16)]
+[Method(id: 3)]
+[Module(id: 4)]
+
+Nancy draws [Method(id: 0)] from draw deck.
+Nancy draws [Ethereum(id: 12)] from draw deck.
+Nancy draws [Ethereum(id: 14)] from draw deck.
+Nancy draws [Ethereum(id: 37)] from draw deck.
+Nancy draws [Ethereum(id: 19)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+[LOG] Nancy -- begins ACTION phase.
+
+[LOG] Nancy -- ends ACTION phase.
+
+[LOG] Nancy played card: [Ethereum(id: 12)]
+
+[LOG] Nancy played card: [Ethereum(id: 14)]
+
+[LOG] Nancy played card: [Ethereum(id: 37)]
+
+[LOG] Nancy played card: [Ethereum(id: 19)]
+
+[LOG] Nancy gained card: Framework
+
+Discard Deck: [Ethereum(id: 7)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 24)]
+[Framework(id: 5)]
+[Module(id: 2)]
+[Module(id: 1)]
+[Ethereum(id: 5)]
+[Ethereum(id: 15)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 16)]
+[Method(id: 3)]
+[Module(id: 4)]
+[Framework(id: 1)]
+
+Discard Deck: [Ethereum(id: 7)]
+[Bitcoin(id: 7)]
+[Ethereum(id: 24)]
+[Framework(id: 5)]
+[Module(id: 2)]
+[Module(id: 1)]
+[Ethereum(id: 5)]
+[Ethereum(id: 15)]
+[Bitcoin(id: 15)]
+[Ethereum(id: 16)]
+[Method(id: 3)]
+[Module(id: 4)]
+[Framework(id: 1)]
+[Ethereum(id: 12)]
+[Ethereum(id: 14)]
+[Ethereum(id: 37)]
+[Ethereum(id: 19)]
+[Method(id: 0)]
+
+Nancy draws [Framework(id: 6)] from draw deck.
+Nancy draws [Bitcoin(id: 42)] from draw deck.
+Nancy draws [Ethereum(id: 32)] from draw deck.
+Nancy draws [Framework(id: 2)] from draw deck.
+Nancy draws [Ethereum(id: 23)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+[LOG] Nancy's turn ends
+
+]]></system-out>
+  </testcase>
+  <testcase name="testProcessBacklogEffect" classname="edu.brandeis.cosi103a.groupb.EngineTest" time="0.001">
+    <system-out><![CDATA[Physical deck initialized with 260 cards.
+Initialized Nancy's draw deck.
+Nancy draws [Method(id: 13)] from draw deck.
+Nancy draws [Bitcoin(id: 30)] from draw deck.
+Nancy draws [Method(id: 3)] from draw deck.
+Nancy draws [Bitcoin(id: 8)] from draw deck.
+Nancy draws [Bitcoin(id: 54)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+Processing BACKLOG effect for Nancy
+Nancy discards 0 card(s) via BACKLOG.
+Nancy no. of actions after BACKLOG: 1
+]]></system-out>
+  </testcase>
+  <testcase name="testProcessIpoEffect" classname="edu.brandeis.cosi103a.groupb.EngineTest" time="0.002">
+    <system-out><![CDATA[Physical deck initialized with 260 cards.
+Initialized Nancy's draw deck.
+Nancy draws [Bitcoin(id: 38)] from draw deck.
+Nancy draws [Bitcoin(id: 15)] from draw deck.
+Nancy draws [Bitcoin(id: 43)] from draw deck.
+Nancy draws [Bitcoin(id: 46)] from draw deck.
+Nancy draws [Method(id: 3)] from draw deck.
+[LOG] Nancy -- Turn 1.
+
+Processing IPO effect for Nancy
+Nancy draws [Method(id: 2)] from draw deck.
+Nancy draws [Method(id: 8)] from draw deck.
+Nancy draws 2 cards. The available actions now are 1 and money are updated to: 2
+]]></system-out>
+  </testcase>
+</testsuite>

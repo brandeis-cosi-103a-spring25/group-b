@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.Module;
 import edu.brandeis.cosi.atg.api.GameDeck;
 import edu.brandeis.cosi.atg.api.GameObserver;
 import edu.brandeis.cosi103a.groupb.Game.GameEngine;
+import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
 
 @Configuration
 public class GameConfig {

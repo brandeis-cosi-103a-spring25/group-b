@@ -23,7 +23,7 @@ import edu.brandeis.cosi103a.groupb.Decks.DiscardDeck;
 import edu.brandeis.cosi103a.groupb.Decks.DrawDeck;
 import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
 import edu.brandeis.cosi103a.groupb.Game.GameEngine;
-import edu.brandeis.cosi103a.groupb.Player.ReyEyePlayer;
+import edu.brandeis.cosi103a.groupb.Player.RedEyePlayer;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,12 +38,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 
-public class ReyEyePlayerTest {
+public class RedEyePlayerTest {
    
 
 @Test
     public void testMakeDecisionWithMoneyPhase() {
-        ReyEyePlayer player = new ReyEyePlayer("Rey");
+        RedEyePlayer player = new RedEyePlayer("Rey");
         // Create dummy GameState for MONEY phase.
         Hand dummyHand = new Hand(ImmutableList.of(), ImmutableList.of());
         GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.MONEY, 1, 0, 1, new GameDeck(ImmutableMap.of()));
@@ -61,7 +61,7 @@ public class ReyEyePlayerTest {
     
     @Test
     public void testMakeDecisionWithBuyPhase() {
-        ReyEyePlayer player = new ReyEyePlayer("Rey");
+        RedEyePlayer player = new RedEyePlayer("Rey");
         // Create dummy GameState for BUY phase with enough money.
         Hand dummyHand = new Hand(ImmutableList.of(), ImmutableList.of());
         GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.BUY, 1, 5, 1, new GameDeck(ImmutableMap.of(Card.Type.FRAMEWORK, 2, Card.Type.BITCOIN, 2)));
@@ -81,7 +81,7 @@ public class ReyEyePlayerTest {
 
     @Test
     public void testMakeDecisionWithDiscardPhase() {
-        ReyEyePlayer player = new ReyEyePlayer("Rey");
+        RedEyePlayer player = new RedEyePlayer("Rey");
         // Create dummy GameState for DISCARD phase.
         Hand dummyHand = new Hand(ImmutableList.of(), ImmutableList.of());
         GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.DISCARD, 1, 0, 1, new GameDeck(ImmutableMap.of()));
@@ -102,7 +102,7 @@ public class ReyEyePlayerTest {
 
     @Test
     public void testMakeDecisionWithGainPhase() {
-        ReyEyePlayer player = new ReyEyePlayer("Rey");
+        RedEyePlayer player = new RedEyePlayer("Rey");
         // Create dummy GameState for GAIN phase.
         Hand dummyHand = new Hand(ImmutableList.of(), ImmutableList.of());
         GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.GAIN, 1, 0, 1, new GameDeck(ImmutableMap.of()));
@@ -121,7 +121,7 @@ public class ReyEyePlayerTest {
 
     @Test
     public void testMakeDecisionWithEndPhase() {
-        ReyEyePlayer player = new ReyEyePlayer("Rey");
+        RedEyePlayer player = new RedEyePlayer("Rey");
         // Create dummy GameState for any phase.
         Hand dummyHand = new Hand(ImmutableList.of(), ImmutableList.of());
         GameState state = new GameState(player.getName(), dummyHand, GameState.TurnPhase.ACTION, 1, 0, 1, new GameDeck(ImmutableMap.of()));

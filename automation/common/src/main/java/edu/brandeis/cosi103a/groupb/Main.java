@@ -13,7 +13,7 @@ import edu.brandeis.cosi103a.groupb.Game.GameEngine;
 import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
 import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
 import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
-import edu.brandeis.cosi103a.groupb.Player.ReyEyePlayer;
+import edu.brandeis.cosi103a.groupb.Player.RedEyePlayer;
 import edu.brandeis.cosi103a.groupb.Rating.RatingMain;
 
 public class Main {
@@ -108,7 +108,7 @@ public class Main {
             case 2:
                 return new BigMoneyPlayer(name);
             case 3:
-                return new ReyEyePlayer(name);
+                return new RedEyePlayer(name);
             default:
                 return new HumanPlayer(name);
         }

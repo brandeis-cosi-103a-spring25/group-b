@@ -15,4 +15,4 @@ edu/brandeis/cosi103a/groupb/Decks/PlayerDeck.class
 edu/brandeis/cosi103a/groupb/Game/GameEngine.class
 edu/brandeis/cosi103a/groupb/Game/GameEngine$1.class
 edu/brandeis/cosi103a/groupb/Decks/DrawDeck.class
-edu/brandeis/cosi103a/groupb/Player/ReyEyePlayer.class
+edu/brandeis/cosi103a/groupb/Player/RedEyePlayer.class
