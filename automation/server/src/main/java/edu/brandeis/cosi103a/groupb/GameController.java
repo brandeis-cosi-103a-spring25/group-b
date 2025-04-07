@@ -25,7 +25,7 @@ public class GameController {
     // Handles decisions
     @PostMapping("/decide") 
     public Decision handleDecision(@RequestBody Decision request) {
-        Decision decision = 
+        Decision decision = player.makeDecision(request.getGameState(), request.options(), request.reason());
     }
 
 
