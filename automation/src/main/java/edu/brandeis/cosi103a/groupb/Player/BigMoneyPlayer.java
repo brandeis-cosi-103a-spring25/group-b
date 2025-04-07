@@ -100,6 +100,10 @@ public class BigMoneyPlayer implements AtgPlayer {
 
         int lowestVal = -1;
         Decision bestDiscard = null;
+        if (options.get(0) instanceof DiscardCardDecision discard && state.getTurnPhase() == GameState.TurnPhase.DISCARD) {
+            lowestVal = discard.getCard().getValue();
+            bestDiscard = discard;
+        }
         for (Decision option: options) {
             if (option instanceof DiscardCardDecision discard && state.getTurnPhase() == GameState.TurnPhase.DISCARD) {
                 if (discard.getCard().getCategory() == Card.Type.Category.VICTORY) { //Victory points don't do anything in the hand
