@@ -8,9 +8,12 @@ import com.fasterxml.jackson.databind.Module;
 
 import edu.brandeis.cosi.atg.api.GameDeck;
 import edu.brandeis.cosi.atg.api.GameObserver;
+import edu.brandeis.cosi.atg.api.Player;
 import edu.brandeis.cosi103a.groupb.Game.GameEngine;
-import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
+import edu.brandeis.cosi103a.groupb.Player.*;
 
+
+/* Defines Player + GameEngine Beans */
 @Configuration
 public class GameConfig {
     /**
@@ -18,8 +21,8 @@ public class GameConfig {
     * and inject it into any class that needs it.
     */
     @Bean
-    public GameEngine gameEngine(AtgPlayer player1, AtgPlayer player2, GameObserver observer, GameDeck deck) {
-        return new GameEngine(player1, player2, observer, deck);
+    public Player humanPlayer() {
+        return new HumanPlayer("Network Player");
     }
 
     /**
