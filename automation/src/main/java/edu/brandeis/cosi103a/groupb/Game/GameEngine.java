@@ -627,19 +627,37 @@ public class GameEngine implements Engine {
             } else {
                 // Opponent did not reveal; force discard down to 3 cards.
                 System.out.println(opponent.getName() + " does not reveal MONITORING; must discard down to 3 cards.");
-                forcedDiscardDownTo3(opponent, state);
+                GameState newState = new GameState(
+                    state.getCurrentPlayerName(),
+                    state.getCurrentPlayerHand(),
+                    GameState.TurnPhase.DISCARD,
+                    state.getAvailableActions(),
+                    state.getSpendableMoney(),
+                    state.getAvailableBuys(),
+                    state.getDeck()
+                );
+                forcedDiscardDownTo3(opponent, newState);
             }
         } else {
             // No monitoring available; force discard.
             System.out.println(opponent.getName() + " lacks MONITORING and must discard down to 3 cards.");
-            forcedDiscardDownTo3(opponent, state);
+            GameState newState = new GameState(
+                state.getCurrentPlayerName(),
+                state.getCurrentPlayerHand(),
+                GameState.TurnPhase.DISCARD,
+                state.getAvailableActions(),
+                state.getSpendableMoney(),
+                state.getAvailableBuys(),
+                state.getDeck()
+            );
+            forcedDiscardDownTo3(opponent, newState);
         }
         System.out.println(player.getName() + " gains 2 money from HACK attack. Money now: " + newMoney);
         // Update active player's state with the bonus money.
         return new GameState(
             state.getCurrentPlayerName(),
             state.getCurrentPlayerHand(),
-            state.getTurnPhase(),
+            GameState.TurnPhase.ACTION,
             state.getAvailableActions(),
             newMoney,
             state.getAvailableBuys(),
