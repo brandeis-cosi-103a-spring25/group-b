@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Application",
+            "request": "launch",
+            "mainClass": "edu.brandeis.cosi103a.groupb.http.Application",
+            "projectName": "automation"
+        },
+        {
+            "type": "java",
             "name": "RatingMain",
             "request": "launch",
             "mainClass": "edu.brandeis.cosi103a.groupb.Rating.RatingMain",
