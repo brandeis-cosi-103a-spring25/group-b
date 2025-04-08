@@ -12,6 +12,7 @@ import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
 import edu.brandeis.cosi103a.groupb.Game.GameEngine;
 import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
 import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
+import edu.brandeis.cosi103a.groupb.Player.FinalBossPlayer;
 import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
 import edu.brandeis.cosi103a.groupb.Player.ReyEyePlayer;
 import edu.brandeis.cosi103a.groupb.Rating.RatingMain;
@@ -42,15 +43,17 @@ public class Main {
         System.out.println("1. Human Player");
         System.out.println("2. BigMoney AI");
         System.out.println("3. ReyEye AI");
+        System.out.println("4. Final Boss AI");
         
-        int player1Choice = getIntInput(scanner, 1, 3);
+        int player1Choice = getIntInput(scanner, 1, 4);
         
         System.out.println("\nSelect player 2:");
         System.out.println("1. Human Player");
         System.out.println("2. BigMoney AI");
         System.out.println("3. ReyEye AI");
+        System.out.println("4. Final Boss AI");
         
-        int player2Choice = getIntInput(scanner, 1, 3);
+        int player2Choice = getIntInput(scanner, 1, 4);
         
         // Create players based on choices
         AtgPlayer player1 = createPlayer("Player 1", player1Choice, scanner);
@@ -109,6 +112,8 @@ public class Main {
                 return new BigMoneyPlayer(name);
             case 3:
                 return new ReyEyePlayer(name);
+            case 4:
+                return new FinalBossPlayer(name);
             default:
                 return new HumanPlayer(name);
         }
@@ -134,4 +139,5 @@ public class Main {
         
         return choice;
     }
+
 }
