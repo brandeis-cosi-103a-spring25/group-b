@@ -1,4 +1,4 @@
-package edu.brandeis.cosi103a.groupb.http.handler;
+package edu.brandeis.cosi103a.groupb.Server.handler;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;

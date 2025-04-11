@@ -1,4 +1,4 @@
-package edu.brandeis.cosi103a.groupb.http.controller;
+package edu.brandeis.cosi103a.groupb.Server.controller;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -17,9 +17,9 @@ import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
 import edu.brandeis.cosi103a.groupb.Game.GameEngine;
 import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
 import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
-import edu.brandeis.cosi103a.groupb.Player.ReyEyePlayer;
-import edu.brandeis.cosi103a.groupb.http.model.GameRequest;
-import edu.brandeis.cosi103a.groupb.http.model.GameResponse;
+import edu.brandeis.cosi103a.groupb.Player.RedEyePlayer;
+import edu.brandeis.cosi103a.groupb.Server.model.GameRequest;
+import edu.brandeis.cosi103a.groupb.Server.model.GameResponse;
 
 @RestController
 @RequestMapping("/api/games")
@@ -28,6 +28,10 @@ public class GameController {
     private static final Map<String, List<AtgPlayer>> gamePlayers = new HashMap<>();
     
     @GetMapping
+    /**
+     * Creating a bunch of GameResponse instances according to the data fetched (GameResponse data strcture in "model")
+     * @return
+     */
     public List<GameResponse> getAllGames() {
         List<GameResponse> games = new ArrayList<>();
         for (Map.Entry<String, Engine> entry : activeGames.entrySet()) {
@@ -85,7 +89,7 @@ public class GameController {
             case "bigmoney":
                 return new BigMoneyPlayer(name);
             case "reyeye":
-                return new ReyEyePlayer(name);
+                return new RedEyePlayer(name);
             default:
                 return new BigMoneyPlayer(name); // Default
         }

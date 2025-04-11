@@ -1,4 +1,4 @@
-package edu.brandeis.cosi103a.groupb.http.exception;
+package edu.brandeis.cosi103a.groupb.Server.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

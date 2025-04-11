@@ -1,4 +1,4 @@
-package edu.brandeis.cosi103a.groupb.http.model;
+package edu.brandeis.cosi103a.groupb.Server.model;
 
 public class GameResponse {
     private String id;

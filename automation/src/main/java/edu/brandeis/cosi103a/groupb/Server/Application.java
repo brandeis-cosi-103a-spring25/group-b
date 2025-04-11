@@ -1,4 +1,4 @@
-package edu.brandeis.cosi103a.groupb.http;
+package edu.brandeis.cosi103a.groupb.Server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
