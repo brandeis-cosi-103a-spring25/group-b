@@ -3,6 +3,7 @@ package edu.brandeis.cosi103a.groupb.Server.controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.RequestEntity;
 
+import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
 import edu.brandeis.cosi103a.groupb.Server.model.DecisionRequest;
 import edu.brandeis.cosi103a.groupb.Server.model.DecisionResponse;
 import edu.brandeis.cosi103a.groupb.Server.model.LogEventRequest;
@@ -13,6 +14,10 @@ public class PlayerDecisionController {
 
     @PostMapping("/decide")
     public DecisionResponse handleDecision(@RequestBody DecisionRequest request) {
+        AtgPlayer player;
+
+        // Get the right type of players and thus strategy
+        
         
     }
 
