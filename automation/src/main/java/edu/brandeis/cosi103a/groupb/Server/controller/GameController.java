@@ -124,12 +124,12 @@ public class GameController {
         String phase = "Unknown";         // You'll need to determine this from your engine
         
         // Extract player 1's hand and played cards
-        List<GameStateResponse.CardInfo> player1Hand = extractCards(player1.getHand().getUnplayedCards());
-        List<GameStateResponse.CardInfo> player1Played = extractCards(player1.getHand().getPlayedCards());
+        List<Card> player1Hand = new ArrayList(player1.getHand().getUnplayedCards());
+        List<Card> player1Played = new ArrayList(player1.getHand().getPlayedCards());
         
         // Extract player 2's hand and played cards
-        List<GameStateResponse.CardInfo> player2Hand = extractCards(player2.getHand().getUnplayedCards());
-        List<GameStateResponse.CardInfo> player2Played = extractCards(player2.getHand().getPlayedCards());
+        List<Card> player2Hand = new ArrayList(player2.getHand().getUnplayedCards());
+        List<Card> player2Played = new ArrayList(player2.getHand().getPlayedCards());
         
         // Create player state info
         GameStateResponse.PlayerStateInfo player1Info = new GameStateResponse.PlayerStateInfo(
@@ -148,21 +148,6 @@ public class GameController {
         
         // Return the complete game state
         return new GameStateResponse(gameId, phase, currentPlayer, player1Info, player2Info);
-    }
-
-    // Helper method to extract card information
-    private List<GameStateResponse.CardInfo> extractCards(List<Card> cards) {
-        List<GameStateResponse.CardInfo> cardInfos = new ArrayList<>();
-        
-        for (Card card : cards) {
-            // Extract suit and rank based on your Card implementation
-            String suit = card.getSuit().toString(); // Adjust based on your Card class
-            String rank = card.getRank().toString(); // Adjust based on your Card class
-            
-            cardInfos.add(new GameStateResponse.CardInfo(suit, rank));
-        }
-        
-        return cardInfos;
     }
 
     // Helper method to calculate a player's score

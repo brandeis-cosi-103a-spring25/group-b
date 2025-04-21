@@ -3,6 +3,8 @@ package edu.brandeis.cosi103a.groupb.Server.model;
 
 import java.util.List;
 
+import edu.brandeis.cosi.atg.api.cards.Card;
+
 public class GameStateResponse {
     private String id;
     private String phase;
@@ -13,12 +15,12 @@ public class GameStateResponse {
     public static class PlayerStateInfo {
         private String name;
         private int score;
-        private List<CardInfo> hand;
-        private List<CardInfo> playedCards;
+        private List<Card> hand;
+        private List<Card> playedCards;
         
         public PlayerStateInfo() {}
         
-        public PlayerStateInfo(String name, int score, List<CardInfo> hand, List<CardInfo> playedCards) {
+        public PlayerStateInfo(String name, int score, List<Card> hand, List<Card> playedCards) {
             this.name = name;
             this.score = score;
             this.hand = hand;
@@ -42,49 +44,20 @@ public class GameStateResponse {
             this.score = score;
         }
         
-        public List<CardInfo> getHand() {
+        public List<Card> getHand() {
             return hand;
         }
         
-        public void setHand(List<CardInfo> hand) {
+        public void setHand(List<Card> hand) {
             this.hand = hand;
         }
         
-        public List<CardInfo> getPlayedCards() {
+        public List<Card> getPlayedCards() {
             return playedCards;
         }
         
-        public void setPlayedCards(List<CardInfo> playedCards) {
+        public void setPlayedCards(List<Card> playedCards) {
             this.playedCards = playedCards;
-        }
-    }
-    
-    public static class CardInfo {
-        private String suit;
-        private String rank;
-        
-        public CardInfo() {}
-        
-        public CardInfo(String suit, String rank) {
-            this.suit = suit;
-            this.rank = rank;
-        }
-        
-        // Getters and setters
-        public String getSuit() {
-            return suit;
-        }
-        
-        public void setSuit(String suit) {
-            this.suit = suit;
-        }
-        
-        public String getRank() {
-            return rank;
-        }
-        
-        public void setRank(String rank) {
-            this.rank = rank;
         }
     }
     
