@@ -60,10 +60,10 @@ public class RatingMain {
         });
         
         // ReyEye player
-        harness.registerPlayer("ReyEye", () -> new ReyEyePlayer("ReyEye"));
+        harness.registerPlayer("RedEye", () -> new RedEyePlayer("RedEye"));
         
         // ReyEye variant with different parameters
-        harness.registerPlayer("CautiousRE", () -> new ReyEyePlayer("CautiousRE") {
+        harness.registerPlayer("CautiousRE", () -> new RedEyePlayer("CautiousRE") {
             // An example of how you could override behavior for variants
             // Here we could override methods to change behavior if needed
         });
