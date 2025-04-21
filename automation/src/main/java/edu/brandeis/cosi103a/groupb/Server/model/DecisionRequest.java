@@ -1,16 +1,17 @@
 package edu.brandeis.cosi103a.groupb.Server.model;
 
+import java.util.List;
+import java.util.Optional;
+
 import edu.brandeis.cosi.atg.api.GameState;
 import edu.brandeis.cosi.atg.api.decisions.Decision;
 import edu.brandeis.cosi.atg.api.event.Event;
-
-import java.util.List;
-import java.util.Optional;
 
 public class DecisionRequest {
     private GameState state;
     private List<Decision> options;
     private Optional<Event> reason;
+    private String player_uuid;
 
     public DecisionRequest() {}
 
@@ -42,5 +43,13 @@ public class DecisionRequest {
 
     public void setReason(Optional<Event> reason) {
         this.reason = reason;
+    }
+
+    public String getPlayer_uuid() {
+        return player_uuid;
+    }
+
+    public void setPlayer_uuid(String player_uuid) {
+        this.player_uuid = player_uuid;
     }
 }

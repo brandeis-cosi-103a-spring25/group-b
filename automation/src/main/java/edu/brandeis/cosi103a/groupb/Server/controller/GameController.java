@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import edu.brandeis.cosi.atg.api.GameObserver;
 import edu.brandeis.cosi.atg.api.Engine;
 import edu.brandeis.cosi.atg.api.Player;
+import edu.brandeis.cosi.atg.api.cards.Card;
 import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
 import edu.brandeis.cosi103a.groupb.Game.GameEngine;
 import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
@@ -20,6 +21,7 @@ import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
 import edu.brandeis.cosi103a.groupb.Player.RedEyePlayer;
 import edu.brandeis.cosi103a.groupb.Server.model.GameRequest;
 import edu.brandeis.cosi103a.groupb.Server.model.GameResponse;
+import edu.brandeis.cosi103a.groupb.Server.model.GameStateResponse;
 
 @RestController
 @RequestMapping("/api/games")
@@ -93,5 +95,81 @@ public class GameController {
             default:
                 return new BigMoneyPlayer(name); // Default
         }
+    }
+
+    @GetMapping("/{id}/state")
+    public ResponseEntity<GameStateResponse> getGameState(@PathVariable String id) {
+        if (!activeGames.containsKey(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        // Get the game and players
+        Engine engine = activeGames.get(id);
+        List<AtgPlayer> players = gamePlayers.get(id);
+        
+        // Create a response with the game state
+        GameStateResponse response = extractGameState(id, engine, players);
+        
+        return ResponseEntity.ok(response);
+    }
+
+    // Helper method to extract game state
+    private GameStateResponse extractGameState(String gameId, Engine engine, List<AtgPlayer> players) {
+        AtgPlayer player1 = players.get(0);
+        AtgPlayer player2 = players.get(1);
+        
+        // Extract current player and phase information
+        // Note: This might need to be adapted based on your actual Engine implementation
+        String currentPlayer = "Unknown"; // You'll need to determine this from your engine
+        String phase = "Unknown";         // You'll need to determine this from your engine
+        
+        // Extract player 1's hand and played cards
+        List<GameStateResponse.CardInfo> player1Hand = extractCards(player1.getHand().getUnplayedCards());
+        List<GameStateResponse.CardInfo> player1Played = extractCards(player1.getHand().getPlayedCards());
+        
+        // Extract player 2's hand and played cards
+        List<GameStateResponse.CardInfo> player2Hand = extractCards(player2.getHand().getUnplayedCards());
+        List<GameStateResponse.CardInfo> player2Played = extractCards(player2.getHand().getPlayedCards());
+        
+        // Create player state info
+        GameStateResponse.PlayerStateInfo player1Info = new GameStateResponse.PlayerStateInfo(
+            player1.getName(),
+            calculateScore(player1), // You'll need to implement this based on your game logic
+            player1Hand,
+            player1Played
+        );
+        
+        GameStateResponse.PlayerStateInfo player2Info = new GameStateResponse.PlayerStateInfo(
+            player2.getName(),
+            calculateScore(player2), // You'll need to implement this based on your game logic
+            player2Hand,
+            player2Played
+        );
+        
+        // Return the complete game state
+        return new GameStateResponse(gameId, phase, currentPlayer, player1Info, player2Info);
+    }
+
+    // Helper method to extract card information
+    private List<GameStateResponse.CardInfo> extractCards(List<Card> cards) {
+        List<GameStateResponse.CardInfo> cardInfos = new ArrayList<>();
+        
+        for (Card card : cards) {
+            // Extract suit and rank based on your Card implementation
+            String suit = card.getSuit().toString(); // Adjust based on your Card class
+            String rank = card.getRank().toString(); // Adjust based on your Card class
+            
+            cardInfos.add(new GameStateResponse.CardInfo(suit, rank));
+        }
+        
+        return cardInfos;
+    }
+
+    // Helper method to calculate a player's score
+    // Implement this based on your game's scoring rules
+    private int calculateScore(AtgPlayer player) {
+        // This is a placeholder - implement your actual scoring logic
+        // For example, you might count victory points or something similar
+        return 0; // Placeholder
     }
 }
