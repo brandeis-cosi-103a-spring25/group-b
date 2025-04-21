@@ -41,14 +41,14 @@ public class Main {
         System.out.println("\nSelect player 1:");
         System.out.println("1. Human Player");
         System.out.println("2. BigMoney AI");
-        System.out.println("3. ReyEye AI");
+        System.out.println("3. RedEye AI");
         
         int player1Choice = getIntInput(scanner, 1, 3);
         
         System.out.println("\nSelect player 2:");
         System.out.println("1. Human Player");
         System.out.println("2. BigMoney AI");
-        System.out.println("3. ReyEye AI");
+        System.out.println("3. RedEye AI");
         
         int player2Choice = getIntInput(scanner, 1, 3);
         

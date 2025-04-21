@@ -1,11 +1,12 @@
-package edu.brandeis.cosi103a.groupb.http.handler;
+package edu.brandeis.cosi103a.groupb.Server.handler;
 
 import com.sun.net.httpserver.HttpExchange;
+
+import edu.brandeis.cosi103a.groupb.Server.model.PlayerResponse;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import edu.brandeis.cosi103a.groupb.http.model.PlayerResponse;
 
 public class PlayerHandler extends BaseHandler {
     private static final List<String> PLAYER_TYPES = List.of("bigmoney", "reyeye");

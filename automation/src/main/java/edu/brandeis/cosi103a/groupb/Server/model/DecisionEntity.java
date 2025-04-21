@@ -1,19 +1,19 @@
-package edu.brandeis.cosi103a.groupb.http.model;
+package edu.brandeis.cosi103a.groupb.Server.model;
 
 import java.time.LocalDateTime;
 
-public class ErrorResponse {
+public class DecisionEntity {
     private LocalDateTime timestamp;
     private int status;
     private String error;
     private String message;
     private String path;
 
-    public ErrorResponse() {
+    public DecisionEntity() {
         this.timestamp = LocalDateTime.now();
     }
 
-    public ErrorResponse(int status, String error, String message, String path) {
+    public DecisionEntity(int status, String error, String message, String path) {
         this();
         this.status = status;
         this.error = error;
