@@ -43,6 +43,8 @@ src/main/java/edu/brandeis/cosi103a/groupb/
 └── Application.java   # Spring Boot entrypoint
 ```
 
+Note: everything in the Server + NetworkPlayer.java + reletive configurations in the pom.xml in the Player package is deliverables for milestone 3. Everything else is deliverables for milestone 2.
+
 ---
 
 ## 🛠️ Technologies Used
