@@ -76,6 +76,15 @@
       background-color: #c0392b;
     }
     
+    .start-btn {
+      background-color: #e67e22;
+      margin-right: 10px;
+    }
+    
+    .start-btn:hover {
+      background-color: #d35400;
+    }
+    
     .form-group {
       margin-bottom: 15px;
     }
@@ -278,6 +287,10 @@
           <p><strong>Game ID:</strong> <span id="modalGameId"></span></p>
           <p><strong>Current Phase:</strong> <span id="currentPhase">Unknown</span></p>
           <p><strong>Current Player:</strong> <span id="currentPlayer">Unknown</span></p>
+          
+          <!-- Start Game button -->
+          <button id="startGameBtn" class="button start-btn">Start Game</button>
+          <button id="refreshGameState" class="button refresh-btn">Refresh Game State</button>
         </div>
         
         <div id="player1Area" class="player-area">
@@ -313,8 +326,6 @@
             </div>
           </div>
         </div>
-        
-        <button id="refreshGameState" class="button refresh-btn">Refresh Game State</button>
       </div>
     </div>
   </div>
@@ -469,6 +480,27 @@
         });
     }
     
+    // Start a game
+    function startGame(gameId) {
+      fetch(`/api/games/${gameId}/start`, {
+        method: 'POST'
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text();
+      })
+      .then(result => {
+        alert('Game started successfully! Refresh to see the game state.');
+        loadGameState(gameId); // Refresh the state after starting
+      })
+      .catch(error => {
+        console.error('Error starting game:', error);
+        alert('Error starting game. Please try again.');
+      });
+    }
+    
     // Handle game creation
     document.getElementById('createGameForm').addEventListener('submit', function(event) {
       event.preventDefault();
@@ -574,9 +606,6 @@
     
     // Update the game state display
     function updateGameStateDisplay(gameState) {
-      // This function would update the display with the actual game state
-      // For now, we'll use placeholder data since we don't know the actual structure
-      
       // Update phase and current player
       document.getElementById('currentPhase').textContent = gameState.phase || 'Unknown';
       document.getElementById('currentPlayer').textContent = gameState.currentPlayer || 'Unknown';
@@ -595,7 +624,7 @@
         gameState.player1.hand.forEach(card => {
           const cardElement = document.createElement('div');
           cardElement.className = 'card';
-          cardElement.textContent = `${card.rank} of ${card.suit}`;
+          cardElement.textContent = card.type;
           player1Hand.appendChild(cardElement);
         });
       } else {
@@ -610,7 +639,7 @@
         gameState.player1.playedCards.forEach(card => {
           const cardElement = document.createElement('div');
           cardElement.className = 'card';
-          cardElement.textContent = `${card.rank} of ${card.suit}`;
+          cardElement.textContent = card.type;
           player1Played.appendChild(cardElement);
         });
       } else {
@@ -625,7 +654,7 @@
         gameState.player2.hand.forEach(card => {
           const cardElement = document.createElement('div');
           cardElement.className = 'card';
-          cardElement.textContent = `${card.rank} of ${card.suit}`;
+          cardElement.textContent = card.type;
           player2Hand.appendChild(cardElement);
         });
       } else {
@@ -640,7 +669,7 @@
         gameState.player2.playedCards.forEach(card => {
           const cardElement = document.createElement('div');
           cardElement.className = 'card';
-          cardElement.textContent = `${card.rank} of ${card.suit}`;
+          cardElement.textContent = card.type;
           player2Played.appendChild(cardElement);
         });
       } else {
@@ -670,6 +699,12 @@
     document.addEventListener('DOMContentLoaded', function() {
       loadPlayerTypes();
       loadGames();
+      
+      // Add event listener for start game button
+      document.getElementById('startGameBtn').addEventListener('click', function() {
+        const gameId = document.getElementById('modalGameId').textContent;
+        startGame(gameId);
+      });
     });
   </script>
 </body>

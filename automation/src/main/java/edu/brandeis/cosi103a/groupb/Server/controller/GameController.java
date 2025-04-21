@@ -1,17 +1,24 @@
 package edu.brandeis.cosi103a.groupb.Server.controller;
 
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.List;
-import java.util.ArrayList;
 
-import edu.brandeis.cosi.atg.api.GameObserver;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import edu.brandeis.cosi.atg.api.Engine;
+import edu.brandeis.cosi.atg.api.GameObserver;
+import edu.brandeis.cosi.atg.api.GameState;
 import edu.brandeis.cosi.atg.api.Player;
 import edu.brandeis.cosi.atg.api.cards.Card;
 import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
@@ -28,10 +35,11 @@ import edu.brandeis.cosi103a.groupb.Server.model.GameStateResponse;
 public class GameController {
     private static final Map<String, Engine> activeGames = new HashMap<>();
     private static final Map<String, List<AtgPlayer>> gamePlayers = new HashMap<>();
+    private static final Map<String, Boolean> gameStarted = new HashMap<>();
     
     @GetMapping
     /**
-     * Creating a bunch of GameResponse instances according to the data fetched (GameResponse data strcture in "model")
+     * Creating a bunch of GameResponse instances according to the data fetched (GameResponse data structure in "model")
      * @return
      */
     public List<GameResponse> getAllGames() {
@@ -68,6 +76,7 @@ public class GameController {
         
         activeGames.put(gameId, engine);
         gamePlayers.put(gameId, List.of(player1, player2));
+        gameStarted.put(gameId, false);
         
         GameResponse response = new GameResponse(gameId, 
             new String[]{player1.getName(), player2.getName()});
@@ -75,11 +84,45 @@ public class GameController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     
+    // Add this new endpoint to start the game
+    @PostMapping("/{id}/start")
+    public ResponseEntity<String> startGame(@PathVariable String id) {
+        if (!activeGames.containsKey(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        if (gameStarted.get(id)) {
+            return ResponseEntity.ok("Game already started");
+        }
+        
+        try {
+            // Get the game engine
+            Engine engine = activeGames.get(id);
+            
+            // Start the game in a separate thread so it doesn't block
+            new Thread(() -> {
+                try {
+                    engine.play();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            
+            gameStarted.put(id, true);
+            return ResponseEntity.ok("Game started successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error starting game: " + e.getMessage());
+        }
+    }
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteGame(@PathVariable String id) {
         if (activeGames.containsKey(id)) {
             activeGames.remove(id);
             gamePlayers.remove(id);
+            gameStarted.remove(id);
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
@@ -90,7 +133,7 @@ public class GameController {
         switch (type.toLowerCase()) {
             case "bigmoney":
                 return new BigMoneyPlayer(name);
-            case "reyeye":
+            case "redeye":
                 return new RedEyePlayer(name);
             default:
                 return new BigMoneyPlayer(name); // Default
@@ -118,30 +161,69 @@ public class GameController {
         AtgPlayer player1 = players.get(0);
         AtgPlayer player2 = players.get(1);
         
+        // Cast to GameEngine to access the getGameState() method
+        GameEngine gameEngine = (GameEngine) engine;
+        GameState gameState = null;
+        
+        // Get the game state if the game has started
+        if (gameStarted.getOrDefault(gameId, false)) {
+            gameState = gameEngine.getGameState();
+        }
+        
         // Extract current player and phase information
-        // Note: This might need to be adapted based on your actual Engine implementation
-        String currentPlayer = "Unknown"; // You'll need to determine this from your engine
-        String phase = "Unknown";         // You'll need to determine this from your engine
+        String currentPlayer = "Unknown";
+        String phase = "Unknown";
+        
+        if (gameState != null) {
+            currentPlayer = gameState.getCurrentPlayerName();
+            
+            // Convert the TurnPhase enum to string
+            switch (gameState.getTurnPhase()) {
+                case ACTION:
+                    phase = "Action Phase";
+                    break;
+                case MONEY:
+                    phase = "Money Phase";
+                    break;
+                case BUY:
+                    phase = "Buy Phase";
+                    break;
+                case CLEANUP:
+                    phase = "Cleanup Phase";
+                    break;
+                case DISCARD:
+                    phase = "Discard Phase";
+                    break;
+                case REACTION:
+                    phase = "Reaction Phase";
+                    break;
+                case GAIN:
+                    phase = "Gain Phase";
+                    break;
+                default:
+                    phase = "Unknown";
+            }
+        }
         
         // Extract player 1's hand and played cards
-        List<Card> player1Hand = new ArrayList(player1.getHand().getUnplayedCards());
-        List<Card> player1Played = new ArrayList(player1.getHand().getPlayedCards());
+        List<Card> player1Hand = new ArrayList<>(player1.getHand().getUnplayedCards());
+        List<Card> player1Played = new ArrayList<>(player1.getHand().getPlayedCards());
         
         // Extract player 2's hand and played cards
-        List<Card> player2Hand = new ArrayList(player2.getHand().getUnplayedCards());
-        List<Card> player2Played = new ArrayList(player2.getHand().getPlayedCards());
+        List<Card> player2Hand = new ArrayList<>(player2.getHand().getUnplayedCards());
+        List<Card> player2Played = new ArrayList<>(player2.getHand().getPlayedCards());
         
         // Create player state info
         GameStateResponse.PlayerStateInfo player1Info = new GameStateResponse.PlayerStateInfo(
             player1.getName(),
-            calculateScore(player1), // You'll need to implement this based on your game logic
+            calculateScore(player1, gameEngine),
             player1Hand,
             player1Played
         );
         
         GameStateResponse.PlayerStateInfo player2Info = new GameStateResponse.PlayerStateInfo(
             player2.getName(),
-            calculateScore(player2), // You'll need to implement this based on your game logic
+            calculateScore(player2, gameEngine),
             player2Hand,
             player2Played
         );
@@ -151,10 +233,24 @@ public class GameController {
     }
 
     // Helper method to calculate a player's score
-    // Implement this based on your game's scoring rules
-    private int calculateScore(AtgPlayer player) {
-        // This is a placeholder - implement your actual scoring logic
-        // For example, you might count victory points or something similar
-        return 0; // Placeholder
+    private int calculateScore(AtgPlayer player, GameEngine engine) {
+        // Since the score calculation is in the GameEngine class, we'll try to use it
+        try {
+            // Use the static method to get current scores
+            List<Player.ScorePair> scores = GameEngine.getCurrentScores();
+            
+            // Find the score for this player
+            for (Player.ScorePair score : scores) {
+                if (score.player.getName().equals(player.getName())) {
+                    return score.getScore();
+                }
+            }
+        } catch (Exception e) {
+            // If there's an error, log it but don't crash
+            System.err.println("Error calculating score: " + e.getMessage());
+        }
+        
+        // Default to 0 if we couldn't get the score
+        return 0;
     }
 }
