@@ -42,7 +42,7 @@ public class Main {
         System.out.println("\nSelect player 1:");
         System.out.println("1. Human Player");
         System.out.println("2. BigMoney AI");
-        System.out.println("3. ReyEye AI");
+        System.out.println("3. RedEye AI");
         System.out.println("4. Final Boss AI");
         
         int player1Choice = getIntInput(scanner, 1, 4);
@@ -50,7 +50,7 @@ public class Main {
         System.out.println("\nSelect player 2:");
         System.out.println("1. Human Player");
         System.out.println("2. BigMoney AI");
-        System.out.println("3. ReyEye AI");
+        System.out.println("3. RedEye AI");
         System.out.println("4. Final Boss AI");
         
         int player2Choice = getIntInput(scanner, 1, 4);
