@@ -3,6 +3,9 @@ package edu.brandeis.cosi103a.groupb.Rating;
 import java.util.*;
 import java.util.Scanner;
 
+import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
+import edu.brandeis.cosi103a.groupb.Player.FinalBossPlayer;
+import edu.brandeis.cosi103a.groupb.Player.RedEyePlayer;
 import edu.brandeis.cosi103a.groupb.Player.*;
 import edu.brandeis.cosi103a.groupb.Rating.PlayerRatingHarness.PlayerStats;
 
@@ -81,6 +84,14 @@ public class RatingMain {
         harness.registerPlayer("CautiousRE", () -> new RedEyePlayer("CautiousRE") {
             // An example of how you could override behavior for variants
             // Here we could override methods to change behavior if needed
+        });
+
+        // Add FinalBossBot player
+        harness.registerPlayer("FinalBossBot", () -> new FinalBossPlayer("FinalBossBot"));
+        
+        // Add a FinalBossBot variant for testing different parameters if needed
+        harness.registerPlayer("LegendaryFB", () -> new FinalBossPlayer("LegendaryFB") {
+            // Could override methods to create a more aggressive variant
         });
     }
     
