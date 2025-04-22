@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
 import edu.brandeis.cosi103a.groupb.Player.FinalBossPlayer;
-import edu.brandeis.cosi103a.groupb.Player.ReyEyePlayer;
+import edu.brandeis.cosi103a.groupb.Player.RedEyePlayer;
 import edu.brandeis.cosi103a.groupb.Rating.PlayerRatingHarness.PlayerStats;
 
 /**

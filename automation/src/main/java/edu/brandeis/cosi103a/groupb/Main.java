@@ -111,7 +111,7 @@ public class Main {
             case 2:
                 return new BigMoneyPlayer(name);
             case 3:
-                return new ReyEyePlayer(name);
+                return new RedEyePlayer(name);
             case 4:
                 return new FinalBossPlayer(name);
             default:
