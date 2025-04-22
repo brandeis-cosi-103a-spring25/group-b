@@ -1,26 +1,12 @@
 package edu.brandeis.cosi103a.groupb.Game;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
-import edu.brandeis.cosi.atg.api.Engine;
-import edu.brandeis.cosi.atg.api.EngineCreator;
-import edu.brandeis.cosi.atg.api.GameDeck;
-import edu.brandeis.cosi.atg.api.GameObserver;
-import edu.brandeis.cosi.atg.api.GameState;
-import edu.brandeis.cosi.atg.api.Hand;
-import edu.brandeis.cosi.atg.api.Player;
-import edu.brandeis.cosi.atg.api.PlayerViolationException;
+import edu.brandeis.cosi.atg.api.*;
 import edu.brandeis.cosi.atg.api.cards.Card;
 import edu.brandeis.cosi.atg.api.decisions.*;
 import edu.brandeis.cosi.atg.api.event.*;
@@ -915,7 +901,7 @@ public class GameEngine implements Engine {
             Card chosenCard = playCardDecision.getCard();
             System.out.println(player.getName() + " chooses to play " + chosenCard + " twice due to PARALLELIZATION.");
             observer.notifyEvent(state, new PlayCardEvent(chosenCard, player.getName()));
-            // Execute the chosen action’s effect twice.
+            // Execute the chosen action's effect twice.
             switch (chosenCard.getType()) {
                 case BACKLOG:
                     state = processBacklogEffect(player, state);
