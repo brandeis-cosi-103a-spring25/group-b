@@ -1,17 +1,25 @@
 package edu.brandeis.cosi103a.groupb.Rating;
 
-import java.util.Map;
+import java.util.*;
 import java.util.Scanner;
 
 import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
 import edu.brandeis.cosi103a.groupb.Player.FinalBossPlayer;
 import edu.brandeis.cosi103a.groupb.Player.RedEyePlayer;
+import edu.brandeis.cosi103a.groupb.Player.*;
 import edu.brandeis.cosi103a.groupb.Rating.PlayerRatingHarness.PlayerStats;
 
 /**
  * Main class for running the player rating harness.
+ * This class provides a user interface for the automated player rating system
+ * that simulates games between different AI strategies and compares their performance.
  */
 public class RatingMain {
+    /**
+     * Main entry point for the rating harness application.
+     * 
+     * @param args Command line arguments (not used)
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         PlayerRatingHarness harness = new PlayerRatingHarness();
@@ -20,12 +28,7 @@ public class RatingMain {
         registerAvailablePlayers(harness);
         
         // Display welcome message
-        System.out.println("=================================================");
-        System.out.println("         AUTOMATED PLAYER RATING HARNESS         ");
-        System.out.println("=================================================");
-        System.out.println("This harness simulates games between automated players");
-        System.out.println("and compares their performance statistics.");
-        System.out.println();
+        displayWelcomeMessage();
         
         // Get number of games to simulate
         int numGames = getNumberOfGamesFromUser(scanner);
@@ -47,7 +50,22 @@ public class RatingMain {
     }
     
     /**
+     * Displays the welcome message and description of the harness.
+     */
+    private static void displayWelcomeMessage() {
+        System.out.println("=================================================");
+        System.out.println("         AUTOMATED PLAYER RATING HARNESS         ");
+        System.out.println("=================================================");
+        System.out.println("This harness simulates games between automated players");
+        System.out.println("and compares their performance statistics.");
+        System.out.println();
+    }
+    
+    /**
      * Register all available automated players with the harness.
+     * This is where new player types or variants should be added.
+     * 
+     * @param harness The PlayerRatingHarness to register players with
      */
     private static void registerAvailablePlayers(PlayerRatingHarness harness) {
         // Standard BigMoney with default settings
@@ -79,6 +97,10 @@ public class RatingMain {
     
     /**
      * Get the number of games to simulate from the user.
+     * Validates that the input is a positive integer.
+     * 
+     * @param scanner Scanner for reading user input
+     * @return A validated positive integer for the number of games
      */
     private static int getNumberOfGamesFromUser(Scanner scanner) {
         int numGames = 0;

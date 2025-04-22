@@ -1,9 +1,6 @@
 package edu.brandeis.cosi103a.groupb.Decks;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 import edu.brandeis.cosi.atg.api.cards.*;
 

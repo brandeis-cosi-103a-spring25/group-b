@@ -1,8 +1,7 @@
 package edu.brandeis.cosi103a.groupb;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+
 
 import edu.brandeis.cosi.atg.api.Engine;
 import edu.brandeis.cosi.atg.api.GameObserver;
@@ -15,9 +14,25 @@ import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
 import edu.brandeis.cosi103a.groupb.Player.FinalBossPlayer;
 import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
 import edu.brandeis.cosi103a.groupb.Player.RedEyePlayer;
+
+import edu.brandeis.cosi.atg.api.*;
+import edu.brandeis.cosi103a.groupb.Game.*;
+import edu.brandeis.cosi103a.groupb.Player.*;
+
 import edu.brandeis.cosi103a.groupb.Rating.RatingMain;
 
+/**
+ * Main application entry point for the card game.
+ * This class provides the user interface for playing the game 
+ * or running the player rating harness.
+ */
 public class Main {
+    /**
+     * Main method that handles user choices between playing a game
+     * or running the rating harness.
+     *
+     * @param args Command line arguments (not used)
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         
@@ -37,6 +52,12 @@ public class Main {
         scanner.close();
     }
     
+    /**
+     * Handles the game setup and execution process.
+     * Allows user to select players, create the game, and displays results.
+     *
+     * @param scanner Scanner for reading user input
+     */
     private static void playGame(Scanner scanner) {
         // Step 1: Choose players
         System.out.println("\nSelect player 1:");
@@ -55,45 +76,22 @@ public class Main {
         
         int player2Choice = getIntInput(scanner, 1, 4);
         
-        // Create players based on choices
+        // Step 2: Create players based on choices
         AtgPlayer player1 = createPlayer("Player 1", player1Choice, scanner);
         AtgPlayer player2 = createPlayer("Player 2", player2Choice, scanner);
         
-        // Create game observer
+        // Step 3: Create game observer
         GameObserver observer = new ConsoleGameObserver();
         
-        // Create game engine
+        // Step 4: Create game engine
         Engine gameEngine = GameEngine.createEngine(player1, player2, observer);
         
         try {
-            // Start the game and get results
+            // Step 5: Start the game and get results
             List<Player.ScorePair> results = gameEngine.play();
             
-            // Display the final scores
-            System.out.println("\nGame Over! Final Scores:");
-            int highestScore = -1;
-            List<AtgPlayer> winners = new ArrayList<>();
-            
-            for (Player.ScorePair score : results) {
-                System.out.println(score.player.getName() + ": " + score.getScore() + " points");
-                
-                // Determine the highest score and winners
-                if (score.getScore() > highestScore) {
-                    highestScore = score.getScore();
-                    winners.clear();
-                    winners.add((AtgPlayer) score.player);
-                } else if (score.getScore() == highestScore) {
-                    winners.add((AtgPlayer) score.player);
-                }
-            }
-            
-            // Announce the winner(s)
-            if (!winners.isEmpty()) {
-                System.out.print("The winner(s): ");
-                System.out.println(winners.stream().map(AtgPlayer::getName).toList());
-            } else {
-                System.out.println("No winner, as no players have scores.");
-            }
+            // Step 6: Display the final scores
+            displayGameResults(results);
             
         } catch (PlayerViolationException e) {
             // Handle invalid moves
@@ -101,6 +99,46 @@ public class Main {
         }
     }
     
+    /**
+     * Displays the final game results and determines the winner(s).
+     *
+     * @param results List of player score pairs from the game
+     */
+    private static void displayGameResults(List<Player.ScorePair> results) {
+        System.out.println("\nGame Over! Final Scores:");
+        int highestScore = -1;
+        List<AtgPlayer> winners = new ArrayList<>();
+        
+        for (Player.ScorePair score : results) {
+            System.out.println(score.player.getName() + ": " + score.getScore() + " points");
+            
+            // Determine the highest score and winners
+            if (score.getScore() > highestScore) {
+                highestScore = score.getScore();
+                winners.clear();
+                winners.add((AtgPlayer) score.player);
+            } else if (score.getScore() == highestScore) {
+                winners.add((AtgPlayer) score.player);
+            }
+        }
+        
+        // Announce the winner(s)
+        if (!winners.isEmpty()) {
+            System.out.print("The winner(s): ");
+            System.out.println(winners.stream().map(AtgPlayer::getName).toList());
+        } else {
+            System.out.println("No winner, as no players have scores.");
+        }
+    }
+    
+    /**
+     * Creates a player based on the user's choice.
+     *
+     * @param defaultName The default player name
+     * @param choice The player type choice (1=Human, 2=BigMoney, 3=RedEye)
+     * @param scanner Scanner for reading user input
+     * @return The created player
+     */
     private static AtgPlayer createPlayer(String defaultName, int choice, Scanner scanner) {
         System.out.print("Enter name for " + defaultName + ": ");
         String name = scanner.next();
@@ -119,6 +157,14 @@ public class Main {
         }
     }
     
+    /**
+     * Gets an integer input from the user within a specified range.
+     *
+     * @param scanner Scanner for reading user input
+     * @param min Minimum acceptable value
+     * @param max Maximum acceptable value
+     * @return The validated integer input
+     */
     private static int getIntInput(Scanner scanner, int min, int max) {
         int choice = min - 1;
         boolean validInput = false;
