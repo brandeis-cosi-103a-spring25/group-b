@@ -15,13 +15,43 @@ import edu.brandeis.cosi103a.groupb.Decks.PlayerDeck;
 import edu.brandeis.cosi103a.groupb.Game.*;
 import edu.brandeis.cosi103a.groupb.Player.*;
 
-
+/**
+ * Test class for the GameEngine implementation.
+ * 
+ * This class tests the core game engine that manages the ATG card game flow, player interactions,
+ * and state transitions. The GameEngine is responsible for applying game rules, managing
+ * turns, and coordinating player decisions.
+ * 
+ * The tests verify that the GameEngine:
+ * 1. Initializes the game state and deck correctly
+ * 2. Manages turn phases in the proper sequence (ACTION → MONEY → BUY → CLEANUP)
+ * 3. Processes multiple turns correctly with deck reshuffling
+ * 4. Calculates victory points accurately at game end
+ * 5. Handles special card effects properly for all action cards
+ * 
+ * Many tests use Java reflection to access private methods of the GameEngine,
+ * allowing for more focused testing of internal components.
+ * 
+ */
 public class EngineTest {
     private AtgPlayer player1 = new BigMoneyPlayer("Nancy");
     private AtgPlayer player2 = new HumanPlayer("Abby");
     private GameObserver observer = new ConsoleGameObserver();
     private Engine gameEngine = GameEngine.createEngine(player1, player2, observer);
 
+    /**
+     * Tests that the game deck is initialized with the correct number of each card type.
+     * 
+     * Expected behavior:
+     * - The game deck should contain the specified quantities of each card type:
+     *   - 60 BITCOIN cards
+     *   - 40 ETHEREUM cards
+     *   - 30 DOGECOIN cards
+     *   - 14 METHOD cards
+     *   - 8 MODULE cards
+     *   - 8 FRAMEWORK cards
+     *   - 10 of each action card type
+     */
     @Test
     void testInitializeDeck() throws Exception {
         Field deckField = gameEngine.getClass().getDeclaredField("deck");
@@ -42,6 +72,14 @@ public class EngineTest {
         }
     }
 
+    /**
+     * Tests that player game states are properly initialized.
+     * 
+     * Expected behavior:
+     * - After initialization, a player's discard deck should be empty
+     * - After initialization, a player's draw deck should have 5 cards
+     *   (since 5 cards are drawn for the initial hand)
+     */
     @Test
     void testInitializeGameState() throws Exception {
         Method initializeGameState = gameEngine.getClass().getDeclaredMethod("initializeGameState", AtgPlayer.class);
@@ -57,7 +95,16 @@ public class EngineTest {
         assertTrue(drawDeck.size() == 5);
     }
 
-    // Only testing Big Money Player here manually with the initial simple conditions for the first 1-2 rounds to check if conditions are set up correctly
+    /**
+     * Tests multiple consecutive turns, including handling of deck reshuffling.
+     * 
+     * This test simulates several complete turns of the game to verify:
+     * - Cards move correctly between decks and hands during different phases
+     * - Purchased cards go to the discard deck
+     * - Played and unplayed cards in hand move to discard during cleanup
+     * - The discard deck is reshuffled into the draw deck when needed
+     * - The game state remains consistent through multiple turns
+     */
     @Test
     void testPhasesAgainAndAgain() throws Exception {
         Field mainDeck = gameEngine.getClass().getDeclaredField("deck"); 
@@ -170,7 +217,14 @@ public class EngineTest {
         assertEquals(7+2, player1.getDrawDeck().size()); // Draw deck should 9 cards after this cleanup;
     }
 
-    //Test if the calculate point mechanism is correct by calculating card values at the end of one simulated 1-player game.
+    /**
+     * Tests that victory points are calculated correctly at the end of the game.
+     * 
+     * This test simulates an entire game until completion, then:
+     * - Computes the final scores
+     * - Verifies that victory points are calculated correctly based on victory cards
+     * - Confirms the total matches the expected value from the game deck
+     */
     @Test void calculateAPs() throws Exception {
         Method initializeGameState = gameEngine.getClass().getDeclaredMethod("initializeGameState", AtgPlayer.class);
         initializeGameState.setAccessible(true);
@@ -213,9 +267,13 @@ public class EngineTest {
         assertEquals(money, score);   
     }
 
-    // Example of testing one action card effect.
-    // Here we simulate BACKLOG. In a real test you may need to override player's makeDecision method 
-    // so that it automatically returns an EndPhaseDecision (i.e. no discarding).
+    /**
+     * Tests the BACKLOG card effect, which should increase available actions by 1.
+     * 
+     * Expected behavior:
+     * - When a BACKLOG card is played, the available actions in the game state 
+     *   should increase by 1
+     */
     @Test
     void testProcessBacklogEffect() throws Exception {
         // Use reflection to get the private method.
@@ -227,7 +285,7 @@ public class EngineTest {
         initState.setAccessible(true);
         initState.invoke(gameEngine, player1);
         
-        // Create a dummy GameState (from the engine’s field).
+        // Create a dummy GameState (from the engine's field).
         // (Assuming gameState is now set by initializeGameState)
         GameState beforeState = ((GameEngine)gameEngine).getGameState();
         
@@ -239,9 +297,13 @@ public class EngineTest {
         assertEquals(beforeState.getAvailableActions() + 1, afterState.getAvailableActions());
     }
 
-    // Example test for an Attack card effect: HACK.
-    // For HACK, we expect the active player’s money to increase by 2, and for the opponent to be forced to discard.
-    // In a real test, you would simulate the opponent decision (for instance always choosing not to reveal MONITORING).
+    /**
+     * Tests the HACK card effect, which should increase money and force opponent to discard.
+     * 
+     * Expected behavior:
+     * - The active player's spendable money should increase by 2
+     * - The opponent's hand size should be at most 3 cards after the effect
+     */
     @Test
     void testProcessHackEffect() throws Exception {
         // Initialize game state for player1.
@@ -257,18 +319,24 @@ public class EngineTest {
         hackMethod.setAccessible(true);
         
         // In our testing environment, ensure that opponent (player2) does not reveal a MONITORING card.
-        // (This may be done via a dummy makeDecision method or by setting player2’s hand appropriately.)
+        // (This may be done via a dummy makeDecision method or by setting player2's hand appropriately.)
         GameState afterState = (GameState) hackMethod.invoke(gameEngine, player1, beforeState);
         
-        // Verify that player1’s spendable money is increased by 2.
+        // Verify that player1's spendable money is increased by 2.
         assertEquals(beforeState.getSpendableMoney() + 2, afterState.getSpendableMoney());
             
-        // You may also check that player2’s hand size is now at most 3.
+        // You may also check that player2's hand size is now at most 3.
         assertTrue(player2.getHand().getUnplayedCards().size() <= 3);
     }
 
-    // Similarly, you can add tests for DAILY_SCRUM, IPO, CODE_REVIEW, TECH_DEBT, REFACTOR, PARALLELIZATION, and EVERGREEN_TEST.
-    // For instance, test that after playing DAILY_SCRUM, the active player draws 4 cards and the opponent draws 1 card:
+    /**
+     * Tests the DAILY_SCRUM card effect, which should increase available buys
+     * and allow players to draw cards.
+     * 
+     * Expected behavior:
+     * - The active player's available buys should increase
+     * - Both players should draw additional cards
+     */
     @Test
     void testProcessDailyScrumEffect() throws Exception {
         // Initialize game state for player1.
@@ -290,10 +358,13 @@ public class EngineTest {
         // (Depending on your implementation, you may need to compare hand sizes before and after.)
     }
 
-    // Additional tests for the remaining action cards should be similarly structured,
-    // invoking the appropriate private method via reflection, setting up dummy decisions if needed,
-    // and asserting that the game state changes as expected.
-
+    /**
+     * Tests the IPO card effect, which should increase both actions and money.
+     * 
+     * Expected behavior:
+     * - The player's available actions should increase by 1
+     * - The player's spendable money should increase by 2
+     */
     @Test
     void testProcessIpoEffect() throws Exception {
         Method initState = gameEngine.getClass().getDeclaredMethod("initializeGameState", AtgPlayer.class);
@@ -311,7 +382,14 @@ public class EngineTest {
         assertEquals(beforeState.getSpendableMoney() + 2, afterState.getSpendableMoney());
     }
 
-    // Test for CODE_REVIEW effect.
+    /**
+     * Tests the CODE_REVIEW card effect, which should increase available actions
+     * and allow the player to draw a card.
+     * 
+     * Expected behavior:
+     * - The player's available actions should increase by 2
+     * - The player should draw at least one card
+     */
     @Test
     void testProcessCodeReviewEffect() throws Exception {
         Method initState = gameEngine.getClass().getDeclaredMethod("initializeGameState", AtgPlayer.class);
@@ -331,7 +409,15 @@ public class EngineTest {
                    beforeState.getCurrentPlayerHand().getUnplayedCards().size());
     }
 
-    // Test for TECH_DEBT effect.
+    /**
+     * Tests the TECH_DEBT card effect, which should provide bonuses
+     * of +1 action, +1 money, and draw a card.
+     * 
+     * Expected behavior:
+     * - The player's available actions should increase by 1
+     * - The player's spendable money should increase by 1
+     * - The player should draw one card
+     */
     @Test
     void testProcessTechDebtEffect() throws Exception {
         // For this test, assume no empty supply piles so that no discarding occurs.
@@ -350,7 +436,13 @@ public class EngineTest {
         assertEquals(beforeState.getSpendableMoney() + 1, afterState.getSpendableMoney());
     }
 
-    // Test for REFACTOR effect.
+    /**
+     * Tests the REFACTOR card effect, which allows players to trash cards.
+     * 
+     * Expected behavior:
+     * - Game state should remain consistent (actions and money unchanged)
+     * - (Note: actual trashing is tested in other methods)
+     */
     @Test
     void testProcessRefactorEffect() throws Exception {
 
@@ -370,7 +462,13 @@ public class EngineTest {
         assertEquals(beforeState.getSpendableMoney(), afterState.getSpendableMoney());
     }
 
-    // Test for PARALLELIZATION effect.
+    /**
+     * Tests the PARALLELIZATION card effect, which allows duplicating an action card.
+     * 
+     * Expected behavior:
+     * - The turn phase should remain unchanged
+     * - (Note: actual action duplication is tested implicitly through game state)
+     */
     @Test
     void testProcessParallelizationEffect() throws Exception {
         // Initialize state and assume the player has at least one valid action card to duplicate.
@@ -388,7 +486,14 @@ public class EngineTest {
         assertEquals(beforeState.getTurnPhase(), afterState.getTurnPhase());
     }
 
-    // Test for EVERGREEN_TEST effect.
+    /**
+     * Tests the EVERGREEN_TEST card effect, which allows drawing cards
+     * and giving BUG cards to opponents.
+     * 
+     * Expected behavior:
+     * - The active player should draw 2 additional cards
+     * - The opponent should receive at least one BUG card
+     */
     @Test
     void testProcessEvergreenTestEffect() throws Exception {
         // Initialize state for the active player.
@@ -416,7 +521,13 @@ public class EngineTest {
         assertTrue(bugCount > 0);
     }
 
-    // Test for MONITORING effect.
+    /**
+     * Tests the MONITORING reaction card effect when responding to EVERGREEN_TEST.
+     * 
+     * Expected behavior:
+     * - The player should draw 2 cards from the Evergreen Test effect
+     * - The opponent with Monitoring should NOT receive a BUG card
+     */
     @Test
     void testMonitoringReactionEvergreenTestEffect() throws Exception {
         // Create a test-specific opponent that always chooses to reveal its MONITORING card.

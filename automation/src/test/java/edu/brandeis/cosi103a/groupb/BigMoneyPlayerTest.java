@@ -20,9 +20,32 @@ import edu.brandeis.cosi103a.groupb.Game.*;
 import edu.brandeis.cosi103a.groupb.Player.*;
 import edu.brandeis.cosi.atg.api.Engine;
 
-
+/**
+ * Test class for the BigMoneyPlayer implementation.
+ * 
+ * This class tests the BigMoneyPlayer AI, which follows a "big money" strategy 
+ * commonly used in deck-building games. The strategy focuses on acquiring high-value
+ * cards and maximizing money generation to purchase more expensive cards.
+ * 
+ * The tests verify that the BigMoneyPlayer:
+ * 1. Plays money cards during the MONEY phase
+ * 2. Buys the most expensive cards available during the BUY phase
+ * 3. Makes appropriate decisions when limited options are available
+ * 4. Implements advanced strategies based on the game state (last Framework card, winning position)
+ * 
+ * Both simple decision tests and more complex strategic tests using game engine integration
+ * are included to validate the player's behavior.
+ * 
+ */
 public class BigMoneyPlayerTest {
 
+    /**
+     * Tests that BigMoneyPlayer plays money cards during the MONEY phase.
+     * 
+     * Expected behavior:
+     * - When presented with a money card and an option to end the phase,
+     *   the player should choose to play the money card to maximize available funds.
+     */
     @Test
     public void testMakeDecisionWithMoneyPhase() {
         BigMoneyPlayer player = new BigMoneyPlayer("BigMoney");
@@ -41,6 +64,14 @@ public class BigMoneyPlayerTest {
         assertTrue(decision instanceof PlayCardDecision, "Expected decision to be PlayCardDecision in MONEY phase.");
     }
     
+    /**
+     * Tests that BigMoneyPlayer buys the most expensive card available during the BUY phase.
+     * 
+     * Expected behavior:
+     * - When presented with multiple cards to buy, the player should 
+     *   prioritize higher-value cards (FRAMEWORK over BITCOIN in this case)
+     *   when it has sufficient money to purchase.
+     */
     @Test
     public void testMakeDecisionWithBuyPhase() {
         BigMoneyPlayer player = new BigMoneyPlayer("BigMoney");
@@ -61,7 +92,13 @@ public class BigMoneyPlayerTest {
         assertEquals(Card.Type.FRAMEWORK, buyDecision.getCardType(), "Expected to choose FRAMEWORK card.");
     }
     
-    // Additional test: Only EndPhaseDecision exists in MONEY phase
+    /**
+     * Tests that BigMoneyPlayer ends the MONEY phase when no cards can be played.
+     * 
+     * Expected behavior:
+     * - When only an EndPhaseDecision is available during the MONEY phase,
+     *   the player should choose to end the phase.
+     */
     @Test
     public void testMakeDecisionWithMoneyPhaseOnlyEndPhase() {
         BigMoneyPlayer player = new BigMoneyPlayer("BigMoney");
@@ -77,7 +114,13 @@ public class BigMoneyPlayerTest {
         assertTrue(decision instanceof EndPhaseDecision, "Expected decision to be EndPhaseDecision when no PlayCardDecision exists in MONEY phase.");
     }
     
-    // Additional test: Only EndPhaseDecision exists in BUY phase (simulate insufficient options).
+    /**
+     * Tests that BigMoneyPlayer ends the BUY phase when no cards can be purchased.
+     * 
+     * Expected behavior:
+     * - When only an EndPhaseDecision is available during the BUY phase,
+     *   the player should choose to end the phase.
+     */
     @Test
     public void testMakeDecisionWithBuyPhaseOnlyEndPhase() {
         BigMoneyPlayer player = new BigMoneyPlayer("BigMoney");
@@ -93,7 +136,13 @@ public class BigMoneyPlayerTest {
         assertTrue(decision instanceof EndPhaseDecision, "Expected decision to be EndPhaseDecision when no BuyDecision exists in BUY phase.");
     }
     
-    // Additional test: In MONEY phase, when multiple PlayCardDecision options exist, the first one is chosen.
+    /**
+     * Tests that BigMoneyPlayer chooses the first money card when multiple options exist.
+     * 
+     * Expected behavior:
+     * - When multiple PlayCardDecision options are available, the player
+     *   should select the first one in the list.
+     */
     @Test
     public void testMakeDecisionWithMultiplePlayCardDecisions() {
         BigMoneyPlayer player = new BigMoneyPlayer("BigMoney");
@@ -116,7 +165,15 @@ public class BigMoneyPlayerTest {
         assertEquals(firstCard, playDecision.getCard(), "Expected the first PlayCardDecision option to be chosen.");
     }
 
-    // Test on advanced strategy to skip the framework car assuming isWinning returns false
+    /**
+     * Tests the advanced strategy where BigMoneyPlayer skips buying the last Framework card
+     * when not in a winning position.
+     * 
+     * Expected behavior:
+     * - When the player is not winning and the last Framework card is available,
+     *   the player should choose an alternative card (ETHEREUM) to avoid helping
+     *   opponents who might be in a better position to win.
+     */
     @Test
     public void testAdvancedStrategySkipsFramework() {
         // Override isWinning() to avoid calling GameEngine.getCurrentScores()
@@ -157,7 +214,18 @@ public class BigMoneyPlayerTest {
         assertEquals(Card.Type.ETHEREUM, buyDecision.getCardType(), "Expected to choose ETHEREUM as the alternative purchase option.");
     }
 
-    // Test on advanced strategy with gameEngine along with isWinning to check if BigMoneyPlayer correctly determines the current situation and make an expected decision
+    /**
+     * Tests the advanced strategy with a real game engine to verify the player's
+     * decision-making in a more realistic scenario.
+     * 
+     * This test:
+     * 1. Creates a real game engine with BigMoneyPlayer and an opponent
+     * 2. Sets up a game state where the opponent has a higher score
+     * 3. Offers the last Framework card as a purchase option
+     * 4. Verifies that BigMoneyPlayer skips buying it in favor of an alternative
+     * 
+     * This tests the integration between the player's strategy and the game engine.
+     */
     @Test
     public void testAdvancedStrategySkipsFrameworkWithEngine() throws Exception {
         // Create primary player and a dummy opponent.

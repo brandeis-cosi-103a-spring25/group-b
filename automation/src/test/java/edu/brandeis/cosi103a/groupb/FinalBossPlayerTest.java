@@ -14,12 +14,37 @@ import edu.brandeis.cosi.atg.api.decisions.*;
 import edu.brandeis.cosi103a.groupb.Player.FinalBossPlayer;
 import edu.brandeis.cosi.atg.api.decisions.TrashCardDecision;
 
+/**
+ * Test class for the FinalBossPlayer implementation.
+ * 
+ * This class tests the FinalBossPlayer AI, which implements the most advanced strategy
+ * in the game. The FinalBossPlayer combines tactical elements from other player types
+ * with enhanced decision-making capabilities for a more challenging opponent.
+ * 
+ * The tests verify that the FinalBossPlayer:
+ * 1. Makes strategically optimal decisions in different game phases
+ * 2. Properly prioritizes cards based on their strategic value
+ * 3. Handles special cases like reaction cards and card trashing effectively
+ * 4. Applies different strategies based on the game situation
+ * 
+ * Each test focuses on a specific game phase or scenario to verify the player's
+ * strategic decision-making capabilities.
+ * 
+ */
 public class FinalBossPlayerTest {
     
     private FinalBossPlayer player;
     private GameState gameState;
     private GameDeck deck;
     
+    /**
+     * Sets up the test environment before each test.
+     * 
+     * This method:
+     * 1. Creates a new FinalBossPlayer instance
+     * 2. Initializes a game deck with standard card distributions
+     * 3. Creates a basic game state in the ACTION phase
+     */
     @BeforeEach
     public void setup() {
         player = new FinalBossPlayer("TestPlayer");
@@ -49,6 +74,14 @@ public class FinalBossPlayerTest {
         );
     }
     
+    /**
+     * Tests the FinalBossPlayer's initialization and basic properties.
+     * 
+     * Verifies that:
+     * - The player's name is set correctly
+     * - Initial hand is empty
+     * - Initial draw and discard decks are empty
+     */
     @Test
     public void testPlayerInitialization() {
         assertEquals("TestPlayer", player.getName());
@@ -57,6 +90,14 @@ public class FinalBossPlayerTest {
         assertTrue(player.getDiscardDeck().isEmpty());
     }
     
+    /**
+     * Tests the FinalBossPlayer's reaction phase decision making with Monitoring cards.
+     * 
+     * Expected behavior:
+     * - When in reaction phase and the player has a Monitoring card,
+     *   it should always choose to play/reveal the card for its reaction effect
+     *   to prevent negative effects from opponent's attack cards.
+     */
     @Test
     public void testReactionPhaseWithMonitoring() {
         // Create a hand with a Monitoring card
@@ -86,6 +127,13 @@ public class FinalBossPlayerTest {
         assertEquals(monitoringCard, ((PlayCardDecision) result).getCard());
     }
     
+    /**
+     * Tests the FinalBossPlayer's action phase card prioritization.
+     * 
+     * Expected behavior:
+     * - When multiple action cards are available, the player should prioritize
+     *   playing high-value action cards like IPO first to maximize early game advantage
+     */
     @Test
     public void testActionPhaseWithPriorityActions() {
         // Create cards of various action types
@@ -121,6 +169,14 @@ public class FinalBossPlayerTest {
         assertEquals(ipoCard, ((PlayCardDecision) result).getCard());
     }
     
+    /**
+     * Tests the FinalBossPlayer's money phase decision making.
+     * 
+     * Expected behavior:
+     * - During the money phase, the player should play all available money cards
+     *   before ending the phase to maximize purchasing power
+     * - The player should choose money cards over victory cards
+     */
     @Test
     public void testMoneyPhasePlayAllMoney() {
         // Create money cards
@@ -155,6 +211,13 @@ public class FinalBossPlayerTest {
         assertTrue(((PlayCardDecision) result).getCard().getType().getCategory() == Card.Type.Category.MONEY);
     }
     
+    /**
+     * Tests the FinalBossPlayer's discard phase priorities, focusing on Bug cards.
+     * 
+     * Expected behavior:
+     * - When forced to discard cards, the player should prioritize discarding
+     *   Bug cards first, as they provide no benefit and take up hand space
+     */
     @Test
     public void testDiscardPrioritizesBugs() {
         // Create cards including a Bug
@@ -188,6 +251,14 @@ public class FinalBossPlayerTest {
         assertEquals(bugCard, ((DiscardCardDecision) result).getCard());
     }
     
+    /**
+     * Tests the FinalBossPlayer's card trashing strategy.
+     * 
+     * Expected behavior:
+     * - When presented with the opportunity to trash cards (e.g., from REFACTOR),
+     *   the player should make a strategic decision about which cards to trash
+     *   to optimize their deck
+     */
     @Test
     public void testTrashUpgradeStrategy() {
         // Create cards for trashing
@@ -219,6 +290,13 @@ public class FinalBossPlayerTest {
         assertTrue(result instanceof TrashCardDecision);
     }
     
+    /**
+     * Tests the FinalBossPlayer's strategy during the gain phase.
+     * 
+     * Expected behavior:
+     * - When offered free cards during the gain phase, the player should
+     *   prioritize high-value victory cards like FRAMEWORK over other options
+     */
     @Test
     public void testGainPhaseStrategy() {
         // Create game state in Gain phase
