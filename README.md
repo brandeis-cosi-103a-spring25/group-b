@@ -77,7 +77,7 @@ cd atg-game-platform
 http://localhost:8080/
 ```
 
-You’ll see the **ATG Game Platform** UI with options to create and manage games.
+You'll see the **ATG Game Platform** UI with options to create and manage games.
 
 ---
 

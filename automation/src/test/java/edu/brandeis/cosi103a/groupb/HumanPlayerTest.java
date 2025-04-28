@@ -13,8 +13,31 @@ import edu.brandeis.cosi.atg.api.cards.*;
 import edu.brandeis.cosi103a.groupb.Player.*;
 import edu.brandeis.cosi.atg.api.*;
 
+/**
+ * Test class for the HumanPlayer implementation.
+ * 
+ * This class tests the HumanPlayer, which is designed to allow human input
+ * via console during gameplay. Since we can't test with actual human input,
+ * these tests use simulated input streams to verify:
+ * 
+ * 1. Basic decision making with a single option
+ * 2. Handling of invalid input (non-numeric or out-of-range values)
+ * 3. Selection from multiple options
+ * 4. Basic player properties like name retrieval
+ * 
+ * Each test simulates console input by providing a ByteArrayInputStream
+ * configured with predefined input that the HumanPlayer will read.
+ * 
+ */
 public class HumanPlayerTest {
 
+    /**
+     * Tests that the HumanPlayer can make a basic decision with a single option.
+     * 
+     * This test simulates a user selecting option "0" (the first and only option)
+     * which is an EndPhaseDecision. It verifies that the player returns the
+     * correct decision type.
+     */
     @Test
     public void testMakeDecisionEndPhase() {
         // Simulate user input: "0" to choose first option.
@@ -34,6 +57,14 @@ public class HumanPlayerTest {
         assertTrue(decision instanceof EndPhaseDecision, "Expected decision to be EndPhaseDecision.");
     }
     
+    /**
+     * Tests that the HumanPlayer correctly handles invalid input.
+     * 
+     * This test simulates a user first entering "abc" (invalid input),
+     * followed by "0" (valid input). It verifies that the player properly
+     * rejects the invalid input and then processes the valid input to
+     * return the correct decision.
+     */
     @Test
     public void testMakeDecisionInvalidThenValid() {
         // Simulate invalid input followed by valid "0"
@@ -57,6 +88,13 @@ public class HumanPlayerTest {
         assertTrue(decision instanceof PlayCardDecision, "Expected decision to be PlayCardDecision after invalid input followed by valid input.");
     }
     
+    /**
+     * Tests that the HumanPlayer can select from multiple options.
+     * 
+     * This test simulates a user entering "1" to select the second option
+     * from a list of three. It verifies that the player correctly returns
+     * the selected decision.
+     */
     @Test
     public void testMakeDecisionMultipleOptions() {
         // Simulate user input: "1" to choose second option.
@@ -83,6 +121,12 @@ public class HumanPlayerTest {
         assertTrue(decision instanceof EndPhaseDecision, "Expected decision to be EndPhaseDecision from multiple options.");
     }
     
+    /**
+     * Tests that the HumanPlayer correctly returns its name.
+     * 
+     * This simple test verifies that the getName() method returns
+     * the name that was provided in the constructor.
+     */
     @Test
     public void testGetName() {
         // Ensure that getName() returns the proper name.

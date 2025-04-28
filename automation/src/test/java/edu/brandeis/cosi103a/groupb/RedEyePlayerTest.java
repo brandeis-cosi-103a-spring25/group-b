@@ -14,10 +14,30 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for the RedEyePlayer implementation.
+ * 
+ * This class validates the decision-making capabilities of the RedEyePlayer, which implements
+ * a strategic AI player that makes intelligent decisions based on the current game state.
+ * 
+ * The tests verify that the RedEyePlayer correctly prioritizes actions according to its strategy:
+ * - In money phase: PlayCard decisions for money cards
+ * - In buy phase: Buy decisions with preference for higher-value cards
+ * - In discard phase: Discard decisions with priority for victory cards (low utility)
+ * - In gain phase: Gain card decisions according to the player's strategy
+ * - End phase decisions when no other options are available
+ * 
+ */
 public class RedEyePlayerTest {
    
-
-@Test
+    /**
+     * Tests the RedEyePlayer's decision making during the MONEY phase.
+     * 
+     * Expected behavior:
+     * - When presented with a money card and an option to end the phase,
+     *   the player should choose to play the money card to maximize available funds.
+     */
+    @Test
     public void testMakeDecisionWithMoneyPhase() {
         RedEyePlayer player = new RedEyePlayer("Rey");
         // Create dummy GameState for MONEY phase.
@@ -35,6 +55,14 @@ public class RedEyePlayerTest {
         assertTrue(decision instanceof PlayCardDecision, "Expected decision to be PlayCardDecision in MONEY phase.");
     }
     
+    /**
+     * Tests the RedEyePlayer's decision making during the BUY phase.
+     * 
+     * Expected behavior:
+     * - When presented with multiple cards to buy, the player should 
+     *   prioritize higher-value cards (FRAMEWORK over BITCOIN in this case)
+     *   when it has sufficient money to purchase.
+     */
     @Test
     public void testMakeDecisionWithBuyPhase() {
         RedEyePlayer player = new RedEyePlayer("Rey");
@@ -55,6 +83,14 @@ public class RedEyePlayerTest {
         assertEquals(Card.Type.FRAMEWORK, buyDecision.getCardType(), "Expected to choose FRAMEWORK card.");
     }
 
+    /**
+     * Tests the RedEyePlayer's decision making during the DISCARD phase.
+     * 
+     * Expected behavior:
+     * - When forced to discard cards, the player should prioritize discarding
+     *   victory cards (METHOD in this test case) over money cards (BITCOIN)
+     *   as victory cards have less utility during gameplay.
+     */
     @Test
     public void testMakeDecisionWithDiscardPhase() {
         RedEyePlayer player = new RedEyePlayer("Rey");
@@ -76,6 +112,13 @@ public class RedEyePlayerTest {
         assertEquals(victoryCard, discardDecision.getCard(), "Expected to discard the VICTORY card first.");
     }
 
+    /**
+     * Tests the RedEyePlayer's decision making during the GAIN phase.
+     * 
+     * Expected behavior:
+     * - When given the opportunity to gain a card for free, the player
+     *   should accept the offer, particularly for valuable cards like FRAMEWORK.
+     */
     @Test
     public void testMakeDecisionWithGainPhase() {
         RedEyePlayer player = new RedEyePlayer("Rey");
@@ -95,6 +138,13 @@ public class RedEyePlayerTest {
         assertEquals(gainType, gainDecision.getCardType(), "Expected to gain the FRAMEWORK card.");
     }
 
+    /**
+     * Tests the RedEyePlayer's decision making when only EndPhase is available.
+     * 
+     * Expected behavior:
+     * - When no other decisions are available, the player should choose
+     *   to end the current phase to progress the game.
+     */
     @Test
     public void testMakeDecisionWithEndPhase() {
         RedEyePlayer player = new RedEyePlayer("Rey");
@@ -110,5 +160,4 @@ public class RedEyePlayerTest {
 
         assertTrue(decision instanceof EndPhaseDecision, "Expected decision to be EndPhaseDecision when no other valid options exist.");
     }
-
 }
