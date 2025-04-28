@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "NetworkPlayerIntegrationTest",
+            "request": "launch",
+            "mainClass": "edu.brandeis.cosi103a.groupb.Server.test.NetworkPlayerIntegrationTest",
+            "projectName": "automation"
+        },
+        {
+            "type": "java",
             "name": "Application",
             "request": "launch",
             "mainClass": "edu.brandeis.cosi103a.groupb.Server.Application",

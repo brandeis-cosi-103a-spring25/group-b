@@ -1,28 +1,20 @@
 package edu.brandeis.cosi103a.groupb;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.Map;
+import java.lang.reflect.*;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue; //Use java reflection to test private method
 import org.junit.jupiter.api.Test;
-import java.util.List;
-import java.util.ArrayList;
+
 
 import com.google.common.collect.ImmutableList;
-import edu.brandeis.cosi.atg.api.GameState;
-import edu.brandeis.cosi.atg.api.GameDeck;
-import edu.brandeis.cosi.atg.api.GameObserver;
+import edu.brandeis.cosi.atg.api.*;
 import edu.brandeis.cosi.atg.api.cards.Card;
-import edu.brandeis.cosi.atg.api.Hand;
 import edu.brandeis.cosi103a.groupb.Decks.PlayerDeck;
-import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
-import edu.brandeis.cosi103a.groupb.Game.GameEngine;
-import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
-import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
-import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
-import edu.brandeis.cosi.atg.api.Engine;
+import edu.brandeis.cosi103a.groupb.Game.*;
+import edu.brandeis.cosi103a.groupb.Player.*;
+
 
 public class EngineTest {
     private AtgPlayer player1 = new BigMoneyPlayer("Nancy");

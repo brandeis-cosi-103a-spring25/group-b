@@ -1,6 +1,6 @@
 package edu.brandeis.cosi103a.groupb.Server.model;
 
-import edu.brandeis.cosi.atg.api.decisions.Decision;
+import edu.brandeis.cosi.atg.api.decisions.*;
 
 public class DecisionResponse {
     private Decision decision;

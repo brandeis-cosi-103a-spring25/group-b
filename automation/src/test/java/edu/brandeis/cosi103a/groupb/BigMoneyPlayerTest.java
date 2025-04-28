@@ -1,13 +1,9 @@
 package edu.brandeis.cosi103a.groupb;
 
 import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -17,19 +13,11 @@ import org.junit.jupiter.api.Test;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
-import edu.brandeis.cosi.atg.api.GameDeck;
-import edu.brandeis.cosi.atg.api.GameObserver;
-import edu.brandeis.cosi.atg.api.GameState;
-import edu.brandeis.cosi.atg.api.Hand;
+import edu.brandeis.cosi.atg.api.*;
 import edu.brandeis.cosi.atg.api.cards.Card;
-import edu.brandeis.cosi.atg.api.decisions.BuyDecision;
-import edu.brandeis.cosi.atg.api.decisions.Decision;
-import edu.brandeis.cosi.atg.api.decisions.EndPhaseDecision;
-import edu.brandeis.cosi.atg.api.decisions.PlayCardDecision;
-import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
-import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
-import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
-import edu.brandeis.cosi103a.groupb.Game.GameEngine;
+import edu.brandeis.cosi.atg.api.decisions.*;
+import edu.brandeis.cosi103a.groupb.Game.*;
+import edu.brandeis.cosi103a.groupb.Player.*;
 import edu.brandeis.cosi.atg.api.Engine;
 
 

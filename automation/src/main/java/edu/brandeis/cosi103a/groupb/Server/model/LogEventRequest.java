@@ -1,7 +1,7 @@
 package edu.brandeis.cosi103a.groupb.Server.model;
 
-import edu.brandeis.cosi.atg.api.GameState;
-import edu.brandeis.cosi.atg.api.event.Event;
+import edu.brandeis.cosi.atg.api.*;
+import edu.brandeis.cosi.atg.api.event.*;
 
 public class LogEventRequest {
     private Event event;

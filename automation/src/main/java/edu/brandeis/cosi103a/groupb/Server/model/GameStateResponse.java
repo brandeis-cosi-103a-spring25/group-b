@@ -1,9 +1,9 @@
 // Add this new model class first
 package edu.brandeis.cosi103a.groupb.Server.model;
 
-import java.util.List;
+import java.util.*;
 
-import edu.brandeis.cosi.atg.api.cards.Card;
+import edu.brandeis.cosi.atg.api.cards.*;
 
 public class GameStateResponse {
     private String id;

@@ -1,33 +1,18 @@
 package edu.brandeis.cosi103a.groupb;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.*;
 
-import edu.brandeis.cosi.atg.api.GameDeck;
-import edu.brandeis.cosi.atg.api.GameState;
-import edu.brandeis.cosi.atg.api.Hand;
+import edu.brandeis.cosi.atg.api.*;
 import edu.brandeis.cosi.atg.api.cards.Card;
-import edu.brandeis.cosi.atg.api.decisions.BuyDecision;
-import edu.brandeis.cosi.atg.api.decisions.Decision;
-import edu.brandeis.cosi.atg.api.decisions.DiscardCardDecision;
-import edu.brandeis.cosi.atg.api.decisions.EndPhaseDecision;
-import edu.brandeis.cosi.atg.api.decisions.GainCardDecision;
-import edu.brandeis.cosi.atg.api.decisions.PlayCardDecision;
-import edu.brandeis.cosi.atg.api.decisions.TrashCardDecision;
+import edu.brandeis.cosi.atg.api.decisions.*;
 import edu.brandeis.cosi103a.groupb.Player.FinalBossPlayer;
+import edu.brandeis.cosi.atg.api.decisions.TrashCardDecision;
 
 public class FinalBossPlayerTest {
     

@@ -4,29 +4,20 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.*;
 
-import edu.brandeis.cosi.atg.api.PlayerViolationException;
-import edu.brandeis.cosi.atg.api.GameDeck;
-import edu.brandeis.cosi.atg.api.GameObserver;
+import edu.brandeis.cosi.atg.api.*;
 import edu.brandeis.cosi.atg.api.cards.*;
 import edu.brandeis.cosi.atg.api.decisions.*;
 import edu.brandeis.cosi.atg.api.event.*;
-import edu.brandeis.cosi.atg.api.GameState;
 import edu.brandeis.cosi.atg.api.GameState.TurnPhase;
-import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
-import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
-import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
-import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
-import edu.brandeis.cosi103a.groupb.Game.GameEngine;
+import edu.brandeis.cosi103a.groupb.Player.*;
+import edu.brandeis.cosi103a.groupb.Game.*;
 import edu.brandeis.cosi.atg.api.Engine;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.lang.reflect.Method;
 
 public class HarnessTest {
@@ -75,14 +66,19 @@ public class HarnessTest {
    
     @Test
     public void testGamePlay() throws PlayerViolationException {
-        List<AtgPlayer.ScorePair> mockResults = new ArrayList<>();
-        mockResults.add(new AtgPlayer.ScorePair(humanPlayer, 10));
-        mockResults.add(new AtgPlayer.ScorePair(bigMoneyPlayer, 5));
-
-        GameEngine mockGameEngine = Mockito.mock(GameEngine.class);
-        when(mockGameEngine.play()).thenReturn(ImmutableList.copyOf(mockResults));
-
-        List<AtgPlayer.ScorePair> results = mockGameEngine.play();
+        // Create a custom Engine implementation that returns our test scores
+        Engine testEngine = new Engine() {
+            @Override
+            public ImmutableList<AtgPlayer.ScorePair> play() throws PlayerViolationException {
+                List<AtgPlayer.ScorePair> mockResults = new ArrayList<>();
+                mockResults.add(new AtgPlayer.ScorePair(humanPlayer, 10));
+                mockResults.add(new AtgPlayer.ScorePair(bigMoneyPlayer, 5));
+                return ImmutableList.copyOf(mockResults);
+            }
+        };
+        
+        // Test the custom engine
+        ImmutableList<AtgPlayer.ScorePair> results = testEngine.play();
         assertEquals(2, results.size());
         assertEquals(10, results.get(0).getScore());
         assertEquals(5, results.get(1).getScore());
@@ -90,10 +86,16 @@ public class HarnessTest {
    
     @Test
     public void testGameEndDueToPlayerViolationException() {
-        GameEngine mockGameEngine = Mockito.mock(GameEngine.class);
+        // Create a custom Engine implementation that throws an exception
+        Engine testEngine = new Engine() {
+            @Override
+            public ImmutableList<AtgPlayer.ScorePair> play() throws PlayerViolationException {
+                throw new PlayerViolationException("Invalid move");
+            }
+        };
+        
         try {
-            when(mockGameEngine.play()).thenThrow(new PlayerViolationException("Invalid move"));
-            mockGameEngine.play();
+            testEngine.play();
             fail("Expected PlayerViolationException to be thrown");
         } catch (PlayerViolationException e) {
             assertEquals("Invalid move", e.getMessage());
@@ -102,13 +104,21 @@ public class HarnessTest {
 
     @Test
     public void testWinnerDetermination() throws PlayerViolationException {
-        List<AtgPlayer.ScorePair> mockResults = new ArrayList<>();
-        mockResults.add(new AtgPlayer.ScorePair(humanPlayer, 10));
-        mockResults.add(new AtgPlayer.ScorePair(bigMoneyPlayer, 10));
-
-        GameEngine mockGameEngine = Mockito.mock(GameEngine.class);
-        when(mockGameEngine.play()).thenReturn(ImmutableList.copyOf(mockResults));
-        List<AtgPlayer.ScorePair> results = mockGameEngine.play();
+        // Create a custom Engine implementation that returns tied scores
+        Engine testEngine = new Engine() {
+            @Override
+            public ImmutableList<AtgPlayer.ScorePair> play() throws PlayerViolationException {
+                List<AtgPlayer.ScorePair> mockResults = new ArrayList<>();
+                mockResults.add(new AtgPlayer.ScorePair(humanPlayer, 10));
+                mockResults.add(new AtgPlayer.ScorePair(bigMoneyPlayer, 10));
+                return ImmutableList.copyOf(mockResults);
+            }
+        };
+        
+        // Test with the custom engine
+        ImmutableList<AtgPlayer.ScorePair> results = testEngine.play();
+        
+        // Determine winners
         int highestScore = -1;
         List<AtgPlayer> winners = new ArrayList<>();
 

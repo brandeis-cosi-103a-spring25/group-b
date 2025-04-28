@@ -1,11 +1,9 @@
 package edu.brandeis.cosi103a.groupb.Server.handler;
 
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
-import com.google.gson.Gson;
+import com.sun.net.httpserver.*;
+import java.io.*;
+import java.nio.charset.*;
+import com.google.gson.*;
 
 public abstract class BaseHandler implements HttpHandler {
     protected static final Gson gson = new Gson();

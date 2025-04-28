@@ -1,34 +1,15 @@
 package edu.brandeis.cosi103a.groupb.Server.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
 
-import edu.brandeis.cosi.atg.api.Engine;
-import edu.brandeis.cosi.atg.api.GameObserver;
-import edu.brandeis.cosi.atg.api.GameState;
-import edu.brandeis.cosi.atg.api.Player;
+import edu.brandeis.cosi.atg.api.*;
 import edu.brandeis.cosi.atg.api.cards.Card;
-import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
-import edu.brandeis.cosi103a.groupb.Game.GameEngine;
-import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
-import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
-import edu.brandeis.cosi103a.groupb.Player.RedEyePlayer;
-import edu.brandeis.cosi103a.groupb.Server.model.GameRequest;
-import edu.brandeis.cosi103a.groupb.Server.model.GameResponse;
-import edu.brandeis.cosi103a.groupb.Server.model.GameStateResponse;
+import edu.brandeis.cosi103a.groupb.Game.*;
+import edu.brandeis.cosi103a.groupb.Player.*;
+import edu.brandeis.cosi103a.groupb.Server.model.*;
 
 @RestController
 @RequestMapping("/api/games")

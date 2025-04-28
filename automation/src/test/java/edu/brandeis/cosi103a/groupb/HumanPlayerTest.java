@@ -3,18 +3,15 @@ package edu.brandeis.cosi103a.groupb;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.*;
 
 import java.io.ByteArrayInputStream;
 import java.util.*;
 
 import edu.brandeis.cosi.atg.api.decisions.*;
 import edu.brandeis.cosi.atg.api.cards.*;
-import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
-import edu.brandeis.cosi.atg.api.GameState;
-import edu.brandeis.cosi.atg.api.GameDeck;
-import edu.brandeis.cosi.atg.api.Hand;
+import edu.brandeis.cosi103a.groupb.Player.*;
+import edu.brandeis.cosi.atg.api.*;
 
 public class HumanPlayerTest {
 

@@ -1,42 +1,18 @@
 package edu.brandeis.cosi103a.groupb;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.*;
 
-import edu.brandeis.cosi.atg.api.GameDeck;
-import edu.brandeis.cosi.atg.api.GameObserver;
-import edu.brandeis.cosi.atg.api.GameState;
-import edu.brandeis.cosi.atg.api.GameState.TurnPhase;
+import edu.brandeis.cosi.atg.api.*;
 import edu.brandeis.cosi.atg.api.Hand;
-import edu.brandeis.cosi.atg.api.Player;
-import edu.brandeis.cosi.atg.api.Player.ScorePair;
 import edu.brandeis.cosi.atg.api.cards.Card;
-import edu.brandeis.cosi.atg.api.decisions.BuyDecision;
-import edu.brandeis.cosi.atg.api.decisions.Decision;
-import edu.brandeis.cosi.atg.api.decisions.DiscardCardDecision;
-import edu.brandeis.cosi.atg.api.decisions.EndPhaseDecision;
-import edu.brandeis.cosi.atg.api.decisions.GainCardDecision;
-import edu.brandeis.cosi.atg.api.decisions.PlayCardDecision;
-import edu.brandeis.cosi.atg.api.decisions.TrashCardDecision;
-import edu.brandeis.cosi.atg.api.event.Event;
-import edu.brandeis.cosi103a.groupb.Decks.DiscardDeck;
-import edu.brandeis.cosi103a.groupb.Decks.DrawDeck;
-import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
-import edu.brandeis.cosi103a.groupb.Game.GameEngine;
+import edu.brandeis.cosi.atg.api.decisions.*;
 import edu.brandeis.cosi103a.groupb.Player.RedEyePlayer;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 
 public class RedEyePlayerTest {
    

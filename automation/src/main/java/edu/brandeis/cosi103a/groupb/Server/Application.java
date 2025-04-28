@@ -1,7 +1,7 @@
 package edu.brandeis.cosi103a.groupb.Server;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.*;
+import org.springframework.boot.autoconfigure.*;
 
 @SpringBootApplication
 public class Application {

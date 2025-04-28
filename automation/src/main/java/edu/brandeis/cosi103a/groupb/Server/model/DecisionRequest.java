@@ -1,11 +1,10 @@
 package edu.brandeis.cosi103a.groupb.Server.model;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-import edu.brandeis.cosi.atg.api.GameState;
-import edu.brandeis.cosi.atg.api.decisions.Decision;
-import edu.brandeis.cosi.atg.api.event.Event;
+import edu.brandeis.cosi.atg.api.*;
+import edu.brandeis.cosi.atg.api.decisions.*;
+import edu.brandeis.cosi.atg.api.event.*;
 
 public class DecisionRequest {
     private GameState state;

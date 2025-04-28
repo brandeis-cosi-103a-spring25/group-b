@@ -3,17 +3,7 @@ package edu.brandeis.cosi103a.groupb;
 import java.util.*;
 
 
-import edu.brandeis.cosi.atg.api.Engine;
-import edu.brandeis.cosi.atg.api.GameObserver;
-import edu.brandeis.cosi.atg.api.Player;
-import edu.brandeis.cosi.atg.api.PlayerViolationException;
-import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
-import edu.brandeis.cosi103a.groupb.Game.GameEngine;
-import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
-import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
-import edu.brandeis.cosi103a.groupb.Player.FinalBossPlayer;
-import edu.brandeis.cosi103a.groupb.Player.HumanPlayer;
-import edu.brandeis.cosi103a.groupb.Player.RedEyePlayer;
+
 
 import edu.brandeis.cosi.atg.api.*;
 import edu.brandeis.cosi103a.groupb.Game.*;

@@ -1,21 +1,15 @@
 package edu.brandeis.cosi103a.groupb.Server.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.*;
 
 import edu.brandeis.cosi.atg.api.decisions.Decision;
-import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
-import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
-import edu.brandeis.cosi103a.groupb.Server.model.DecisionRequest;
-import edu.brandeis.cosi103a.groupb.Server.model.DecisionResponse;
-import edu.brandeis.cosi103a.groupb.Server.model.LogEventRequest;
+import edu.brandeis.cosi103a.groupb.Player.*;
+import edu.brandeis.cosi103a.groupb.Server.model.*;
 
 @RestController
 public class PlayerDecisionController {
