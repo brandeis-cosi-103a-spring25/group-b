@@ -1,15 +1,23 @@
 package edu.brandeis.cosi103a.groupb.Server.controller;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableList;
 
 import edu.brandeis.cosi.atg.api.decisions.Decision;
-import edu.brandeis.cosi103a.groupb.Player.*;
-import edu.brandeis.cosi103a.groupb.Server.model.*;
+import edu.brandeis.cosi103a.groupb.Player.AtgPlayer;
+import edu.brandeis.cosi103a.groupb.Player.BigMoneyPlayer;
+import edu.brandeis.cosi103a.groupb.Server.model.DecisionRequest;
+import edu.brandeis.cosi103a.groupb.Server.model.DecisionResponse;
+import edu.brandeis.cosi103a.groupb.Server.model.LogEventRequest;
 
 @RestController
 public class PlayerDecisionController {
@@ -20,8 +28,8 @@ public class PlayerDecisionController {
     public DecisionResponse handleDecision(@RequestBody DecisionRequest request) {
         String playerUuid = request.getPlayer_uuid();
 
-        if (playerUuid == null || playerUuid.isEmpty()) {
-            playerUuid = "dxefault-uuid";
+        if (playerUuid == null || playerUuid.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing player UUID");
         }
 
         AtgPlayer player = getOrCreatePlayer(playerUuid);
