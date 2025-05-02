@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerHandler extends BaseHandler {
-    private static final List<String> PLAYER_TYPES = List.of("bigmoney", "reyeye");
+    private static final List<String> PLAYER_TYPES = List.of("bigmoney", "reyeye", "finalboss");
     
     @Override
     protected void handleGet(HttpExchange exchange) throws IOException {
