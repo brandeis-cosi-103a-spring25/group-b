@@ -615,7 +615,7 @@ public class GameEngine implements Engine {
                 System.out.println(opponent.getName() + " does not reveal MONITORING; must discard down to 3 cards.");
                 GameState newState = new GameState(
                     state.getCurrentPlayerName(),
-                    state.getCurrentPlayerHand(),
+                    opponent.getHand(),
                     GameState.TurnPhase.DISCARD,
                     state.getAvailableActions(),
                     state.getSpendableMoney(),
@@ -629,7 +629,7 @@ public class GameEngine implements Engine {
             System.out.println(opponent.getName() + " lacks MONITORING and must discard down to 3 cards.");
             GameState newState = new GameState(
                 state.getCurrentPlayerName(),
-                state.getCurrentPlayerHand(),
+                opponent.getHand(),
                 GameState.TurnPhase.DISCARD,
                 state.getAvailableActions(),
                 state.getSpendableMoney(),
