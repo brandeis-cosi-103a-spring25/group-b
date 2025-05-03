@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/players")
 public class PlayerController {
-    private static final List<String> PLAYER_TYPES = List.of("bigmoney", "redeye");
+    private static final List<String> PLAYER_TYPES = List.of("bigmoney", "redeye","finalboss");
     
     @GetMapping
     public List<PlayerResponse> getPlayerTypes() {
