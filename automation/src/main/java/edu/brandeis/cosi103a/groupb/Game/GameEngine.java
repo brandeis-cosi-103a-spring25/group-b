@@ -589,7 +589,6 @@ public class GameEngine implements Engine {
                 break;
             }
         }
-        
         // If a MONITORING card is available, prompt with reaction options.
         if (hasMonitoring) {
             List<Decision> reactionOptions = new ArrayList<>();
@@ -614,12 +613,12 @@ public class GameEngine implements Engine {
                 // Opponent did not reveal; force discard down to 3 cards.
                 System.out.println(opponent.getName() + " does not reveal MONITORING; must discard down to 3 cards.");
                 GameState newState = new GameState(
-                    state.getCurrentPlayerName(),
+                    opponent.getName(),
                     opponent.getHand(),
                     GameState.TurnPhase.DISCARD,
-                    state.getAvailableActions(),
-                    state.getSpendableMoney(),
-                    state.getAvailableBuys(),
+                    0,
+                    0,
+                    0,
                     state.getDeck()
                 );
                 forcedDiscardDownTo3(opponent, newState);
@@ -628,12 +627,12 @@ public class GameEngine implements Engine {
             // No monitoring available; force discard.
             System.out.println(opponent.getName() + " lacks MONITORING and must discard down to 3 cards.");
             GameState newState = new GameState(
-                state.getCurrentPlayerName(),
+                opponent.getName(),
                 opponent.getHand(),
                 GameState.TurnPhase.DISCARD,
-                state.getAvailableActions(),
-                state.getSpendableMoney(),
-                state.getAvailableBuys(),
+                0,
+                0,
+                0,
                 state.getDeck()
             );
             forcedDiscardDownTo3(opponent, newState);

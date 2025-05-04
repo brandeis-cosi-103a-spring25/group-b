@@ -103,6 +103,7 @@ You'll see the **ATG Game Platform** UI with options to create and manage games.
 
 - **BigMoneyPlayer**: Greedy player that prioritizes high-value cards
 - **RedEyePlayer**: Strategic player that reacts to game state
+- **FinalBossPlayer**: Advanced player that analyzes and responds to the game situation
 - **NetworkPlayer**: Delegates decisions to a remote HTTP server
 - **HumanPlayer**: Terminal-based interactive player (useful for debugging)
 
