@@ -26,9 +26,22 @@ import edu.brandeis.cosi103a.groupb.Decks.DrawDeck;
 import edu.brandeis.cosi103a.groupb.Game.ConsoleGameObserver;
 import edu.brandeis.cosi103a.groupb.Game.GameEngine;
 
-
 /**
- * Represents an automated player, following the basic strategy.
+ * FinalBossPlayer implements an advanced strategy for the game.
+ * 
+ * The strategy adapts based on game phase (early, mid, late) and targets optimal
+ * deck composition through carefully planned buying, trashing, and card play decisions.
+ * 
+ * Core strategic elements:
+ *   1. Early game (turns 1-6): Builds economic foundation with strategic action cards
+ *   2. Mid game (turns 7-12): Balances action cards with buying power, begins acquiring victory points
+ *   3. Late game (turns 13+): Focuses on high-value victory cards and optimizing final score
+ *   4. Card upgrade strategy that evaluates each card's potential improvement value
+ *   5. Tactical discarding based on card utility and situation (forced vs. optional)
+ *   6. Situational awareness to avoid helping opponents by not buying the last Framework when behind
+ * 
+ * The player analyzes the current game state for each decision and applies
+ * prioritized action lists based on the game phase to maximize effectiveness.
  */
 public class FinalBossPlayer implements AtgPlayer {
     private int turnCount = 0;
@@ -74,12 +87,26 @@ public class FinalBossPlayer implements AtgPlayer {
         return count;
     }
 
+    /**
+     * Determines the current game phase based on turn count.
+     * Early game focuses on building economy and initial action cards.
+     */
     private boolean isEarlyGame() { return turnCount < 7; }
+    
+    /**
+     * Mid game balances between economy, action cards, and starting to acquire victory points.
+     */
     private boolean isMidGame() { return turnCount >= 7 && turnCount < 13; }
+    
+    /**
+     * Late game prioritizes high-value victory cards and optimizing final score.
+     */
     private boolean isLateGame() { return turnCount >= 13; }
 
     @Override
     public Decision makeDecision(GameState state, ImmutableList<Decision> options, Optional<Event> reason) {
+        // Main decision tree - processes each game phase according to strategy
+        
         // Handle reaction cards immediately
         if (state.getTurnPhase() == GameState.TurnPhase.REACTION) {
             for (Decision option : options) {
@@ -94,7 +121,7 @@ public class FinalBossPlayer implements AtgPlayer {
             return handleDiscardDecision(options, state);
         }
 
-        // Handle REFACTOR trash decisions
+        // Handle REFACTOR trash decisions - strategic upgrading of cards
         if (state.getTurnPhase() == GameState.TurnPhase.ACTION && options.get(0) instanceof TrashCardDecision) {
             return handleTrashDecision(options, state);
         }
@@ -110,7 +137,7 @@ public class FinalBossPlayer implements AtgPlayer {
             if (actionDecision != null) return actionDecision;
         }
 
-        // Money phase - always play all money cards
+        // Money phase - maximize available money by playing all money cards
         if (state.getTurnPhase() == GameState.TurnPhase.MONEY) {
             for (Decision option : options) {
                 if (option instanceof PlayCardDecision) {
@@ -135,6 +162,10 @@ public class FinalBossPlayer implements AtgPlayer {
         throw new IllegalStateException("GoatBot could not find a valid decision");
     }
 
+    /**
+     * Evaluates cards to trash for maximum upgrade value.
+     * Prioritizes cards based on upgrade potential and current deck composition.
+     */
     private Decision handleTrashDecision(ImmutableList<Decision> options, GameState state) {
         // Evaluate cards by their upgrade potential
         Card bestToTrash = null;
@@ -166,6 +197,10 @@ public class FinalBossPlayer implements AtgPlayer {
         return options.get(0);
     }
 
+    /**
+     * Calculates the strategic value of upgrading a card.
+     * Adjusts values based on card type, game phase, and current deck composition.
+     */
     private int evaluateUpgradePotential(Card card, int maxNewCost) {
         // Base value is how much we can upgrade the cost
         int upgradeValue = maxNewCost - card.getType().getCost();
@@ -203,6 +238,10 @@ public class FinalBossPlayer implements AtgPlayer {
         return upgradeValue;
     }
 
+    /**
+     * Manages discard decisions with different priorities for forced and optional discards.
+     * Prioritizes discarding negative cards (Bugs) and victory cards during action phases.
+     */
     private Decision handleDiscardDecision(ImmutableList<Decision> options, GameState state) {
         // First check if this is a forced discard (no EndPhaseDecision available)
         boolean isForced = !options.stream().anyMatch(d -> d instanceof EndPhaseDecision);
@@ -211,7 +250,7 @@ public class FinalBossPlayer implements AtgPlayer {
         boolean isBacklogDiscard = state.getTurnPhase() == GameState.TurnPhase.DISCARD && 
                                  !isForced;
 
-        // First priority: Always discard bugs
+        // First priority: Always discard bugs - they provide negative points
         for (Decision option : options) {
             if (option instanceof DiscardCardDecision discardDecision) {
                 if (discardDecision.getCard().getType() == Card.Type.BUG) {
@@ -231,7 +270,7 @@ public class FinalBossPlayer implements AtgPlayer {
 
         // For BACKLOG: Consider discarding low-value cards to draw more
         if (isBacklogDiscard) {
-            // If no more actions available, discard action cards
+            // If no more actions available, discard action cards since they can't be played
             if (state.getAvailableActions() < 1) {
                 for (Decision option : options) {
                     if (option instanceof DiscardCardDecision discardDecision) {
@@ -285,36 +324,43 @@ public class FinalBossPlayer implements AtgPlayer {
         return options.get(0);
     }
 
+    /**
+     * Prioritizes action cards based on the current game phase.
+     * Each phase has different priorities to maximize effectiveness.
+     */
     private Decision handleActionPhase(ImmutableList<Decision> options, GameState state) {
         // Create priority lists based on game phase
         List<Card.Type> priorityActions;
         
         if (isEarlyGame()) {
+            // Early game: focus on card draw and economy building
             priorityActions = Arrays.asList(
-                Card.Type.IPO,
-                Card.Type.CODE_REVIEW,
-                Card.Type.BACKLOG,
-                Card.Type.PARALLELIZATION,
-                Card.Type.HACK
+                Card.Type.IPO,                // Get money
+                Card.Type.CODE_REVIEW,        // Card draw
+                Card.Type.BACKLOG,            // Card churn through discards
+                Card.Type.PARALLELIZATION,    // Additional actions
+                Card.Type.HACK                // Flexible utility
             );
         } else if (isMidGame()) {
+            // Mid game: balance economy with deck improvement
             priorityActions = Arrays.asList(
-                Card.Type.PARALLELIZATION,
-                Card.Type.IPO,
-                Card.Type.TECH_DEBT,
-                Card.Type.REFACTOR,
-                Card.Type.CODE_REVIEW,
-                Card.Type.BACKLOG,
-                Card.Type.HACK,
-                Card.Type.EVERGREEN_TEST
+                Card.Type.PARALLELIZATION,    // More actions = more options
+                Card.Type.IPO,                // Economy still important
+                Card.Type.TECH_DEBT,          // Card improvement
+                Card.Type.REFACTOR,           // Card upgrading for late game
+                Card.Type.CODE_REVIEW,        // Card draw still valuable
+                Card.Type.BACKLOG,            // Cycle through deck
+                Card.Type.HACK,               // Flexibility
+                Card.Type.EVERGREEN_TEST      // Card protection and draw
             );
         } else {
+            // Late game: focus on maximizing points and final push
             priorityActions = Arrays.asList(
-                Card.Type.IPO,
-                Card.Type.PARALLELIZATION,
-                Card.Type.CODE_REVIEW,
-                Card.Type.EVERGREEN_TEST,
-                Card.Type.HACK
+                Card.Type.IPO,                // Money for high-value cards
+                Card.Type.PARALLELIZATION,    // More actions for final push
+                Card.Type.CODE_REVIEW,        // Find victory cards
+                Card.Type.EVERGREEN_TEST,     // Protect key cards
+                Card.Type.HACK                // Flexible utility
             );
         }
 
@@ -331,20 +377,27 @@ public class FinalBossPlayer implements AtgPlayer {
         return options.get(0);
     }
 
+    /**
+     * Implements a phase-based buying strategy.
+     * Adapts purchases based on available money, current deck composition,
+     * and game phase to optimize long-term strategy.
+     */
     private Decision handleBuyPhase(ImmutableList<Decision> options, GameState state) {
         int availableMoney = state.getSpendableMoney();
-        // last buy action, update turn count
+        // Track turn progression - last buy action updates turn count
         if (state.getAvailableBuys() == 1) {
             turnCount++;
         }
-        // Skip buying last Framework if not winning
+        
+        // Strategic decision: Skip buying last Framework if not winning
+        // This prevents ending the game when behind, giving more time to catch up
         if (!isWinning() && state.getDeck().getNumAvailable(Card.Type.FRAMEWORK) == 1) {
             options = ImmutableList.copyOf(options.stream()
                 .filter(d -> !(d instanceof BuyDecision && ((BuyDecision)d).getCardType() == Card.Type.FRAMEWORK))
                 .collect(Collectors.toList()));
         }
 
-        // Early game buying strategy
+        // Early game buying strategy: focus on economy and basic engine pieces
         if (isEarlyGame()) {
             if (availableMoney >= 5) {
                 // Prefer IPO or Module based on action card count
@@ -365,18 +418,15 @@ public class FinalBossPlayer implements AtgPlayer {
                 return decision != null ? decision : options.get(0);
             }
         }
-        // Mid game buying strategy
+        // Mid game buying strategy: balance action cards, money and victory points
         else if (isMidGame()) {
             int actionCardCount = countActionCards();
             
             if (availableMoney >= 8) {
-                // Check if we need more action cards before buying Framework
-                // if (actionCardCount < 4 && canBuy(options, Card.Type.IPO)) {
-                //     return findBuyDecision(options, Card.Type.IPO);
-                // }
+                // High priority on Framework cards - major victory points
                 return findBuyDecision(options, Card.Type.FRAMEWORK);
             } else if (availableMoney >= 6) {
-                // Balance between money and action cards
+                // Balance between action cards and money
                 if (actionCardCount < 5) {
                     if (canBuy(options, Card.Type.EVERGREEN_TEST)) {
                         return findBuyDecision(options, Card.Type.EVERGREEN_TEST);
@@ -385,6 +435,7 @@ public class FinalBossPlayer implements AtgPlayer {
                         return findBuyDecision(options, Card.Type.PARALLELIZATION);
                     }
                 }
+                // Improve money if needed
                 if (countMoneyCards() < 15 && canBuy(options, Card.Type.DOGECOIN)) {
                     return findBuyDecision(options, Card.Type.DOGECOIN);
                 }
@@ -426,7 +477,7 @@ public class FinalBossPlayer implements AtgPlayer {
                 }
             }
         }
-        // Late game buying strategy
+        // Late game buying strategy: maximize victory points
         else {
             if (availableMoney >= 8) {
                 return findBuyDecision(options, Card.Type.FRAMEWORK);
@@ -455,17 +506,21 @@ public class FinalBossPlayer implements AtgPlayer {
             }
         }
 
-        return options.get(0); // Take first option if no priorities found
+        return options.get(0); // Take first option if no priorities matched
     }
 
+    /**
+     * Prioritizes gained cards for maximum strategic value.
+     * Used primarily with Refactor and other gain effects.
+     */
     private Decision handleGainPhase(ImmutableList<Decision> options) {
         // For gained cards, prioritize in this order:
         Card.Type[] gainPriorities = {
-            Card.Type.FRAMEWORK,
-            Card.Type.MODULE,
-            Card.Type.DOGECOIN,
-            Card.Type.ETHEREUM,
-            Card.Type.METHOD
+            Card.Type.FRAMEWORK,    // Highest victory points
+            Card.Type.MODULE,       // Good victory points
+            Card.Type.DOGECOIN,     // Best money
+            Card.Type.ETHEREUM,     // Good money
+            Card.Type.METHOD        // Basic victory points
         };
 
         for (Card.Type type : gainPriorities) {
@@ -479,6 +534,7 @@ public class FinalBossPlayer implements AtgPlayer {
         return options.get(0); // Take first option if no priorities found
     }
 
+    // Helper methods for finding buy decisions
     private Decision findBuyDecision(ImmutableList<Decision> options, Card.Type type) {
         for (Decision option : options) {
             if (option instanceof BuyDecision && ((BuyDecision)option).getCardType() == type) {
@@ -492,6 +548,10 @@ public class FinalBossPlayer implements AtgPlayer {
         return findBuyDecision(options, type) != null;
     }
 
+    /**
+     * Counts money cards across all decks to inform economic decisions.
+     * Important for determining if basic money cards should be upgraded.
+     */
     private int countMoneyCards() {
         int count = 0;
         for (Card card : hand.getAllCards()) {
@@ -513,6 +573,10 @@ public class FinalBossPlayer implements AtgPlayer {
         return count;
     }
 
+    /**
+     * Counts action cards across all decks to balance actions vs. other card types.
+     * Too few action cards limits options; too many reduces deck efficiency.
+     */
     private int countActionCards() {
         int count = 0;
         for (Card card : hand.getAllCards()) {
@@ -536,6 +600,7 @@ public class FinalBossPlayer implements AtgPlayer {
 
     /**
      * Calculates if the player is winning based on the current game state.
+     * Used for strategic decisions like avoiding buying the last Framework when behind.
      */
     public boolean isWinning() {
         List<Player.ScorePair> scores = GameEngine.getCurrentScores();

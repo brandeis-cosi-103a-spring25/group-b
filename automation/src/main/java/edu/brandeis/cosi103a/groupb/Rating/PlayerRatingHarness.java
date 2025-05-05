@@ -242,7 +242,7 @@ public class PlayerRatingHarness {
         
         for (Map.Entry<String, PlayerStats> entry : sortedPlayers) {
             PlayerStats stats = entry.getValue();
-            report.append(String.format("%-15s %-7d %-7d %-7d %-7d %-10.2f%% %-12.2f %-+12.2f %-10d %-10d\n",
+            report.append(String.format("%-15s %-7d %-7d %-7d %-7d %-10.2f %-12.2f %-+12.2f %-10d %-10d\n",
                                    entry.getKey(),
                                    stats.gamesPlayed,
                                    stats.wins,
