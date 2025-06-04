@@ -14,6 +14,8 @@ This documentation will briefly go through the essential classes and cover their
 
 This is a Spring Boot-based web application for simulating and managing card-based strategy games. It allows users to create, view, and delete active games between different types of AI players.
 
+Deployed on: https://groupb-atg.bravebush-41dc6ff9.eastus.azurecontainerapps.io
+
 ---
 
 ## 🚀 Features
@@ -122,6 +124,7 @@ The frontend is a simple HTML/CSS/JS page located in `homepage.html`. It loads d
 
 ## 🤝 Team
 This project was developed by Group B for COSI 103A Spring 2025.
+
 Nancy Zhang: huayizhang@brandeis.edu \
 Chun Fung Wong: chunfungwong@brandeis.edu \
 Ryan Jian: hnjian@brandeis.edu \
